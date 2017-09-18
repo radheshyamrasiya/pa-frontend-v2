@@ -1,0 +1,64 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">{{followupDevotee.name}}</div>
+        <div class="row justify-content-center">
+            <div class="col pr-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.coming">
+                <span class="oi oi-circle-check"></span><br>Coming
+            </button>
+            </div>
+            <div class="col pl-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.notComing">
+                <span class="oi oi-circle-x"></span><br>Not Coming
+            </button>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col pr-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.doubtful">
+                <span class="oi oi-cloudy"></span><br>Doubtful
+            </button>
+            </div>
+            <div class="col pl-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.travelOut">
+                <span class="oi oi-briefcase"></span><br>Travel Out
+            </button>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+                <div class="col pr-0">
+                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.callAgain">
+                    <span class="oi oi-action-redo"></span><br>Call Again
+                </button>
+                </div>
+                <div class="col pl-0">
+                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.wrongNumber">
+                    <span class="oi oi-trash"></span><br>Wrong Number
+                </button>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col pr-0">
+                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.removeMe">
+                    <span class="oi oi-ban"></span><br>Remove Me
+                </button>
+            </div>
+            <div class="col pl-0">
+                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.permanentlyShifted">
+                    <span class="oi oi-compass"></span><br>Permanently Shifted
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="response" class="card">
+    <div class="card-body" style="justify-content: center">
+        <div class="alert alert-primary" role="alert">{{response}}</div>
+        <p align="center">
+        <button type="button" class="btn btn-primary" (click)="onSaveClick()">
+                Save Response
+        </button>
+        </p>
+    </div>
+</div>

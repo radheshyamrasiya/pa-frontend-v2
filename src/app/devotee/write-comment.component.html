@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-title">
+        
+    </div>
+    <div class="card-body">
+        Rate {{devotee.name}} <ngb-rating max="5" [(rate)]="selected"></ngb-rating> ({{selected}})
+        <br>
+        <label for="followupComment">Followup Comment</label>
+        <textarea class="form-control" id="followupComment" rows="3"></textarea>
+        <br>
+        <p align="center">
+            <button type="button" class="btn btn-primary" (click)="onSaveClick()">
+                Save and Proceed
+            </button>
+        </p>
+    </div>
+</div>
+

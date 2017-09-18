@@ -1,0 +1,12 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container rounded bg-light px-3 py-3">
+    <button type="button" class="btn btn-secondary sticky-top bg-info" (click)="onDashboardClick()">
+        <span class="oi oi-home"></span>
+    </button>
+    <button type="button" class="btn btn-secondary sticky-top float-right bg-info" (click)="onDashboardClick()">
+        <span class="oi oi-account-logout"></span>
+    </button>
+    <div class="bg-light py-2">
+        <router-outlet></router-outlet>
+    </div>
+</div>
