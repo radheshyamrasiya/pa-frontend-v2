@@ -15,17 +15,17 @@
               </span>
             </div>
             <div class="col">
-              <button type="button" class="w-100 btn btn-light btn-sm">
+              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onHistoryClick(devotee.id)">
                   <span class="oi oi-document"></span><br>History
               </button>
             </div>
             <div class="col">
-              <button type="button" class="w-100 btn btn-light btn-sm">
+              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onProfileClick(devotee.id)">
                   <span class="oi oi-person"></span><br>Profile
               </button>
             </div>
             <div class="col">
-              <button type="button" class="w-100 btn btn-light btn-sm">
+              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onCommentClick(devotee.id)">
                   <span class="oi oi-pencil"></span><br>Comment
               </button>
             </div>

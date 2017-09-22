@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { routeConstants } from '../shared/app-properties';
 import { DevoteeProfileComponent } from './devotee-profile.component';
 import { HistoryComponent } from './history.component'
 import { WriteCommentComponent } from './write-comment.component'
 
 const routes: Routes = [
-  { path: 'devotee-profile', component: DevoteeProfileComponent },
-  { path: 'history', component: HistoryComponent},
-  { path: 'write-comment', component: WriteCommentComponent}
+  { path: routeConstants.devoteeProfile, component: DevoteeProfileComponent },
+  { path: routeConstants.history, component: HistoryComponent},
+  { path: routeConstants.writeComment, component: WriteCommentComponent}
 ];
 
 @NgModule({

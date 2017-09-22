@@ -3,6 +3,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { CaptureSessionService } from './capture-session.service';
 import { CaptureContactComponent } from './capture-contact.component';
 import { CapturedListComponent } from './captured-list.component';
 
@@ -20,6 +21,8 @@ import { CaptureRoutingModule } from './capture-routing.module';
         CaptureContactComponent,
         CapturedListComponent,
     ],
-    providers: [],
+    providers: [
+        CaptureSessionService,
+    ],
 })
 export class CaptureModule { }

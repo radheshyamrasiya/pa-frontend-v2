@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from  '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { Devotee } from '../model/devotee.model';
-
-import { FollowupSessionService } from '../core/followup-session.service';
+import { DevoteeMin } from '../model/devotee.model';
+import { routeConstants } from '../shared/app-properties';
+import { FollowupSessionService } from './followup-session.service';
 
 @Component ({
     selector: "my-followups",
@@ -12,20 +12,40 @@ import { FollowupSessionService } from '../core/followup-session.service';
 })
 
 export class MyFollowupsComponent implements OnInit {
-    devoteeList: Devotee[];
+    devoteeList: DevoteeMin[];
+    selectedProgramId: number;
     @Input() form: FormGroup;
 
     constructor(
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private followSession: FollowupSessionService,
     ) {}
 
     ngOnInit() {
-        this.devoteeList = this.followSession.followupDevoteeList;
+        this.activatedRoute.params.subscribe((params: Params) => {
+            this.devoteeList = this.followSession.getDevoteeList(+params[routeConstants.paramsProgramId]);
+            this.selectedProgramId = +params[routeConstants.paramsProgramId];
+        });
     }
 
     onPhoneClick(devoteeId: string): void {
-        this.router.navigate(['/call-response']);
+        this.router.navigate([routeConstants.followup,routeConstants.callResponse,this.selectedProgramId, devoteeId]);
+        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+    }
+
+    onHistoryClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.followup, routeConstants.history, this.selectedProgramId, devoteeId]);
+        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+    }
+
+    onProfileClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.followup, routeConstants.devoteeProfile, this.selectedProgramId, devoteeId]);
+        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+    }
+
+    onCommentClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.followup, routeConstants.writeComment, this.selectedProgramId, devoteeId]);
         this.followSession.setCurrentFollowupDevotee(+devoteeId);
     }
 }

@@ -1,4 +1,4 @@
-export class Devotee {
+export class DevoteeMin {
     id: number;
     name: string;
     phone: string;

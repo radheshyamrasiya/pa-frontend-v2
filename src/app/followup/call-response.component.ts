@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { callResponse } from '../shared/app-properties';
-import { Devotee } from '../model/devotee.model';
+import { DevoteeMin } from '../model/devotee.model';
 
-import { FollowupSessionService } from '../core/followup-session.service';
+import { routeConstants } from '../shared/app-properties';
+import { FollowupSessionService } from './followup-session.service';
 
 @Component ({
     selector: 'call-response',
@@ -14,7 +15,7 @@ import { FollowupSessionService } from '../core/followup-session.service';
 export class CallResponseComponent implements OnInit {
     callResponse;
     response: string;
-    followupDevotee: Devotee;
+    followupDevotee: DevoteeMin;
 
     constructor(
         private router: Router,
@@ -24,13 +25,13 @@ export class CallResponseComponent implements OnInit {
     ngOnInit() {
         this.followupDevotee = this.followupSession.getCurrentFollowupDevotee();
         if (!this.followupDevotee) {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate([routeConstants.dashboard]);
         }
         this.callResponse = callResponse;
         this.response="";
     }
 
     onSaveClick() {
-        this.router.navigate(['/write-comment']);
+        this.router.navigate([routeConstants.writeComment]);
     }
 }

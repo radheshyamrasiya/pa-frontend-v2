@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from  '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Devotee } from '../model/devotee.model';
+import { DevoteeMin } from '../model/devotee.model';
 
-import { FollowupSessionService } from '../core/followup-session.service';
+import { CaptureSessionService } from './capture-session.service';
+import { routeConstants } from '../shared/app-properties';
 
 @Component ({
     selector: 'captured-list',
@@ -12,35 +13,35 @@ import { FollowupSessionService } from '../core/followup-session.service';
 })
 
 export class CapturedListComponent implements OnInit {
-    devoteeList: Devotee[];
+    devoteeList: DevoteeMin[];
     @Input() form: FormGroup;
 
     constructor(
         private router: Router,
-        private followSession: FollowupSessionService,
+        private captureSession: CaptureSessionService,
     ) {}
 
     ngOnInit() {
-        this.devoteeList = this.followSession.followupDevoteeList;
+        this.devoteeList = this.captureSession.captureDevoteeList;
     }
 
     onPhoneClick(devoteeId: string): void {
-        this.router.navigate(['/call-response']);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        this.router.navigate([routeConstants.writeComment, devoteeId]);
+        this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 
     onHistoryClick(devoteeId: string): void {
-        this.router.navigate(['/history']);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        this.router.navigate([routeConstants.history, devoteeId]);
+        this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 
     onProfileClick(devoteeId: string): void {
-        this.router.navigate(['/devotee-profile']);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        this.router.navigate([routeConstants.devoteeProfile, devoteeId]);
+        this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 
     onCommentClick(devoteeId: string): void {
-        this.router.navigate(['/write-comment']);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        this.router.navigate([routeConstants.writeComment, devoteeId]);
+        this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 }

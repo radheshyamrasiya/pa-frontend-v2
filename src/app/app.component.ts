@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FollowupSessionService } from './core/followup-session.service';
+import { routeConstants } from './shared/app-properties';
+import { LoginSessionService } from './login/login-session.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private followupSession: FollowupSessionService,
+    private loginService: LoginSessionService,
   ) {}
 
   ngOnInit() {
@@ -21,6 +22,10 @@ export class AppComponent implements OnInit {
   }
 
   onDashboardClick(): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate([routeConstants.dashboard]);
+  }
+
+  onLogoutClick(): void {
+    this.loginService.logout();
   }
 }

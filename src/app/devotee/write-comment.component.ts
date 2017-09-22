@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { Devotee } from '../model/devotee.model';
-import { FollowupSessionService } from "../core/followup-session.service";
+import { routeConstants } from '../shared/app-properties';
+import { DevoteeMin } from '../model/devotee.model';
+import { FollowupSessionService } from "../followup/followup-session.service";
 
 @Component ({
     selector: 'write-comment',
@@ -11,7 +12,7 @@ import { FollowupSessionService } from "../core/followup-session.service";
 
 export class WriteCommentComponent implements OnInit {
     selected = 0;
-    devotee: Devotee;
+    devotee: DevoteeMin;
 
     constructor(
         private router: Router,
@@ -22,11 +23,11 @@ export class WriteCommentComponent implements OnInit {
         if (this.followupService.getCurrentFollowupDevotee()) {
             this.devotee = this.followupService.getCurrentFollowupDevotee();
         } else {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate([routeConstants.dashboard]);
         }
     }
 
     onSaveClick() {
-        
+        this.router.navigate(['../']);
     }
 }
