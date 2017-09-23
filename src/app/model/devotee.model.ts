@@ -2,6 +2,6 @@ export class DevoteeMin {
     id: number;
     name: string;
     phone: string;
-    preferredLanguage: string;
-    introDate: string;
+    area: string;
+    pin: string;
 }
