@@ -52,7 +52,7 @@ export class LoginSessionService implements OnInit {
                 this.role = loginResponse.data.role;
 
                 this.followupSession.loadFollowupDevoteeList();
-                this.captureSession.loadCaptureDevoteeList();
+                this.captureSession.loadCaptureDevoteeList(this.devoteeId);
                 this.router.navigate([routeConstants.dashboard]);
             }, err => {
                 console.log(err);

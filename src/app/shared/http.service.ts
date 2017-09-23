@@ -24,4 +24,10 @@ export class HttpService {
             headers: this.headers
         });
     }
+
+    public post(url: string, body: any): Observable<any> {
+        return this.http.post(connectionProperties.baseUrl + url, body, {
+            headers: this.headers
+        });
+    }
 }

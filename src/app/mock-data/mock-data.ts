@@ -10,15 +10,15 @@ export const mockFollowupDevotees: FollowupDevotees[] = [
                 id: 1,
                 name: 'hari',
                 phone: '9886709603',
-                preferredLanguage: 'english',
-                introDate: '1/6/2017',
+                area: 'bangalore',
+                pin: '560043',
             },
             {
                 id: 2,
                 name: 'Krishna',
                 phone: '8880076000',
-                preferredLanguage: 'english',
-                introDate: '1/6/2017',
+                area: 'bangalore',
+                pin: '560043',
             }
         ]
     },
@@ -30,15 +30,15 @@ export const mockFollowupDevotees: FollowupDevotees[] = [
                 id: 3,
                 name: 'Kumar',
                 phone: '9888889603',
-                preferredLanguage: 'english',
-                introDate: '1/6/2017',
+                area: 'bangalore',
+                pin: '560043',
             },
             {
                 id: 2,
                 name: 'Basava',
                 phone: '9990088000',
-                preferredLanguage: 'english',
-                introDate: '1/6/2017',
+                area: 'bangalore',
+                pin: '560043',
             }
         ]
     }

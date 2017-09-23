@@ -30,7 +30,5 @@ export class LoginComponent implements OnInit {
         this.status="clicked";
         this.httpService.init(this.username, this.password);
         this.loginSessionService.login(this.username, this.password);
-        console.log("Trying to go to dashboard");
-        this.router.navigate([routeConstants.dashboard]);
     }
 }
