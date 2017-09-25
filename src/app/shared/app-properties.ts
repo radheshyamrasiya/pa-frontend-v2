@@ -7,7 +7,7 @@ export const connectionProperties = {
     baseUrl: 'http://localhost:8080',
     login: '/login',
     capture: '/devotees',
-    myCapturedListUrl: '/devotees',       //my captured list - change later
+    myCapturedListUrl: '/my_captured_list',
     followUpDevoteeList: '/devotees', //get lis of follwups for a volunteer
 }
 

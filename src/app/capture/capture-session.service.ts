@@ -37,7 +37,7 @@ export class CaptureSessionService {
         //Get the volunteer id from Login Session Service and fetch followup list
         //assigned to the volunteer. We have hardcoded the devotee list now
         this.httpService
-        .get(connectionProperties.followUpDevoteeList)
+        .get(connectionProperties.myCapturedListUrl + "/" + devoteeId)
         .subscribe(res => {
             console.log(res._body);
             let devoteeList = JSON.parse(res._body);
