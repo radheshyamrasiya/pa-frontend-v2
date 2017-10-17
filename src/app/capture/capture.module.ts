@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CaptureSessionService } from './capture-session.service';
 import { CaptureContactComponent } from './capture-contact.component';
 import { CapturedListComponent } from './captured-list.component';
+import { CapturedListHolderComponent } from './captured-list-holder.component';
 
 import { CaptureRoutingModule } from './capture-routing.module';
 
@@ -20,6 +21,7 @@ import { CaptureRoutingModule } from './capture-routing.module';
     declarations: [
         CaptureContactComponent,
         CapturedListComponent,
+        CapturedListHolderComponent,
     ],
     providers: [
         CaptureSessionService,

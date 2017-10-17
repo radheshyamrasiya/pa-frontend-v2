@@ -1,5 +1,17 @@
 <div class="card">
-    <div class="card-title">
-        History Page
+    <div class="card-body">
+        <div *ngIf="devoteeName==null; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>No history yet.. Kindly get in touch</ng-template>
+        <ng-template #elseBlock>{{devoteeName}}'s History</ng-template>
+    </div>
+</div>
+<div *ngFor="let history of historyList">
+    <div class="card">
+        <div class="card-body">
+            <span class="{{colorCodeList[history.rating]}}">&nbsp;{{history.rating}} <span class="oi oi-star"></span>&nbsp;</span>
+            {{history.comment}} <br>
+            <span class="font-italic small">Commented By: {{history.commentedByDevoteeName}}</span> <br>
+            <span class="font-italic small">{{history.timeStamp | date:'yMMMd'}} ({{history.timeStamp | date:'EEE'}}) - {{history.timeStamp | date:'jm'}}</span> <br>
+        </div>
     </div>
 </div>

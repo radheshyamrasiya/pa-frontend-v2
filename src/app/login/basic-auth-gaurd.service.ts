@@ -14,7 +14,6 @@ export class BasicAuthGuardService implements CanActivate, CanActivateChild {
 
   canActivate() {
     if (this.loginService.loginStatus == LoginStatus.loggedIn) {
-      console.log("Auth Success");
       return true;
     }
     this.router.navigate([routeConstants.login]);

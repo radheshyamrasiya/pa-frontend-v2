@@ -7,9 +7,9 @@ import { HistoryComponent } from './history.component'
 import { WriteCommentComponent } from './write-comment.component'
 
 const routes: Routes = [
-  { path: routeConstants.devoteeProfile, component: DevoteeProfileComponent },
-  { path: routeConstants.history, component: HistoryComponent},
-  { path: routeConstants.writeComment, component: WriteCommentComponent}
+  { path: routeConstants.devoteeProfile + '/:' + routeConstants.paramDevoteeId, component: DevoteeProfileComponent },
+  { path: routeConstants.history + '/:' + routeConstants.paramDevoteeId, component: HistoryComponent},
+  { path: routeConstants.writeComment + '/:' + routeConstants.paramDevoteeId, component: WriteCommentComponent},
 ];
 
 @NgModule({

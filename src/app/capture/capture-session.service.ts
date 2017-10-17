@@ -39,10 +39,8 @@ export class CaptureSessionService {
         this.httpService
         .get(connectionProperties.myCapturedListUrl + "/" + devoteeId)
         .subscribe(res => {
-            console.log(res._body);
             let devoteeList = JSON.parse(res._body);
             this.captureDevoteeList = devoteeList.data;
-            console.log(this.captureDevoteeList);
             this.captureDevoteeListBackUrl = "";
             this.captureDevoteeListFrontUrl = "";
         }, err => {
@@ -63,7 +61,6 @@ export class CaptureSessionService {
         this.httpService
         .post(connectionProperties.capture, postRequest)
         .subscribe(res => {
-            console.log(res._body);
             let devoteeList = JSON.parse(res._body);
             this.captureDevoteeList = devoteeList.data;
             console.log(this.captureDevoteeList);

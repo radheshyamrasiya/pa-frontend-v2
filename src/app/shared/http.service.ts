@@ -30,4 +30,11 @@ export class HttpService {
             headers: this.headers
         });
     }
+
+    public put(url: string, body: any): Observable<any> {
+        console.log("In put now...");
+        return this.http.put(connectionProperties.baseUrl + url, body, {
+            headers: this.headers
+        });
+    }
 }

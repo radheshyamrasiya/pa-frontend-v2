@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from  '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { DevoteeMin } from '../model/devotee.model';
 
@@ -18,6 +18,7 @@ export class CapturedListComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private captureSession: CaptureSessionService,
     ) {}
 
@@ -26,22 +27,22 @@ export class CapturedListComponent implements OnInit {
     }
 
     onPhoneClick(devoteeId: string): void {
-        this.router.navigate([routeConstants.writeComment, devoteeId]);
+        this.router.navigate([routeConstants.writeComment, devoteeId], {relativeTo: this.route});
         this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 
     onHistoryClick(devoteeId: string): void {
-        this.router.navigate([routeConstants.history, devoteeId]);
+        this.router.navigate([routeConstants.history, devoteeId], {relativeTo: this.route});
         this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 
     onProfileClick(devoteeId: string): void {
-        this.router.navigate([routeConstants.devoteeProfile, devoteeId]);
+        this.router.navigate([routeConstants.devoteeProfile, devoteeId], {relativeTo: this.route});
         this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 
     onCommentClick(devoteeId: string): void {
-        this.router.navigate([routeConstants.writeComment, devoteeId]);
+        this.router.navigate([routeConstants.writeComment, devoteeId], {relativeTo: this.route});
         this.captureSession.setCurrentCaptureDevotee(+devoteeId);
     }
 }

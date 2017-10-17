@@ -1,5 +1,201 @@
-<div class="card">
-    <div class="card-title">
-        Devotee Profile Page
+<!--<form> Commented as it is breaking code-->
+    <ngb-accordion [closeOthers]="false" activeIds="static-1">
+        <ngb-panel id="personal_info">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-100">Personal Information</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <!--Legal Name Field-->
+                <div class="form-group">
+                    <label for="legalNameInput">Name</label>
+                    <input type="text" class="form-control" id="legalNameInput"  placeholder="Devotee Name"
+                    [(ngModel)]='devotee.legalName'>
+                </div>
+                <!--Initiated Name Field-->
+                <div class="form-group">
+                    <label for="initiatedNameInput">Initiated Name</label>
+                    <input type="tel" class="form-control" id="initiatedNameInput" placeholder="Initiated Name" 
+                    [(ngModel)]='devotee.initiatedName'>
+                </div>
+                <!--Date of Birth Field-->
+                <div class="form-group">
+                    <label for="dobInput">Date of Birth</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" id="dobInput"
+                            name="dp" [(ngModel)]="datePicker" ngbDatepicker #d="ngbDatepicker" disabled>
+                        <button class="input-group-addon" (click)="d.toggle()" type="button">
+                            <span class="oi oi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
+                        </button>
+                    </div>
+                </div>
+                <!--Gender Field-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div ngbDropdown>
+                            <button class="btn btn-outline-primary" id="genderMenu" ngbDropdownToggle>
+                                Gender
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="genderMenu">
+                                <div *ngFor="let gen of gender">
+                                    <a class="dropdown-item" (click)="genderClick(gen)">{{gen}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="devotee.gender" disabled>
+                    </div>
+                </div>
+                <!--Marital Status Field-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div ngbDropdown>
+                            <button class="btn btn-outline-primary" id="maritalStatusMenu" ngbDropdownToggle>
+                                Marital Status
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="maritalStatusMenu">
+                                <div *ngFor="let mar of maritalStatus">
+                                    <a class="dropdown-item" (click)="maritalStatusClick(mar)">{{mar}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="devotee.maritalStatus" disabled>
+                    </div>
+                </div>
+                <!--Family Info Field-->
+                <div class="form-group">
+                    <label for="areaInput">Family Info</label>
+                    <textarea class="form-control" id="areaInput" rows='5' placeholder="Any Notable Family Information" 
+                    [(ngModel)]='devotee.familyInfo'>
+                    </textarea>
+                </div>        
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="contact_info">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-100">Contact Information</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <!--SMS Phone Field-->
+                <div class="form-group">
+                    <label for="smsPhoneInput">Phone Number</label>
+                    <input type="tel" class="form-control" id="smsPhoneInput"  placeholder="Phone number"
+                        [(ngModel)]='devotee.smsPhone'>
+                </div>
+                <!--Area Field-->
+                <div class="form-group">
+                    <label for="areaInput">Area</label>
+                    <input type="text" class="form-control" id="areaInput" placeholder="Area" 
+                        [(ngModel)]='devotee.area'>
+                </div>
+                <!--Address Field-->
+                <div class="form-group">
+                    <label for="addressInput">Address</label>
+                    <textarea class="form-control" rows="5" id="addressInput"  placeholder="Address"
+                        [(ngModel)]='devotee.address'></textarea>
+                </div>
+                <!--Email Field-->
+                <div class="form-group">
+                    <label for="emailInput">Email</label>
+                    <input type="email" class="form-control" id="emailInput" placeholder="Email" 
+                        [(ngModel)]='devotee.email'>
+                </div>            
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="spiritual_info">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-100">Spiritual Information</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <!--Preferred Language Field-->
+                <div class="form-group">
+                    <label for="preferredLanguageInput">Preferred Language</label>
+                    <input type="text" class="form-control" id="preferredLanguageInput"  placeholder="Preferred Language"
+                        [(ngModel)]='devotee.preferredLanguage'>
+                </div>
+                <!--Books Read Field-->
+                <div class="form-group">
+                    <label for="booksReadInput">Srila Prabhupada Books Read</label>
+                    <input type="text" class="form-control" id="booksReadInput" placeholder="Books Read" 
+                        [(ngModel)]='devotee.booksRead'>
+                </div>
+                <!--Monthly Contribution Field-->
+                <div class="form-group">
+                    <label for="monthlyContributionInput">Monthly Contribution</label>
+                    <input type="number" class="form-control" id="addressInput"  placeholder="Monthly Contribution"
+                        [(ngModel)]='devotee.monthlyContribution'>
+                </div>
+                <!--Siksha Level Field-->
+                <div class="form-group">
+                    <label for="sikshaLevelInput">Siksha Level</label>
+                    <input type="text" class="form-control" id="sikshaLevelInput" placeholder="Siksha Level" 
+                        [(ngModel)]='devotee.sikshaLevel'>
+                </div>            
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="professional_info">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-100">Professional Information</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <!--Education Field-->
+                <div class="form-group">
+                    <label for="educationInput">Education</label>
+                    <input type="text" class="form-control" id="educationInput"  placeholder="Education"
+                        [(ngModel)]='devotee.education'>
+                </div>
+                <!--Occupation Field-->
+                <div class="form-group">
+                    <label for="occupationInput">Occupation</label>
+                    <input type="text" class="form-control" id="occupationInput" placeholder="Occupation" 
+                        [(ngModel)]='devotee.occupation'>
+                </div>
+                <!--Organization Field-->
+                <div class="form-group">
+                    <label for="organizationInput">Organization</label>
+                    <input type="text" class="form-control" id="organizationInput"  placeholder="Organization"
+                        [(ngModel)]='devotee.organization'>
+                </div>
+                <!--Designation Field-->
+                <div class="form-group">
+                    <label for="designationInput">Designation</label>
+                    <input type="text" class="form-control" id="designationInput" placeholder="Designation" 
+                        [(ngModel)]='devotee.designation'>
+                </div>            
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="general_info">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-100">General Information</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <!--Description Field-->
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <textarea class="form-control" rows="5" id="descriptionInput"  placeholder="Description"
+                        [(ngModel)]='devotee.description'></textarea>
+                </div>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+    <button type="submit" class="btn btn-primary mt-2" (click)="onUpdateClick()">Update</button>
+    <button class="btn btn-primary mt-2" (click)="onResetClick()">Reset</button>
+    <button class="btn btn-primary mt-2" (click)="onUpdateDatesClick(discardContentDates)">Update Important Dates</button>
+
+
+    <ng-template #discardContentDates let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Discard changes</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-</div>
+    <div class="modal-body">
+        <p>Proceeding to important dates page may discard any un-updated changes made to devotee</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('cancel')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('ok')">Ok</button>
+    </div>
+    </ng-template>
+
+<!--</form>-->
