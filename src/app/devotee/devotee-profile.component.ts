@@ -5,9 +5,10 @@ import { NgbDateStruct, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-b
 import { Devotee } from '../model/devotee.model';
 import { Gender } from '../model/devotee.model';
 import { MaritalStatus } from '../model/devotee.model';
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, statusType } from '../shared/app-properties';
 
 import { DevoteeService } from './devotee.service';
+import { StatusService } from '../shared/status.service';
 
 @Component({
     selector: 'devotee-profile',
@@ -29,6 +30,7 @@ export class DevoteeProfileComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private devoteeService: DevoteeService,
         private modalService: NgbModal,
+        private statusService: StatusService,
     ) {}
 
     ngOnInit() {
@@ -62,9 +64,9 @@ export class DevoteeProfileComponent implements OnInit {
 
     onUpdateClick() {
         this.devoteeService.updateDevotee(this.devotee).subscribe(devotee => {
-            console.log("Devotee is : " + devotee.legalName);
+            this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
         }, err => {
-            console.log("devotee: Some error occured", err);
+            this.statusService.setFlag("Error updating devotee", statusType.error);
         });
     }
 
@@ -93,7 +95,6 @@ export class DevoteeProfileComponent implements OnInit {
     onUpdateDatesClick(content) {
         this.modalService.open(content).result.then((result) => {
           if (result == "ok") {
-            console.log("Clicked : " + result);
             //Navigate to important dates page
           }
         });

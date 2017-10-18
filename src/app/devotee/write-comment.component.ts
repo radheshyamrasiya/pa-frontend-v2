@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, statusType } from '../shared/app-properties';
 import { Devotee } from '../model/devotee.model';
 import { DevoteeService } from "./devotee.service";
 import { LoginSessionService } from '../login/login-session.service';
 
 import { History } from '../model/history.model';
 import { HistoryService } from './history.service';
+import { StatusService } from '../shared/status.service';
 
 @Component ({
     selector: 'write-comment',
@@ -24,6 +25,7 @@ export class WriteCommentComponent implements OnInit {
         private devoteeService: DevoteeService,
         private loginSession: LoginSessionService, 
         private historyService: HistoryService,
+        private statusService: StatusService,
     ) {};
 
     ngOnInit() {
@@ -44,6 +46,11 @@ export class WriteCommentComponent implements OnInit {
     }
 
     onSaveClick() {
+        if(this.history.rating == 0) {
+            this.statusService.setFlag("Kindly rate the devotee!", statusType.error);
+            return;
+        }
+        console.log("SSS Test");
         this.history.timeStamp = Date.now();
         this.historyService.writeComment(this.history)
         .subscribe(history => {
@@ -51,6 +58,6 @@ export class WriteCommentComponent implements OnInit {
         }, err => {
             console.log(err);
         });
-        this.router.navigate(['../']);
+        this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
     }
 }

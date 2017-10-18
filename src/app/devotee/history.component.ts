@@ -15,6 +15,7 @@ export class HistoryComponent implements OnInit {
     historyList: History[];
     devoteeName: string;
     colorCodeList: string[];
+    devoteeId: number;
 
     constructor(
         private historyService: HistoryService,
@@ -27,6 +28,7 @@ export class HistoryComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => {
             this.historyService.loadHistory(+params[routeConstants.paramDevoteeId])
             .subscribe(historyList => {
+                this.devoteeId = +params[routeConstants.paramDevoteeId];
                 this.historyList = historyList;
                 if (this.historyList.length) this.devoteeName = historyList[0].ratedDevoteeName;
             }, err => {
@@ -34,5 +36,9 @@ export class HistoryComponent implements OnInit {
                 //Navigate to different page
             });
         });
+    }
+
+    onBackClick() {
+        this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devoteeId} });
     }
 }

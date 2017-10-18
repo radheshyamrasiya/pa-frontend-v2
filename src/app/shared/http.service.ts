@@ -16,7 +16,6 @@ export class HttpService {
         this.headers = new Headers;
         this.headers.append('Authorization', 'Basic ' +
         btoa(username + ':' + password));
-        console.log(username + ':' + password);
     }
 
     public get(url: string): Observable<any> {
@@ -32,7 +31,6 @@ export class HttpService {
     }
 
     public put(url: string, body: any): Observable<any> {
-        console.log("In put now...");
         return this.http.put(connectionProperties.baseUrl + url, body, {
             headers: this.headers
         });

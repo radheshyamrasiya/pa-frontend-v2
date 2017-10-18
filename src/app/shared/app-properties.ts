@@ -52,6 +52,7 @@ export const routeConstants = {
     paramsProgramId: 'programId',
 };
 
+//For history comments
 export const colorCode = [
     "", //value 0
     "text-white bg-danger", //value 1
@@ -60,3 +61,13 @@ export const colorCode = [
     "text-white bg-info", //value 4
     "text-white bg-success", //value 5
 ];
+
+//For status service
+export const statusType = {
+    info: "alert alert-secondary",
+    success: "alert alert-success",
+    error: "alert alert-danger"
+}
+
+export const welcomeMessage = "Hare Krishna! Welcome to Preaching Assistant";
+export const greeting = "Hare Krishna, ";

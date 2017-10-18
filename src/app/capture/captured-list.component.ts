@@ -14,6 +14,7 @@ import { routeConstants } from '../shared/app-properties';
 
 export class CapturedListComponent implements OnInit {
     devoteeList: DevoteeMin[];
+    activePanel: string;
     @Input() form: FormGroup;
 
     constructor(
@@ -23,7 +24,14 @@ export class CapturedListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.activePanel = "";
         this.devoteeList = this.captureSession.captureDevoteeList;
+        
+        this.route.queryParams.subscribe(params => {
+            if(params["id"]) {
+                this.activePanel = params["id"] + "_id";
+            }
+        });
     }
 
     onPhoneClick(devoteeId: string): void {

@@ -20,7 +20,6 @@ export class MyFollowupProgramsComponent implements OnInit {
 
     ngOnInit() { 
         this.programList = this.followupSession.getProgramList();
-        console.log(this.programList.toString() + "Program List Log");
     }
  
     followupForProgram(programId: number) {

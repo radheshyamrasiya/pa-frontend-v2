@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { routeConstants } from './shared/app-properties';
+import { routeConstants, statusType } from './shared/app-properties';
 import { LoginSessionService } from './login/login-session.service';
+import { StatusService } from './shared/status.service';
 
 @Component({
   selector: 'app-root',
@@ -15,10 +16,11 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private loginService: LoginSessionService,
+    private statusService: StatusService,
   ) {}
 
   ngOnInit() {
-
+    this.statusService.resetDefaultFlag();
   }
 
   onDashboardClick(): void {

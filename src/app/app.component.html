@@ -1,11 +1,16 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container rounded bg-light px-3 py-3">
-    <button type="button" class="btn btn-secondary sticky-top bg-info" (click)="onDashboardClick()">
+    <div class="sticky-top">
+    <div class="{{statusService.status}} py-0" role="alert">
+        {{statusService.message}}
+    </div>
+    <button type="button" class="btn btn-secondary bg-info" (click)="onDashboardClick()">
         <span class="oi oi-home"></span>
     </button>
-    <button type="button" class="btn btn-secondary sticky-top float-right bg-info" (click)="onLogoutClick()">
+    <button type="button" class="btn btn-secondary float-right bg-info" (click)="onLogoutClick()">
         <span class="oi oi-account-logout"></span>
     </button>
+    </div>
     <div class="bg-light py-2">
         <router-outlet></router-outlet>
     </div>

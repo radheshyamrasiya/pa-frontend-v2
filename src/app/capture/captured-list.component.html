@@ -1,4 +1,4 @@
-<ngb-accordion [closeOthers]="true" activeIds="static-1">
+<ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
     <div *ngFor="let devotee of devoteeList">
       <ngb-panel id="{{devotee.id}}_id">
         <ng-template ngbPanelTitle>

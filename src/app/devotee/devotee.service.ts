@@ -3,21 +3,22 @@ import { Observable }     from 'rxjs/Observable';
 
 import { Devotee, MaritalStatus, Gender } from '../model/devotee.model';
 import { HttpService } from '../shared/http.service';
-import { connectionProperties } from '../shared/app-properties';
+import { connectionProperties, statusType } from '../shared/app-properties';
 import { DevoteeQueryModel } from '../model-get/devotee-query.model';
+import { StatusService } from '../shared/status.service';
 
 @Injectable()
 export class DevoteeService {
     devotee: Devotee;
 
     constructor(
-        private httpService: HttpService
+        private httpService: HttpService,
+        private statusService: StatusService,
     ) { }
     
     loadDevotee(devoteeId: number): Observable<Devotee> {
         let devoteeJson: DevoteeQueryModel;
         //Code to get a devotee
-        console.log("Loading devotee " + devoteeId);
         return Observable.create(observer => {
             this.httpService
             .get(connectionProperties.devotees + '/' + devoteeId)
@@ -28,7 +29,7 @@ export class DevoteeService {
                 observer.next(this.devotee);
                 observer.complete();    
             }, err => {
-                console.log(err);
+                this.statusService.setFlag("Error retriving devotee details", statusType.error);
                 observer.throw(err);
                 observer.complete();
             });
@@ -48,12 +49,13 @@ export class DevoteeService {
             .put(connectionProperties.devotees + '/' + devotee.id, devotee)
             .subscribe(res => {
                 let devoteeDetail = JSON.parse(res._body);
-                devoteeJson = devoteeDetail.data;
+                devoteeJson = devoteeDetail;
                 this.devotee = this.mapJsonToDevotee(devoteeJson);
                 observer.next(this.devotee);
-                observer.complete();    
+                this.statusService.setFlag(this.devotee.legalName + " updated", statusType.success);
+                observer.complete();   
             }, err => {
-                console.log(err);
+                this.statusService.setFlag("Error updating devotee details", statusType.error);
                 observer.throw(err);
                 observer.complete();
             });

@@ -33,7 +33,6 @@ export class CaptureSessionService {
 
     loadCaptureDevoteeList(devoteeId: number) {
         this.loggedInDevoteeId = devoteeId;
-        console.log("Who is logging in : " + this.loggedInDevoteeId + " : " + devoteeId);
         //Get the volunteer id from Login Session Service and fetch followup list
         //assigned to the volunteer. We have hardcoded the devotee list now
         this.httpService
@@ -56,14 +55,12 @@ export class CaptureSessionService {
         postRequest.area = devotee.area;
         postRequest.address = devotee.pin;
         postRequest.capturedBy = this.loggedInDevoteeId;
-        console.log("devotee capturing is : " + postRequest.capturedBy + " : " + this.loggedInDevoteeId);
 
         this.httpService
         .post(connectionProperties.capture, postRequest)
         .subscribe(res => {
             let devoteeList = JSON.parse(res._body);
             this.captureDevoteeList = devoteeList.data;
-            console.log(this.captureDevoteeList);
             this.captureDevoteeListBackUrl = "";
             this.captureDevoteeListFrontUrl = "";
         }, err => {

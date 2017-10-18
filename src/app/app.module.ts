@@ -17,6 +17,7 @@ import { DevoteeModule } from './devotee/devotee.module';
 import { ProgramModule } from './program/program.module';
 import { FollowupModule } from './followup/followup.module';
 
+import { StatusService } from './shared/status.service';
 import { DevoteeService } from './devotee/devotee.service';
 import { HistoryService } from './devotee/history.service';
 
@@ -42,6 +43,7 @@ import { HistoryService } from './devotee/history.service';
     FollowupModule,
   ],
   providers: [
+    StatusService,
     DevoteeService,
     HistoryService,
   ],

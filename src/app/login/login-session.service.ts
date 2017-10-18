@@ -9,6 +9,7 @@ import { LoginGetQueryModel } from '../model-get/login-get-query.model';
 
 import { FollowupSessionService } from '../followup/followup-session.service';
 import { CaptureSessionService } from '../capture/capture-session.service';
+import { StatusService } from '../shared/status.service';
 
 
 /*
@@ -30,6 +31,7 @@ export class LoginSessionService implements OnInit {
         private captureSession: CaptureSessionService,
         private httpService: HttpService,
         private router: Router,
+        private statusService: StatusService
     ) {}
 
     ngOnInit(): void {
@@ -38,7 +40,6 @@ export class LoginSessionService implements OnInit {
     }
 
     login(username: string, password: string): void {
-        console.log(connectionProperties.login);
         //Authentication Code
         this.httpService
             .get(connectionProperties.login + "/" + username)
@@ -53,6 +54,7 @@ export class LoginSessionService implements OnInit {
 
                 this.followupSession.loadFollowupDevoteeList();
                 this.captureSession.loadCaptureDevoteeList(this.devoteeId);
+                this.statusService.setDefaultFlag(this.devoteeName);
                 this.router.navigate([routeConstants.dashboard]);
             }, err => {
                 console.log(err);
@@ -60,6 +62,7 @@ export class LoginSessionService implements OnInit {
                 this.userName = "";
                 this.password = "";
                 this.devoteeId = 0;
+                this.statusService.resetDefaultFlag();
                 this.router.navigate([routeConstants.login]);
             });
     }
@@ -69,6 +72,7 @@ export class LoginSessionService implements OnInit {
         this.userName = "";
         this.password = "";
         this.devoteeId = 0;
+        this.statusService.resetDefaultFlag();
         this.router.navigate([routeConstants.login]);
     }
 

@@ -16,14 +16,10 @@ export class HistoryService {
         let historyJson: HistoryRequestQuery;
         let historyReponseJson: HistoryResponseQuery;
 
-        console.log("HIST TS: " + history.timeStamp);
         historyJson = this.mapHistoryToJson(history);
-        console.log("JSON TS: " + historyJson.timeStamp);
         return Observable.create(observer => {
-            console.log("JSON TS: " + historyJson.timeStamp);
             this.httpService.post(connectionProperties.writeHistory, historyJson)
             .subscribe(res => {
-                console.log(res._body);
                 let rawHistory = JSON.parse(res._body);
                 historyReponseJson = rawHistory; //There is no .data in this response ??
                 history = this.mapJsonToHistory(historyReponseJson);
@@ -65,7 +61,6 @@ export class HistoryService {
         json.rating = history.rating;
         json.response = history.response;
         json.timeStamp = (new Date(history.timeStamp)).toJSON();
-        console.log("Requesting : " + json.timeStamp);
 
         return json;
     }

@@ -2,6 +2,7 @@ export class DevoteeQueryModel {
     id: number;
     legalName: string;
     initiatedName: string;
+    displayName: string;
     dob: string;
     gender: string;
     maritalStatus: string;
