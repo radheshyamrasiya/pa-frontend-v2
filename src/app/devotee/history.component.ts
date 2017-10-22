@@ -3,7 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { HistoryService } from './history.service';
-import { History } from '../model/history.model';
+import { History, HistoryPage } from '../model/history.model';
+import { Paging } from '../model/paging.model';
 import { routeConstants, colorCode } from '../shared/app-properties';
 
 @Component({
@@ -12,7 +13,7 @@ import { routeConstants, colorCode } from '../shared/app-properties';
 })
 
 export class HistoryComponent implements OnInit {
-    historyList: History[];
+    contents: HistoryPage;
     devoteeName: string;
     colorCodeList: string[];
     devoteeId: number;
@@ -25,14 +26,20 @@ export class HistoryComponent implements OnInit {
 
     ngOnInit() {
         this.colorCodeList = colorCode;
+        this.contents = new HistoryPage();
+        this.contents.historyList = [];
+        this.contents.paging = new Paging();
+        this.contents.paging.first = true;
+        this.contents.paging.last = true;
         this.activatedRoute.params.subscribe(params => {
-            this.historyService.loadHistory(+params[routeConstants.paramDevoteeId])
-            .subscribe(historyList => {
-                this.devoteeId = +params[routeConstants.paramDevoteeId];
-                this.historyList = historyList;
-                if (this.historyList.length) this.devoteeName = historyList[0].ratedDevoteeName;
+            this.devoteeId = +params[routeConstants.paramDevoteeId];
+            if (this.devoteeId == undefined || this.devoteeId == null)
+                return
+            this.historyService.loadHistory(this.devoteeId, 0)
+            .subscribe(historyPage => {
+                this.contents = historyPage;
+                if (this.contents.historyList.length) this.devoteeName = this.contents.historyList[0].ratedDevoteeName;
             }, err => {
-                console.log(err);
                 //Navigate to different page
             });
         });
@@ -40,5 +47,18 @@ export class HistoryComponent implements OnInit {
 
     onBackClick() {
         this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devoteeId} });
+    }
+
+
+    loadContents(page?: number) {
+        if(page == undefined) {
+            page = this.historyService.pageNumber;
+        }
+        this.historyService.loadHistory(
+            this.devoteeId,
+            page,
+        ).subscribe(contents => {
+            this.contents = contents;
+        });
     }
 }

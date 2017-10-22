@@ -1,3 +1,5 @@
+import { Paging } from './paging.model';
+
 export class DevoteeMin {
     id: number;
     name: string;
@@ -6,12 +8,18 @@ export class DevoteeMin {
     pin: string;
 }
 
+export class DevoteeMinPage {
+    devoteeList: DevoteeMin[];
+    paging: Paging;
+}
+
 export class Devotee {
     id: number;
     
     //Personal
     legalName: string;
     initiatedName: string;
+    displayName: string;
     dob: Date;
     gender: string;
     maritalStatus: string;
@@ -29,6 +37,7 @@ export class Devotee {
     smsPhone: string; 
     area: string;
     address: string;
+    zipPostalCode: string;
     email: string;
     //country TODO later
     //pin TODO later
@@ -46,15 +55,4 @@ export class Devotee {
     capturedBy: number;
     capturedFor: string;
     introDate: string;
-}
-
-export enum Gender {
-    MALE,
-    FEMALE,
-}
-
-export enum MaritalStatus {
-    married,
-	single,
-	seperated,
 }

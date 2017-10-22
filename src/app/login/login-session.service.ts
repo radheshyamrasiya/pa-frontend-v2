@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { LoginStatus } from '../shared/app-properties';
 
 import { HttpService } from '../shared/http.service';
+import { EnumService } from '../shared/enum.service';
 import { connectionProperties, routeConstants } from '../shared/app-properties';
 import { LoginGetQueryModel } from '../model-get/login-get-query.model';
 
-import { FollowupSessionService } from '../followup/followup-session.service';
-import { CaptureSessionService } from '../capture/capture-session.service';
 import { StatusService } from '../shared/status.service';
 
 
@@ -27,11 +26,10 @@ export class LoginSessionService implements OnInit {
     role: string;
 
     constructor(
-        private followupSession: FollowupSessionService,
-        private captureSession: CaptureSessionService,
         private httpService: HttpService,
         private router: Router,
-        private statusService: StatusService
+        private statusService: StatusService,
+        private enumService: EnumService,
     ) {}
 
     ngOnInit(): void {
@@ -52,10 +50,9 @@ export class LoginSessionService implements OnInit {
                 this.devoteeName = loginResponse.data.devoteeName;
                 this.role = loginResponse.data.role;
 
-                this.followupSession.loadFollowupDevoteeList();
-                this.captureSession.loadCaptureDevoteeList(this.devoteeId);
                 this.statusService.setDefaultFlag(this.devoteeName);
                 this.router.navigate([routeConstants.dashboard]);
+                this.enumService.loadEnums();
             }, err => {
                 console.log(err);
                 this.loginStatus = LoginStatus.loggedOut;

@@ -3,12 +3,11 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbDateStruct, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { Devotee } from '../model/devotee.model';
-import { Gender } from '../model/devotee.model';
-import { MaritalStatus } from '../model/devotee.model';
 import { routeConstants, statusType } from '../shared/app-properties';
 
 import { DevoteeService } from './devotee.service';
 import { StatusService } from '../shared/status.service';
+import { EnumService } from '../shared/enum.service';
 
 @Component({
     selector: 'devotee-profile',
@@ -20,9 +19,6 @@ export class DevoteeProfileComponent implements OnInit {
     resetDevotee: Devotee;
     datePicker: NgbDateStruct;
 
-    gender: string[];
-    maritalStatus: string[];
-
     displayDob: string;
 
     constructor(
@@ -31,14 +27,12 @@ export class DevoteeProfileComponent implements OnInit {
         private devoteeService: DevoteeService,
         private modalService: NgbModal,
         private statusService: StatusService,
+        private enumService: EnumService,
     ) {}
 
     ngOnInit() {
         this.devotee = new Devotee();
         this.resetDevotee = new Devotee();
-
-        this.gender = this.devoteeService.getGenderList();
-        this.maritalStatus = this.devoteeService.getMaritalStatusList();
 
         this.activatedRoute.params.subscribe((params: Params) => {
             this.devoteeService.loadDevotee(+params[routeConstants.paramDevoteeId])
@@ -83,12 +77,8 @@ export class DevoteeProfileComponent implements OnInit {
         }
     }
 
-    genderClick(input: string) {
-        this.devotee.gender = input;
-    }
-
-    maritalStatusClick(input: string) {
-        this.devotee.maritalStatus = input;
+    onBackClick() {
+        this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
     }
 
     //Modal trigger

@@ -29,4 +29,12 @@ export class DashboardComponent {
     onCapturedListClick(): void {
         this.router.navigate([routeConstants.capturedList]);
     }
+
+    onYatraAdminClick() {
+        this.router.navigate([routeConstants.yatra]);
+    }
+
+    onSuperAdminClick() {
+        this.router.navigate([routeConstants.superAdmin]);
+    }
 }

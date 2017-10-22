@@ -1,3 +1,5 @@
+import { Paging } from './paging.model';
+
 export class History {
     id: number;
     comment: string;
@@ -8,4 +10,9 @@ export class History {
     commentedByDevoteeName: string;
     ratedDevoteeId: number;
     ratedDevoteeName: string;
+}
+
+export class HistoryPage {
+    historyList: History[];
+    paging: Paging;
 }

@@ -7,15 +7,25 @@ export const connectionProperties = {
     baseUrl: 'http://localhost:8080',
     login: '/login',
 
+    //Enums
+    enums: '/enumModels',
+    
     //Devotee
     capture: '/devotees',
     devotees: '/devotees',
-    myCapturedListUrl: '/my_captured_list',
+    devoteeList: '/devoteesPage',
+    devoteesByEmailId: '/devotees',
+    myCapturedListUrl: '/myCapturedListPage',
 
     //History
     writeHistory: '/devoteeHistory',
-    historyOf: '/devoteeHistoryByRatedDevotee',
+    historyOf: '/devoteeHistoryPageByRatedDevotee',
 
+    //Yatra
+    createYatra: '/yatra',
+    updateYatra: '/yatra',
+    listYatra: '/yatraPage',
+    
     //Followup
     followUpDevoteeList: '/devotees', //get lis of follwups for a volunteer
 };
@@ -43,6 +53,13 @@ export const routeConstants = {
     //Capture Feature
     captureContact: 'capture-contact',
     capturedList: 'captured-list',
+    paramsYatraId: 'yatraId',
+    //Yatra
+    yatra: 'yatra',
+    //Super Admin
+    superAdmin: 'super-admin',
+    createYatra: 'create-yatra',
+    listYatra: 'list-yatra',
     //Followup Feature
     followup: 'followup',
     followupProgram: 'followup-program',
@@ -71,3 +88,5 @@ export const statusType = {
 
 export const welcomeMessage = "Hare Krishna! Welcome to Preaching Assistant";
 export const greeting = "Hare Krishna, ";
+
+export const dbRequestPageSize = 5;

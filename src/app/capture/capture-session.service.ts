@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Observable }     from 'rxjs/Observable';
 
-import { DevoteeMin } from '../model/devotee.model';
+import { DevoteeMin, Devotee, DevoteeMinPage } from '../model/devotee.model';
+import { Paging } from '../model/paging.model';
 import { HttpService } from '../shared/http.service';
-import { connectionProperties } from '../shared/app-properties';
-
-import { CapturePostQueryModel } from '../model-get/capture-post-query.model';
+import { connectionProperties, statusType, dbRequestPageSize } from '../shared/app-properties';
+import { StatusService } from '../shared/status.service';
 
 
 @Injectable()
@@ -16,73 +17,37 @@ is needed in other screens. This service helps in maintaining the session of fol
 */
 
 export class CaptureSessionService {
-    //Change followupDevoteeList to program, devotee array
-    loggedInDevoteeId: number;
-    captureDevoteeList: DevoteeMin[];
-    captureDevoteeListBackUrl: string;
-    captureDevoteeListFrontUrl: string;
-    currentCaptureDevoteeId: number;
-
+    pageNumber: number;
+    
     constructor(
         private httpService: HttpService,
+        private statusService: StatusService,
     ) {}
 
     init() {
+        this.pageNumber=0;
         //this.loadCaptureDevoteeList();
     }
 
-    loadCaptureDevoteeList(devoteeId: number) {
-        this.loggedInDevoteeId = devoteeId;
+    loadCaptureDevoteeList(devoteeId: number, page: number): Observable<DevoteeMinPage> {
         //Get the volunteer id from Login Session Service and fetch followup list
         //assigned to the volunteer. We have hardcoded the devotee list now
-        this.httpService
-        .get(connectionProperties.myCapturedListUrl + "/" + devoteeId)
-        .subscribe(res => {
-            let devoteeList = JSON.parse(res._body);
-            this.captureDevoteeList = devoteeList.data;
-            this.captureDevoteeListBackUrl = "";
-            this.captureDevoteeListFrontUrl = "";
-        }, err => {
-            console.log(err);
+        let params = "?page=" + page + "&size=" + dbRequestPageSize  + "&sort=introDate,desc";
+        this.pageNumber = page;
+        return Observable.create(observer => {
+            this.httpService
+            .get(connectionProperties.myCapturedListUrl + "/" + devoteeId + params)
+            .subscribe(res => {
+                let contents = new DevoteeMinPage();
+                let devoteeList = JSON.parse(res._body);
+                contents.devoteeList = devoteeList.data;
+                contents.paging = devoteeList.paging;
+                observer.next(contents);
+                observer.complete();
+            }, err => {
+                this.statusService.setFlag("Error retriving devotee details", statusType.error);
+                observer.complete();
+            });
         });
-    }
-
-    addCapturedDevotee(devotee: DevoteeMin) {
-        let postRequest = new CapturePostQueryModel();
-        
-        postRequest.legalName = devotee.name;
-        postRequest.smsPhone = devotee.phone;
-        postRequest.area = devotee.area;
-        postRequest.address = devotee.pin;
-        postRequest.capturedBy = this.loggedInDevoteeId;
-
-        this.httpService
-        .post(connectionProperties.capture, postRequest)
-        .subscribe(res => {
-            let devoteeList = JSON.parse(res._body);
-            this.captureDevoteeList = devoteeList.data;
-            this.captureDevoteeListBackUrl = "";
-            this.captureDevoteeListFrontUrl = "";
-        }, err => {
-            console.log(err);
-        });
-    }
-
-    loadCaptureDevoteeListBack() {
-        //Write code to fetch the devotees list if back button is pressed
-        this.captureDevoteeListBackUrl = ""; //Use this url
-    }
-
-    loadCaptureDevoteeListFront() {
-        //Write code to fetch the devotees list if back button is pressed
-        this.captureDevoteeListFrontUrl = "" //Use this url
-    }
-
-    getCurrentCaptureDevotee(): DevoteeMin {
-        return this.captureDevoteeList.find(x => x.id == this.currentCaptureDevoteeId);
-    }
-
-    setCurrentCaptureDevotee(devoteeId: number): void {
-        this.currentCaptureDevoteeId = devoteeId;
     }
 }

@@ -50,7 +50,6 @@ export class WriteCommentComponent implements OnInit {
             this.statusService.setFlag("Kindly rate the devotee!", statusType.error);
             return;
         }
-        console.log("SSS Test");
         this.history.timeStamp = Date.now();
         this.historyService.writeComment(this.history)
         .subscribe(history => {
@@ -58,6 +57,10 @@ export class WriteCommentComponent implements OnInit {
         }, err => {
             console.log(err);
         });
+        this.onBackClick();
+    }
+
+    onBackClick() {
         this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
     }
 }

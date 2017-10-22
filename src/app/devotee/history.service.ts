@@ -1,16 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { HttpService } from '../shared/http.service';
-import { connectionProperties } from '../shared/app-properties';
-import { History } from '../model/history.model';
+import { connectionProperties, dbRequestPageSize } from '../shared/app-properties';
+import { History, HistoryPage } from '../model/history.model';
 import { HistoryRequestQuery, HistoryResponseQuery } from '../model-get/history-query.model';
 
 @Injectable()
-export class HistoryService {
+export class HistoryService implements OnInit {
+    pageNumber: number;
+
     constructor(
         private httpService: HttpService,
     ) { }
+
+    ngOnInit() {
+        this.pageNumber = 0;
+    }
 
     writeComment(history: History): Observable<History> {
         let historyJson: HistoryRequestQuery;
@@ -32,16 +38,19 @@ export class HistoryService {
         });
     }
 
-    loadHistory(devoteeId: number): Observable<History[]> {
-        let historyResponseJson: HistoryResponseQuery;
-        let historyList: History[];
+    loadHistory(devoteeId: number, page: number): Observable<HistoryPage> {
+        let historyPage: HistoryPage;
 
+        historyPage = new HistoryPage();
+        let params = "?page=" + page + "&size=" + dbRequestPageSize + "&sort=timeStamp,desc";
+        this.pageNumber = page;
         return Observable.create(observer => {
-            this.httpService.get(connectionProperties.historyOf + '/' + devoteeId)
+            this.httpService.get(connectionProperties.historyOf + '/' + devoteeId + params)
             .subscribe(res => {
                 let rawHistory = JSON.parse(res._body);
-                historyList = rawHistory.data;
-                observer.next(historyList);
+                historyPage.historyList = rawHistory.data;
+                historyPage.paging = rawHistory.paging;
+                observer.next(historyPage);
                 observer.complete();
             }, err => {
                 observer.throw(err);

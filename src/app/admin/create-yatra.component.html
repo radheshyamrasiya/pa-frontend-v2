@@ -1,0 +1,59 @@
+<div class="form-group">
+    <label for="yatraNameInput">Yatra Name</label>
+    <input type="text" class="form-control" id="yatraNameInput"  placeholder="Enter Yatra Name" [(ngModel)]='yatra.yatraName'>
+</div>
+<div class="form-group">
+    <label for="yatraAddressInput">Yatra Address</label>
+    <input type="text" class="form-control" id="yatraAddressInput" placeholder="Enter Yatra Address" [(ngModel)]='yatra.yatraAddress'>
+</div>
+<div class="form-group">
+    <div class="input-group">
+        <div ngbDropdown>
+            <button class="btn btn-outline-primary" id="yatraTypeMenu" ngbDropdownToggle>
+                Yatra Type
+            </button>
+            <div ngbDropdownMenu aria-labelledby="yatraTypeMenu">
+                <div *ngFor="let yType of enumService.enums.yatraType.yatraTypeName">
+                    <a class="dropdown-item" (click)="yatra.yatraType=yType">{{yType}}</a>
+                </div>
+            </div>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="yatra.yatraType" disabled>
+    </div>
+</div>
+<div class="form-group">
+    <label for="yatraAdminInput">Yatra Admin</label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="yatraAdminInput" placeholder="Select Yatra Admin" [(ngModel)]='devotee.displayName' disabled>
+        <button class="btn btn-primary" (click)="onSelectYatraAdminClick(fetchDevoteeByEmail)">Select</button>
+    </div>
+</div>
+
+<div *ngIf="isCreate; then saveBlock else updateBlock"></div>
+<ng-template #saveBlock>
+    <button class="btn btn-primary" (click)="onRegisterYatraClick()" id="saveButton">Register Yatra</button>
+</ng-template>
+<ng-template #updateBlock>
+    <button class="btn btn-primary" (click)="onUpdateYatraDetailsClick()" id="updateButton">Update Yatra Details</button>
+</ng-template>
+<button class="btn btn-primary" (click)="onBackClick()" id="updateButton">Back</button>
+
+
+<ng-template #fetchDevoteeByEmail let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Fetch Devotee</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="emailAddressInput">Enter devotee email id</label>
+            <input type="text" class="form-control" id="emailAddressInput" placeholder="Type email address" [(ngModel)]='emailAddress'>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('cancel')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('fetch')">Fetch</button>
+    </div>
+</ng-template>

@@ -1,5 +1,5 @@
 <ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
-    <div *ngFor="let devotee of devoteeList">
+    <div *ngFor="let devotee of contents.devoteeList">
       <ngb-panel id="{{devotee.id}}_id">
         <ng-template ngbPanelTitle>
           <span class="float-left w-50">{{devotee.name}}</span>
@@ -34,3 +34,9 @@
       </ngb-panel>
     </div>
   </ngb-accordion>
+  <div>
+      <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
+      <button class="btn btn-primary my-3" (click)="loadContents(this.contents.paging.pageNumber-1)" [disabled]=contents.paging.first> &lt; Prev </button>
+      <button class="btn btn-primary my-3 float-right" (click)="loadContents(this.contents.paging.pageNumber+1)" [disabled]=contents.paging.last>Next &gt;</button>
+  </div>
+  <button class="btn btn-primary" (click)="onBackClick()">Back</button>

@@ -36,8 +36,8 @@
                                 Gender
                             </button>
                             <div ngbDropdownMenu aria-labelledby="genderMenu">
-                                <div *ngFor="let gen of gender">
-                                    <a class="dropdown-item" (click)="genderClick(gen)">{{gen}}</a>
+                                <div *ngFor="let gen of enumService.enums.gender.genderName">
+                                    <a class="dropdown-item" (click)="devotee.gender=gen">{{gen}}</a>
                                 </div>
                             </div>
                         </div>
@@ -52,8 +52,8 @@
                                 Marital Status
                             </button>
                             <div ngbDropdownMenu aria-labelledby="maritalStatusMenu">
-                                <div *ngFor="let mar of maritalStatus">
-                                    <a class="dropdown-item" (click)="maritalStatusClick(mar)">{{mar}}</a>
+                                <div *ngFor="let mar of enumService.enums.maritalStatus.maritalStatusName">
+                                    <a class="dropdown-item" (click)="devotee.maritalStatus=mar">{{mar}}</a>
                                 </div>
                             </div>
                         </div>
@@ -180,6 +180,7 @@
     <button type="submit" class="btn btn-primary mt-2" (click)="onUpdateClick()">Update</button>
     <button class="btn btn-primary mt-2" (click)="onResetClick()">Reset</button>
     <button class="btn btn-primary mt-2" (click)="onUpdateDatesClick(discardContentDates)">Update Important Dates</button>
+    <button class="btn btn-primary mt-2" (click)="onBackClick()"> Back</button>
 
 
     <ng-template #discardContentDates let-c="close" let-d="dismiss">
