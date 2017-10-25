@@ -20,13 +20,18 @@ export class YatraService implements OnInit {
         this.pageNumber = 0;
     }
 
-    loadYatraList(page: number): Observable<YatraPage> {
+    loadYatraList(page: number, adminId?: number): Observable<YatraPage> {
         let params = "?page=" + page + "&size=" + dbRequestPageSize;
         this.pageNumber = page;
+        
+        let queryUrl = connectionProperties.listYatra;
+        if (adminId != undefined) {
+            queryUrl = connectionProperties.listYatraByAdmin + "/" + adminId;
+        }
         let yatraPage = new YatraPage();
         return Observable.create(observer => {
             this.httpService
-            .get(connectionProperties.listYatra + params)
+            .get(queryUrl + params)
             .subscribe(response => {
                 let responseYatra = JSON.parse(response._body);
                 yatraPage.yatraList = responseYatra.data;
@@ -42,7 +47,7 @@ export class YatraService implements OnInit {
     loadYatra(yatraId: number): Observable<Yatra> {
         return Observable.create(observer => {
             this.httpService
-            .get(connectionProperties.updateYatra + '/' + yatraId)
+            .get(connectionProperties.getYatra + '/' + yatraId)
             .subscribe(response => {
                 let responseYatra = JSON.parse(response._body);
                 observer.next(responseYatra.data);

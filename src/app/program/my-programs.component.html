@@ -1,0 +1,20 @@
+<div *ngFor="let program of contents.programList">
+    <div class="card">
+        <div class="card-body">
+            {{program.name}}
+            <span class="font-italic small">
+                &nbsp;(Type: {{program.type}} Target Audiance: {{program.targetAudience}})
+            </span> <br>
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onManageProgram(program.id)">Manage Program</button>
+        </div>
+    </div>
+</div>
+            
+<div>
+    <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
+    <button class="btn btn-primary my-3" (click)="loadContents(this.contents.paging.pageNumber-1)" [disabled]=contents.paging.first> &lt; Prev </button>
+    <button class="btn btn-primary my-3 float-right" (click)="loadContents(this.contents.paging.pageNumber+1)" [disabled]=contents.paging.last>Next &gt;</button>
+</div>
+<button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
+    Back
+</button>

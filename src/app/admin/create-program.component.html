@@ -1,0 +1,70 @@
+<div class="form-group">
+        <label for="programNameInput">Program Name</label>
+        <input type="text" class="form-control" id="programNameInput"  placeholder="Enter Program Name" [(ngModel)]='program.name'>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <div ngbDropdown>
+                <button class="btn btn-outline-primary" id="programTypeMenu" ngbDropdownToggle>
+                    Program Type
+                </button>
+                <div ngbDropdownMenu aria-labelledby="programTypeMenu">
+                    <div *ngFor="let pType of enumService.enums.programType.programTypeName">
+                        <a class="dropdown-item" (click)="program.type=pType">{{pType}}</a>
+                    </div>
+                </div>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="program.type" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <div ngbDropdown>
+                <button class="btn btn-outline-primary" id="targetAudienceMenu" ngbDropdownToggle>
+                    Target Audience
+                </button>
+                <div ngbDropdownMenu aria-labelledby="targetAudienceMenu">
+                    <div *ngFor="let tAud of enumService.enums.targetAudience.targetAudienceName">
+                        <a class="dropdown-item" (click)="program.targetAudience=tAud">{{tAud}}</a>
+                    </div>
+                </div>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="program.targetAudience" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="programMentornInput">Program Mentor</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="programMentorInput" placeholder="Select Program Mentor" [(ngModel)]='devotee.displayName' disabled>
+            <button class="btn btn-primary" (click)="onSelectMentorClick(fetchDevoteeByEmail)">Select</button>
+        </div>
+    </div>
+    
+    <div *ngIf="isCreate; then saveBlock else updateBlock"></div>
+    <ng-template #saveBlock>
+        <button class="btn btn-primary" (click)="onCreateProgramClick()" id="saveButton">Register Program</button>
+    </ng-template>
+    <ng-template #updateBlock>
+        <button class="btn btn-primary" (click)="onUpdateProgramClick()" id="updateButton">Update Program Details</button>
+    </ng-template>
+    <button class="btn btn-primary" (click)="onBackClick()" id="backButton">Back</button>
+    
+    
+    <ng-template #fetchDevoteeByEmail let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Fetch Devotee</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="emailAddressInput">Enter devotee email id</label>
+                <input type="text" class="form-control" id="emailAddressInput" placeholder="Type email address" [(ngModel)]='emailAddress'>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="c('cancel')">Cancel</button>
+            <button type="button" class="btn btn-outline-dark" (click)="c('fetch')">Fetch</button>
+        </div>
+    </ng-template>

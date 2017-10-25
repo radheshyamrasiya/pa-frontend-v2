@@ -23,9 +23,17 @@ export const connectionProperties = {
 
     //Yatra
     createYatra: '/yatra',
+    getYatra: '/yatra',
     updateYatra: '/yatra',
     listYatra: '/yatraPage',
-    
+    listYatraByAdmin: '/yatraPageByAdminId',
+
+    //Program
+    listProgram: '/programPage',
+    getProgram: '/programs',
+    updateProgram: '/programs',
+    createProgram: '/programs',
+
     //Followup
     followUpDevoteeList: '/devotees', //get lis of follwups for a volunteer
 };
@@ -54,12 +62,17 @@ export const routeConstants = {
     captureContact: 'capture-contact',
     capturedList: 'captured-list',
     paramsYatraId: 'yatraId',
-    //Yatra
-    yatra: 'yatra',
     //Super Admin
     superAdmin: 'super-admin',
     createYatra: 'create-yatra',
     listYatra: 'list-yatra',
+    //Yatra
+    yatra: 'yatra',
+    createProgram: 'create-program',
+    paramsYatraAdminId: 'yatraAdminId',
+    updateProgram: 'update-program',
+    //Program
+    manageProgram: 'manage-program',
     //Followup Feature
     followup: 'followup',
     followupProgram: 'followup-program',

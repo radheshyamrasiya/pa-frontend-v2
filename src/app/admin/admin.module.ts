@@ -5,12 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AdminRoutingModule } from './admin-routing.module';
 
-import { YatraHolderComponent } from './yatra-holder.component';
+import { YatraAdminHolderComponent } from './yatra-admin-holder.component';
 import { YatraComponent } from './yatra.component';
 import { CreateYatraComponent } from './create-yatra.component';
 import { SuperAdminComponent } from './super-admin.component';
 import { SuperAdminHolderComponent } from './super-admin-holder.component';
 import { YatraListComponent } from './yatra-list.component';
+import { CreateProgramComponent } from './create-program.component';
 
 @NgModule({
     imports: [
@@ -27,8 +28,9 @@ import { YatraListComponent } from './yatra-list.component';
         CreateYatraComponent,
         YatraListComponent,
         //Yatra Admin
-        YatraHolderComponent,
+        YatraAdminHolderComponent,
         YatraComponent,
+        CreateProgramComponent,
     ],
     providers: [],
 })

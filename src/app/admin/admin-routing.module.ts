@@ -4,13 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { BasicAuthGuardService } from '../login/basic-auth-gaurd.service';
 
 import { routeConstants } from '../shared/app-properties';
-import { YatraHolderComponent } from './yatra-holder.component';
+import { YatraAdminHolderComponent } from './yatra-admin-holder.component';
 import { YatraComponent } from './yatra.component';
 import { CreateYatraComponent } from './create-yatra.component';
 
 import { SuperAdminHolderComponent } from './super-admin-holder.component';
 import { SuperAdminComponent } from './super-admin.component';
 import { YatraListComponent } from './yatra-list.component';
+import { CreateProgramComponent } from './create-program.component';
 
 const routes: Routes = [
     {
@@ -42,9 +43,14 @@ const routes: Routes = [
     },
     { 
         path: routeConstants.yatra,
-        component:  YatraHolderComponent,
+        component:  YatraAdminHolderComponent,
         canActivate: [BasicAuthGuardService],
         children: [
+            { 
+                path: routeConstants.createProgram + '/:' + routeConstants.paramsYatraId, 
+                component: CreateProgramComponent,
+                canActivate: [BasicAuthGuardService],
+            },
             { 
                 path: '', 
                 component: YatraComponent,

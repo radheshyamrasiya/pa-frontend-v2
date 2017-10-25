@@ -1,0 +1,46 @@
+<h3> {{program.name}} </h3>
+<span class="font-italic small">
+    (Type: {{program.type}}&nbsp;Target Audiance: {{program.targetAudience}})
+</span> <br> <br>
+
+<div class="form-group">
+    <label for="descriptionInput">Program Description</label>
+    <textarea class="form-control" rows="5" id="descriptionInput"  placeholder="Write program description"
+    [(ngModel)]='program.description'></textarea>
+</div>
+
+<div class="form-group">
+    <label for="addressInput">Where does this proghram happen?</label>
+    <textarea class="form-control" rows="5" id="addressInput"  placeholder="Address location of the program"
+    [(ngModel)]='program.address'></textarea>
+</div>
+
+<div class="form-group">
+    <label for="mapInput">Link to map location</label>
+    <input type="text" class="form-control" id="mapInput" placeholder="Map Location" aria-label="Map Location" [(ngModel)]="program.mapLocation">
+</div>
+
+<div class="form-group">
+    <label for="taskInput">Add/Modify followup tasks</label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="taskInput" placeholder="Add a Followup Task" aria-label="Add a Followup Task" [(ngModel)]="task">
+        <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button" (click)="onTaskAddClick()"><span class="oi oi-plus"></span></button>
+        </span>
+    </div>
+</div>
+
+<ul class="list-group">
+    <div *ngFor="let taskItem of program.followupDescription">
+        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+            {{taskItem}} <span class="oi oi-trash" (click)="onTaskRemoveClick(taskItem)"></span>
+        </li>
+    </div>
+</ul>
+
+<button type="button" class="btn btn-primary my-3" (click)="onUpdateProgramClick()">
+    Update Program
+</button>
+<button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
+    Back
+</button>

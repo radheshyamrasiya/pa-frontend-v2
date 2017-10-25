@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
     template: `<router-outlet></router-outlet>`
 })
 
-export class YatraHolderComponent{
+export class YatraAdminHolderComponent{
     constructor() { }
 }
