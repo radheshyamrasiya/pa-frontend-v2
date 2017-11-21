@@ -62,7 +62,7 @@ export class DevoteeService {
         //Code to get a devotee
         return Observable.create(observer => {
             this.httpService
-            .get(connectionProperties.devoteesByEmailId + '/' + emailId)
+            .get(connectionProperties.devoteesByEmailId, {email: emailId})
             .subscribe(res => {
                 let devoteeDetail = JSON.parse(res._body);
                 devoteeJson = devoteeDetail.data;

@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { connectionProperties } from './app-properties';
+import { connectionProperties, statusType, dbRequestPageSize } from '../shared/app-properties';
+import { GenericPage } from '../model/generic-page.model';
 
 @Injectable()
 export class HttpService {
@@ -18,9 +19,10 @@ export class HttpService {
         btoa(username + ':' + password));
     }
 
-    public get(url: string): Observable<any> {
+    public get(url: string, params?: any): Observable<any> {
         return this.http.get(connectionProperties.baseUrl + url, {
-            headers: this.headers
+            headers: this.headers,
+            params: params
         });
     }
 
@@ -32,6 +34,12 @@ export class HttpService {
 
     public put(url: string, body: any): Observable<any> {
         return this.http.put(connectionProperties.baseUrl + url, body, {
+            headers: this.headers
+        });
+    }
+
+    public delete(url: string): Observable<any> {
+        return this.http.delete(connectionProperties.baseUrl + url, {
             headers: this.headers
         });
     }

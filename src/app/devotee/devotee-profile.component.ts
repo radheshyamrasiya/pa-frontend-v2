@@ -54,10 +54,13 @@ export class DevoteeProfileComponent implements OnInit {
 
     onDateChange() {
         this.devotee.dob = new Date(this.datePicker.year + "-" + this.datePicker.month + "-" + this.datePicker.day);
+        console.log(this.devotee.dob); 
     }
 
     onUpdateClick() {
-        this.devoteeService.updateDevotee(this.devotee).subscribe(devotee => {
+        this.devotee.dob = new Date(this.datePicker.year + "-" + this.datePicker.month + "-" + this.datePicker.day);
+        this.devoteeService.updateDevotee(this.devotee)
+        .subscribe(devotee => {
             this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
         }, err => {
             this.statusService.setFlag("Error updating devotee", statusType.error);

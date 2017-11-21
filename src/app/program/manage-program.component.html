@@ -38,9 +38,63 @@
     </div>
 </ul>
 
-<button type="button" class="btn btn-primary my-3" (click)="onUpdateProgramClick()">
+<button class="btn btn-primary my-3" (click)="onUpdateProgramClick()">
     Update Program
 </button>
-<button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
+<button class="btn btn-primary my-3" (click)="onAreaSubscriptionClick(areaSubscriptionModal)">
+    Area Subscription
+</button>
+<button class="btn btn-primary my-3" (click)="onBackClick()">
     Back
 </button>
+
+<ng-template #areaSubscriptionModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Area Subscription</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Subscribe to the postal codes that your program caters to</p>
+        <div *ngIf="areaSubscription.programAreaSubscriptionList.length==0">
+            <div class="form-group">
+                <div class="input-group">
+                    <div ngbDropdown>
+                        <button class="btn btn-outline-primary" id="countryCodeMenu" ngbDropdownToggle>
+                            Country Code
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="countryCodeMenu">
+                            <div *ngFor="let ccode of enumService.enums.countryCode.countryCodeName">
+                                <a class="dropdown-item" (click)="countryCodeText=ccode">{{ccode}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="countryCodeText" disabled>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="areaSubscription.programAreaSubscriptionList.length!=0">
+            Country Code {{countryCodeText}}
+        </div>
+        <div class="form-group">
+            <label for="pinInput">Add/Remove Postal Codes</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="pinInput" placeholder="Add a Postal Code" aria-label="Add a Postal Code" [(ngModel)]="postalCode">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button" (click)="onPostalCodeAddClick()"><span class="oi oi-plus"></span></button>
+                </span>
+            </div>
+        </div>
+        <ul class="list-group">
+            <div *ngFor="let areaSub of areaSubscription.programAreaSubscriptionList">
+                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                    {{areaSub.zipPostalCode}} <span class="oi oi-trash" (click)="deleteProgramAreaSubscription(areaSub.id)"></span>
+                </li>
+            </div>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('ok')">Ok</button>
+    </div>
+</ng-template>

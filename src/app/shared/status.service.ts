@@ -49,4 +49,17 @@ export class StatusService implements OnInit {
         this.message = this.defaultMessage;
         this.status = this.defaultStatus;
     }
+
+    //New Methods
+    success(message: string) {
+        this.setFlag(message, statusType.success);
+    }
+
+    error(message: string) {
+        this.setFlag(message, statusType.error);
+    }
+
+    info(message: string) {
+        this.setFlag(message, statusType.info);
+    }
 }

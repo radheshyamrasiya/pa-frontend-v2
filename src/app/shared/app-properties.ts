@@ -14,7 +14,7 @@ export const connectionProperties = {
     capture: '/devotees',
     devotees: '/devotees',
     devoteeList: '/devoteesPage',
-    devoteesByEmailId: '/devotees',
+    devoteesByEmailId: '/devoteeByEmail',
     myCapturedListUrl: '/myCapturedListPage',
 
     //History
@@ -33,6 +33,21 @@ export const connectionProperties = {
     getProgram: '/programs',
     updateProgram: '/programs',
     createProgram: '/programs',
+
+    //Program Area Subscription
+    listProgramAreaSubscription: '/programAreaSubscriptionByProgramPage',
+    createProgramAreaSubscription: '/programAreaSubscription',
+    deleteProgramAreaSubscription: '/programAreaSubscriptionWithProgram',
+
+    //Program Assignment
+    listProgramAssignment: '/programAssignmentByProgramPage',
+    createProgramAssignment: '/programAssignment',
+    deleteProgramAssignment: '/programAssignment',
+
+    //Followup Volunteer
+    listFollowupVolunteer: '/followUpVolunteerByProgramPage',
+    createFollowupVolunteer: '/followUpVolunteer',
+    deleteFollowupVolunteer: '/followUpVolunteer',
 
     //Followup
     followUpDevoteeList: '/devotees', //get lis of follwups for a volunteer
@@ -73,6 +88,9 @@ export const routeConstants = {
     updateProgram: 'update-program',
     //Program
     manageProgram: 'manage-program',
+    addParticipants: 'add-participants',
+    addFollowupVolunteers: 'add-followup-volunteers',
+    assignFollowups: 'assign-followups',
     //Followup Feature
     followup: 'followup',
     followupProgram: 'followup-program',

@@ -35,6 +35,18 @@ export class MyProgramsComponent implements OnInit {
         this.router.navigate([routeConstants.myPrograms, routeConstants.manageProgram, programId]);
     }
 
+    onAddParticipants(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, programId]);
+    }
+
+    onAddFollowupVolunteers(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addFollowupVolunteers, programId]);
+    }
+
+    onAssignFollowups(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.assignFollowups, programId]);
+    }
+
     onBackClick() {
         this.router.navigate(['../'], {relativeTo: this.activatedRoute});
     }

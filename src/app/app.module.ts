@@ -25,6 +25,9 @@ import { DevoteeService } from './devotee/devotee.service';
 import { HistoryService } from './devotee/history.service';
 import { YatraService } from './admin/yatra.service';
 import { ProgramService } from './program/program.service';
+import { ProgramAssignmentService } from './program/program-assignment.service';
+import { ProgramAreaSubscriptionService } from './program/program-area-subscription.service';
+import { FollowupVolunteerService } from './followup/followup-volunteer.service';
 import { HttpService } from './shared/http.service';
 
 @NgModule({
@@ -58,6 +61,9 @@ import { HttpService } from './shared/http.service';
     HistoryService,
     YatraService,
     ProgramService,
+    ProgramAreaSubscriptionService,
+    FollowupVolunteerService,
+    ProgramAssignmentService,
   ],
   bootstrap: [AppComponent]
 })

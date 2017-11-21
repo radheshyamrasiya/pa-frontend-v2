@@ -6,6 +6,9 @@
                 &nbsp;(Type: {{program.type}} Target Audiance: {{program.targetAudience}})
             </span> <br>
             <button type="button" class="btn btn-info btn-sm my-2" (click)="onManageProgram(program.id)">Manage Program</button>
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onAddParticipants(program.id)">Add Participants</button>
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onAddFollowupVolunteers(program.id)">Add Followup Volunteers</button>
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onAssignFollowups(program.id)">Assign Followups</button>
         </div>
     </div>
 </div>
