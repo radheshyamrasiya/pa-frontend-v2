@@ -5,7 +5,6 @@ import { callResponse } from '../shared/app-properties';
 import { DevoteeMin } from '../model/devotee.model';
 
 import { routeConstants } from '../shared/app-properties';
-import { FollowupSessionService } from './followup-session.service';
 
 @Component ({
     selector: 'call-response',
@@ -19,11 +18,10 @@ export class CallResponseComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private followupSession: FollowupSessionService,
     ) {}
 
     ngOnInit() {
-        this.followupDevotee = this.followupSession.getCurrentFollowupDevotee();
+        //this.followupDevotee = this.followupSession.getCurrentFollowupDevotee();
         if (!this.followupDevotee) {
             this.router.navigate([routeConstants.dashboard]);
         }

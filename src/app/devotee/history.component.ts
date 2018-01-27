@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from  '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { HistoryService } from './history.service';
+import { HttpService } from '../shared/http.service';
 import { History, HistoryPage } from '../model/history.model';
-import { Paging } from '../model/paging.model';
-import { routeConstants, colorCode } from '../shared/app-properties';
+import { Paging } from '../model/entity.model';
+import { routeConstants, colorCode, connectionProperties } from '../shared/app-properties';
 
 @Component({
     selector: 'history',
@@ -19,7 +19,7 @@ export class HistoryComponent implements OnInit {
     devoteeId: number;
 
     constructor(
-        private historyService: HistoryService,
+        private httpService: HttpService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
     ) {}
@@ -27,7 +27,7 @@ export class HistoryComponent implements OnInit {
     ngOnInit() {
         this.colorCodeList = colorCode;
         this.contents = new HistoryPage();
-        this.contents.historyList = [];
+        this.contents.dataList = [];
         this.contents.paging = new Paging();
         this.contents.paging.first = true;
         this.contents.paging.last = true;
@@ -35,10 +35,14 @@ export class HistoryComponent implements OnInit {
             this.devoteeId = +params[routeConstants.paramDevoteeId];
             if (this.devoteeId == undefined || this.devoteeId == null)
                 return
-            this.historyService.loadHistory(this.devoteeId, 0)
+            this.httpService.getList(connectionProperties.historyOf, {
+                pathParams: "/" + this.devoteeId,
+                page: 0,
+                sortString: 'timeStamp,desc',
+            })
             .subscribe(historyPage => {
-                this.contents = historyPage;
-                if (this.contents.historyList.length) this.devoteeName = this.contents.historyList[0].ratedDevoteeName;
+                this.contents = historyPage as HistoryPage;
+                if (this.contents.dataList.length) this.devoteeName = (<History>this.contents.dataList[0]).ratedDevoteeName;
             }, err => {
                 //Navigate to different page
             });
@@ -52,12 +56,14 @@ export class HistoryComponent implements OnInit {
 
     loadContents(page?: number) {
         if(page == undefined) {
-            page = this.historyService.pageNumber;
+            page = 0;
         }
-        this.historyService.loadHistory(
-            this.devoteeId,
-            page,
-        ).subscribe(contents => {
+        this.httpService.getList(connectionProperties.historyOf, {
+            pathParams: "/" + this.devoteeId,
+            page: page,
+            sortString: 'timeStamp,desc',
+        })
+        .subscribe(contents => {
             this.contents = contents;
         });
     }

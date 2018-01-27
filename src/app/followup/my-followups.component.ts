@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { DevoteeMin } from '../model/devotee.model';
 import { routeConstants } from '../shared/app-properties';
-import { FollowupSessionService } from './followup-session.service';
 
 @Component ({
     selector: "my-followups",
@@ -19,33 +18,32 @@ export class MyFollowupsComponent implements OnInit {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private followSession: FollowupSessionService,
     ) {}
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
-            this.devoteeList = this.followSession.getDevoteeList(+params[routeConstants.paramsProgramId]);
+            //this.devoteeList = this.followSession.getDevoteeList(+params[routeConstants.paramsProgramId]);
             this.selectedProgramId = +params[routeConstants.paramsProgramId];
         });
     }
 
     onPhoneClick(devoteeId: string): void {
         this.router.navigate([routeConstants.followup,routeConstants.callResponse,this.selectedProgramId, devoteeId]);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        //this.followSession.setCurrentFollowupDevotee(+devoteeId);
     }
 
     onHistoryClick(devoteeId: string): void {
         this.router.navigate([routeConstants.followup, routeConstants.history, this.selectedProgramId, devoteeId]);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        //this.followSession.setCurrentFollowupDevotee(+devoteeId);
     }
 
     onProfileClick(devoteeId: string): void {
         this.router.navigate([routeConstants.followup, routeConstants.devoteeProfile, this.selectedProgramId, devoteeId]);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        //this.followSession.setCurrentFollowupDevotee(+devoteeId);
     }
 
     onCommentClick(devoteeId: string): void {
         this.router.navigate([routeConstants.followup, routeConstants.writeComment, this.selectedProgramId, devoteeId]);
-        this.followSession.setCurrentFollowupDevotee(+devoteeId);
+        //this.followSession.setCurrentFollowupDevotee(+devoteeId);
     }
 }

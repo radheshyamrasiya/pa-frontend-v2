@@ -1,13 +1,12 @@
-import { Paging } from './paging.model';
+import { Entity, Page, Paging } from './entity.model';
 
-export class ProgramAreaSubscription {
+export class ProgramAreaSubscription extends Entity{
     id: number;
     programId: number;
     countryCode: string;
     zipPostalCode: string;
 }
 
-export class ProgramAreaSubscriptionPage {
-    programAreaSubscriptionList: ProgramAreaSubscription[];
-    paging: Paging;
+export class ProgramAreaSubscriptionPage extends Page{
+    
 }

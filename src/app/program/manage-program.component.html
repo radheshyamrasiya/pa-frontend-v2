@@ -57,7 +57,7 @@
     </div>
     <div class="modal-body">
         <p>Subscribe to the postal codes that your program caters to</p>
-        <div *ngIf="areaSubscription.programAreaSubscriptionList.length==0">
+        <div *ngIf="areaSubscription.dataList.length==0">
             <div class="form-group">
                 <div class="input-group">
                     <div ngbDropdown>
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="areaSubscription.programAreaSubscriptionList.length!=0">
+        <div *ngIf="areaSubscription.dataList.length!=0">
             Country Code {{countryCodeText}}
         </div>
         <div class="form-group">
@@ -87,7 +87,7 @@
             </div>
         </div>
         <ul class="list-group">
-            <div *ngFor="let areaSub of areaSubscription.programAreaSubscriptionList">
+            <div *ngFor="let areaSub of areaSubscription.dataList">
                 <li class="list-group-item d-flex justify-content-between align-items-center py-2">
                     {{areaSub.zipPostalCode}} <span class="oi oi-trash" (click)="deleteProgramAreaSubscription(areaSub.id)"></span>
                 </li>

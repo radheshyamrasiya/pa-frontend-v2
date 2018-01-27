@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Program, ProgramPage } from '../model/program.model';
-import { Paging } from '../model/paging.model';
-import { ProgramService } from './program.service';
+import { Paging } from '../model/entity.model';
+import { HttpService } from '../shared/http.service';
 import { LoginSessionService } from '../login/login-session.service';
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, connectionProperties } from '../shared/app-properties';
 
 @Component ({
     selector: "my-programs",
@@ -16,7 +16,7 @@ export class MyProgramsComponent implements OnInit {
      contents: ProgramPage;
 
      constructor(
-        private programService: ProgramService,
+        private httpService: HttpService,
         private loginService: LoginSessionService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -53,12 +53,14 @@ export class MyProgramsComponent implements OnInit {
 
     loadContents(page?: number) {
         if(page == undefined) {
-            page = this.programService.pageNumber;
+            page = 0;
         }
-        
-        this.programService.loadProgramList(page, this.loginService.getDevoteeId())
+        this.httpService.getList(connectionProperties.listProgram, {
+            page: page,
+            //pathParams: "/" + this.loginService.getDevoteeId(),
+        })
         .subscribe(contents => {
-            this.contents = contents;
+            this.contents = contents as ProgramPage;
         });
     }
 }

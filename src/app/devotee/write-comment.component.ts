@@ -1,13 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
-import { routeConstants, statusType } from '../shared/app-properties';
+import { routeConstants, statusType, connectionProperties } from '../shared/app-properties';
 import { Devotee } from '../model/devotee.model';
-import { DevoteeService } from "./devotee.service";
+import { HttpService } from "../shared/http.service";
 import { LoginSessionService } from '../login/login-session.service';
 
 import { History } from '../model/history.model';
-import { HistoryService } from './history.service';
 import { StatusService } from '../shared/status.service';
 
 @Component ({
@@ -22,9 +21,8 @@ export class WriteCommentComponent implements OnInit {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private devoteeService: DevoteeService,
+        private httpService: HttpService,
         private loginSession: LoginSessionService, 
-        private historyService: HistoryService,
         private statusService: StatusService,
     ) {};
 
@@ -35,10 +33,10 @@ export class WriteCommentComponent implements OnInit {
         this.history.commentedByDevoteeId = this.loginSession.devoteeId;
         this.activatedRoute.params.subscribe((params: Params) => {
             this.history.ratedDevoteeId = +params[routeConstants.paramDevoteeId];
-            this.devoteeService.loadDevotee(this.history.ratedDevoteeId)
+            this.httpService.getData(connectionProperties.devotees, "/" + this.history.ratedDevoteeId)
             .subscribe(devotee => {
                 this.devotee = new Devotee;
-                this.devotee = devotee;
+                this.devotee = devotee as Devotee;
             }, err => {
                 //Route to a different Page
             });
@@ -51,7 +49,7 @@ export class WriteCommentComponent implements OnInit {
             return;
         }
         this.history.timeStamp = Date.now();
-        this.historyService.writeComment(this.history)
+        this.httpService.postAndReturnData(connectionProperties.writeHistory, '', this.history)
         .subscribe(history => {
             //Check the object if needed
         }, err => {

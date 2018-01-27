@@ -2,11 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { Devotee } from '../model/devotee.model';
-import { CaptureSessionService } from './capture-session.service';
 import { LoginSessionService } from '../login/login-session.service';
-import { DevoteeService } from '../devotee/devotee.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
-import { statusType } from '../shared/app-properties';
+import { statusType, connectionProperties } from '../shared/app-properties';
 
 @Component ({
     selector: "capture-contact",
@@ -19,7 +18,7 @@ export class CaptureContactComponent implements OnInit {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private devoteeService: DevoteeService,
+        private httpService: HttpService,
         private loginService: LoginSessionService,
         private statusService: StatusService,
     ) {}
@@ -31,9 +30,12 @@ export class CaptureContactComponent implements OnInit {
     onCaptureClick(): void {
         if (this.validateDevotee()) {
             this.devotee.capturedBy = this.loginService.getDevoteeId();
-            this.devoteeService.captureDevotee(this.devotee);
-            //Once solving Observable issue if successful empty all fields
-            this.devotee = new Devotee();
+            this.httpService.postAndReturnData(connectionProperties.capture, "", this.devotee)
+            .subscribe(contents => {
+                this.devotee = new Devotee();
+            }, err =>{
+                //TODO: Handle Error
+            });
         }
     }
 

@@ -80,11 +80,23 @@
                     <input type="tel" class="form-control" id="smsPhoneInput"  placeholder="Phone number"
                         [(ngModel)]='devotee.smsPhone'>
                 </div>
-                <!--Area Field-->
+                <!--Area Field--> 
                 <div class="form-group">
                     <label for="areaInput">Area</label>
                     <input type="text" class="form-control" id="areaInput" placeholder="Area" 
                         [(ngModel)]='devotee.area'>
+                </div>
+                <!--Country Code Field--> 
+                <div class="form-group">
+                    <label for="countryInput">Country</label>
+                    <input type="text" class="form-control" id="countryInput" placeholder="Country Code" 
+                        [(ngModel)]='devotee.countryCode'>
+                </div>
+                <!--Zip Postal Code Field--> 
+                <div class="form-group">
+                    <label for="zipInput">Zip/Postal Code</label>
+                    <input type="text" class="form-control" id="zipInput" placeholder="Postal Code" 
+                        [(ngModel)]='devotee.zipPostalCode'>
                 </div>
                 <!--Address Field-->
                 <div class="form-group">

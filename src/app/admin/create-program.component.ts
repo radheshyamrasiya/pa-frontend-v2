@@ -4,10 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Devotee } from '../model/devotee.model';
 import { Program } from '../model/program.model';
-import { statusType, routeConstants } from '../shared/app-properties';
+import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 
-import { DevoteeService } from '../devotee/devotee.service';
-import { ProgramService } from '../program/program.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 import { EnumService } from '../shared/enum.service';
 
@@ -24,8 +23,7 @@ export class CreateProgramComponent implements OnInit {
 
     constructor(
         private modalService: NgbModal,
-        private devoteeService: DevoteeService,
-        private programService: ProgramService,
+        private httpService: HttpService,
         private statusService: StatusService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -48,13 +46,13 @@ export class CreateProgramComponent implements OnInit {
                 this.program.parentYatraId = yatraId;
             }else if (programId != undefined) {
                 this.isCreate = false;
-                this.programService.loadProgram(+programId)
+                this.httpService.getData(connectionProperties.getProgram, "/" + programId)
                 .subscribe(program => {
                     this.isCreate = false;
-                    this.program = program;
-                    this.devoteeService.loadDevotee(this.program.mentorId)
+                    this.program = program as Program;
+                    this.httpService.getData(connectionProperties.devotees, '/' + this.program.mentorId)
                     .subscribe(devotee => {
-                        this.devotee = devotee;
+                        this.devotee = devotee as Devotee;
                     }, err => {
                         //
                     })
@@ -68,10 +66,12 @@ export class CreateProgramComponent implements OnInit {
     onSelectMentorClick(content) {
         this.modalService.open(content).result.then((result) => {
             if (result=="fetch") {
-                this.devoteeService.getDevoteeByEmailId(this.emailAddress)
+                this.httpService.getData(connectionProperties.devoteesByEmailId, {
+                    queryParams: {email: this.emailAddress}
+                })
                 .subscribe((devotee) => {
-                    this.program.mentorId = devotee.id;
-                    this.devotee = devotee;
+                    this.program.mentorId = (<Devotee>devotee).id;
+                    this.devotee = devotee as Devotee;
                 }, err => {
                     this.statusService.setFlag("Email not found! Unable to fetch devotee", statusType.error);
                 });
@@ -101,7 +101,7 @@ export class CreateProgramComponent implements OnInit {
 
     onCreateProgramClick() {
         if (!this.validatePage()) return;
-        this.programService.createProgram(this.program)
+        this.httpService.postAndReturnData(connectionProperties.createProgram,'',this.program)
         .subscribe(responseProgram => {
             //Handle Success
         }, err => {
@@ -111,7 +111,7 @@ export class CreateProgramComponent implements OnInit {
 
     onUpdateProgramClick() {
         if (!this.validatePage()) return;
-        this.programService.updateProgram(this.program)
+        this.httpService.putAndReturnData(connectionProperties.updateProgram,"/" + this.program.id,this.program)
         .subscribe(responseProgram => {
             //Handle Success
         }, err => {

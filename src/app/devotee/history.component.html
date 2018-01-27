@@ -5,7 +5,7 @@
         <ng-template #elseBlock>{{devoteeName}}'s History</ng-template>
     </div>
 </div>
-<div *ngFor="let history of contents.historyList">
+<div *ngFor="let history of contents.dataList">
     <div class="card">
         <div class="card-body">
             <span class="{{colorCodeList[history.rating]}}">&nbsp;{{history.rating}} <span class="oi oi-star"></span>&nbsp;</span>

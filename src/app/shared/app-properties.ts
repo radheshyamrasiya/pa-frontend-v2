@@ -30,6 +30,7 @@ export const connectionProperties = {
 
     //Program
     listProgram: '/programPage',
+    listProgramByMentor: '/programPage',
     getProgram: '/programs',
     updateProgram: '/programs',
     createProgram: '/programs',
@@ -50,7 +51,10 @@ export const connectionProperties = {
     deleteFollowupVolunteer: '/followUpVolunteer',
 
     //Followup
-    followUpDevoteeList: '/devotees', //get lis of follwups for a volunteer
+    myFollowUpDevoteeList: '/followUpAssignmentByVolunteerPage', // /volunteerId
+    myFollowUpListByProgram: '/followUpAssignmentAttendeesForVolunteerByProgramPage', // /volunteerId/programId
+    createFollowup: '/followUpAssignment',
+    deleteFollowup: '/followUpAssignment', // /id
 };
 
 export const callResponse = {
@@ -95,6 +99,7 @@ export const routeConstants = {
     followup: 'followup',
     followupProgram: 'followup-program',
     callResponse: 'call-response',
+    paramsVolunteerId: 'volunteerId',
     //Program Feature
     myPrograms: 'my-programs',
     paramsProgramId: 'programId',

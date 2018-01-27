@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, connectionProperties } from '../shared/app-properties';
 import { FollowupVolunteer, FollowupVolunteerPage } from '../model/followup-volunteer.model';
-import { Paging } from '../model/paging.model';
+import { Paging } from '../model/entity.model';
+import { Devotee } from '../model/devotee.model';
 
-import { FollowupVolunteerService } from '../followup/followup-volunteer.service';
-import { DevoteeService } from '../devotee/devotee.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 
 @Component({
@@ -20,8 +20,7 @@ export class AddFollowupVolunteersComponent implements OnInit {
     programId: number;
 
     constructor(
-        private followVolunteerService: FollowupVolunteerService,
-        private devoteeService: DevoteeService,
+        private httpService: HttpService,
         private activatedRoute: ActivatedRoute,
         private statusService: StatusService,
         private router: Router,
@@ -29,7 +28,7 @@ export class AddFollowupVolunteersComponent implements OnInit {
 
     ngOnInit() { 
         this.contents = new FollowupVolunteerPage();
-        this.contents.followupVolunteerList = [];
+        this.contents.dataList = [];
         this.contents.paging = new Paging();
 
         this.activatedRoute.params.subscribe(params => {
@@ -39,7 +38,10 @@ export class AddFollowupVolunteersComponent implements OnInit {
     }
 
     loadContents(page: number) {
-        this.followVolunteerService.loadFollowupVolunteerList(this.programId, page)
+        this.httpService.getList(connectionProperties.listFollowupVolunteer, {
+            page: page,
+            pathParams: "/" + this.programId,
+        })
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
                 this.contents = volunteerList;
@@ -48,16 +50,19 @@ export class AddFollowupVolunteersComponent implements OnInit {
     }
 
     onVolunteerAddClick() {
-        this.devoteeService.getDevoteeByEmailId(this.email).subscribe(devotee => {
+        this.httpService.getData(connectionProperties.devoteesByEmailId, {
+            queryParams: {email: this.email}
+        })
+        .subscribe(devotee => {
             if (devotee==undefined || devotee == null) {
                 this.statusService.error("No devotee found for email id: " + this.email);
                 return
             }
             let followupVolunteer =  new FollowupVolunteer();
-            followupVolunteer.devoteeId = devotee.id;
+            followupVolunteer.devoteeId = (<Devotee>devotee).id;
             followupVolunteer.programId = this.programId;
             
-            this.followVolunteerService.createFollowupVolunteer(followupVolunteer)
+            this.httpService.postAndReturnList(connectionProperties.createFollowupVolunteer, '', followupVolunteer)
             .subscribe(volunteerList => {
                 if (volunteerList!= undefined && volunteerList!=null) {
                     this.contents = volunteerList;
@@ -67,7 +72,7 @@ export class AddFollowupVolunteersComponent implements OnInit {
     }
 
     onRemoveVolunteerClick(assignmentId: number) {
-        this.followVolunteerService.deleteFollowupVolunteer(this.programId, assignmentId)
+        this.httpService.deleteAndReturnList(connectionProperties.deleteFollowupVolunteer, '/' + this.programId + '/' + assignmentId)
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
                 this.contents = volunteerList;

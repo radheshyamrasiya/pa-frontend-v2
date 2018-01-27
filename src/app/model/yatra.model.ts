@@ -1,6 +1,6 @@
-import { Paging } from './paging.model';
+import { Entity, Page, Paging } from './entity.model';
 
-export class Yatra {
+export class Yatra extends Entity {
     id: number;
     yatraName: string;
     yatraAddress: string;
@@ -8,7 +8,6 @@ export class Yatra {
     yatraAdmin: number;
 }
 
-export class YatraPage {
-    yatraList: Yatra[];
-    paging: Paging;
+export class YatraPage extends Page {
+    
 }

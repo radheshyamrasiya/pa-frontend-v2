@@ -1,6 +1,6 @@
-import { Paging } from './paging.model';
+import { Entity, Page, Paging } from './entity.model';
 
-export class ProgramAssignment {
+export class ProgramAssignment extends Entity{
     id: number;
     programId: number;
     programName: string;
@@ -8,7 +8,6 @@ export class ProgramAssignment {
     attendeeName: string;
 }
 
-export class ProgramAssignmentPage {
-    programAssignmentList: ProgramAssignment[];
-    paging: Paging;
+export class ProgramAssignmentPage extends Page{
+    
 }

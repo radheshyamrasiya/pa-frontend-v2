@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Yatra, YatraPage } from '../model/yatra.model';
-import { Paging } from '../model/paging.model';
-import { YatraService } from './yatra.service';
+import { Paging } from '../model/entity.model';
+import { HttpService } from '../shared/http.service';
 import { LoginSessionService } from '../login/login-session.service';
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, connectionProperties } from '../shared/app-properties';
 
 @Component({
     selector: 'yatra-component',
@@ -17,7 +17,7 @@ export class YatraComponent implements OnInit {
     contents: YatraPage;
 
     constructor(
-        private yatraService: YatraService,
+        private httpService: HttpService,
         private loginService: LoginSessionService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -41,10 +41,12 @@ export class YatraComponent implements OnInit {
 
     loadContents(page?: number) {
         if(page == undefined) {
-            page = this.yatraService.pageNumber;
+            page = 0;
         }
-        
-        this.yatraService.loadYatraList(page, this.loginService.getDevoteeId())
+        this.httpService.getList(connectionProperties.listYatraByAdmin,{
+            page: page,
+            pathParams: "/" + this.loginService.getDevoteeId(),
+        })
         .subscribe(contents => {
             this.contents = contents;
         });

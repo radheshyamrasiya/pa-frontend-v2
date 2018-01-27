@@ -6,7 +6,6 @@ import { LoginStatus } from '../shared/app-properties';
 import { HttpService } from '../shared/http.service';
 import { EnumService } from '../shared/enum.service';
 import { connectionProperties, routeConstants } from '../shared/app-properties';
-import { LoginGetQueryModel } from '../model-get/login-get-query.model';
 
 import { StatusService } from '../shared/status.service';
 
@@ -77,4 +76,7 @@ export class LoginSessionService implements OnInit {
         return this.devoteeId;
     }
 
+    getRole(): string {
+        return this.role;
+    }
 }

@@ -3,11 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { DevoteeMin, DevoteeMinPage, Devotee } from '../model/devotee.model';
-import { Paging } from '../model/paging.model';
+import { Paging } from '../model/entity.model';
 
-import { CaptureSessionService } from './capture-session.service';
+//import { CaptureSessionService } from './capture-session.service';
+import { HttpService } from '../shared/http.service';
 import { LoginSessionService } from '../login/login-session.service';
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, connectionProperties } from '../shared/app-properties';
+import { NavService } from '../shared/nav.service';
 
 @Component ({
     selector: 'captured-list',
@@ -22,8 +24,9 @@ export class CapturedListComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private captureSession: CaptureSessionService,
+        private httpService: HttpService,
         private loginService: LoginSessionService,
+        private navService: NavService,
     ) {}
 
     ngOnInit() {
@@ -58,11 +61,18 @@ export class CapturedListComponent implements OnInit {
     
     loadContents(page?: number) {
         if(page == undefined) {
-            page = this.captureSession.pageNumber;
+            let pageNum = this.navService.getNum("myCapturedListPageNo");
+            (pageNum==null)?page=0:page=pageNum;
+        } else {
+            this.navService.setNum("myCapturedListPageNo", page);
         }
-        this.captureSession.loadCaptureDevoteeList(
-            this.loginService.getDevoteeId(),
-            page,
+        this.httpService.getList(
+            connectionProperties.myCapturedListUrl,
+            {
+                pathParams: "/" + this.loginService.getDevoteeId(),
+                page: page,
+                sortString: "introDate,desc"
+            }
         ).subscribe(contents => {
             this.contents = contents;
         });

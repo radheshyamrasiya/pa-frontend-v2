@@ -1,6 +1,6 @@
-import { Paging } from './paging.model';
+import { Entity, Page, Paging } from './entity.model';
 
-export class DevoteeMin {
+export class DevoteeMin extends Entity {
     id: number;
     name: string;
     phone: string;
@@ -8,12 +8,11 @@ export class DevoteeMin {
     pin: string;
 }
 
-export class DevoteeMinPage {
-    devoteeList: DevoteeMin[];
-    paging: Paging;
+export class DevoteeMinPage extends Page{
+
 }
 
-export class Devotee {
+export class Devotee extends Entity {
     id: number;
     
     //Personal
@@ -37,6 +36,7 @@ export class Devotee {
     smsPhone: string; 
     area: string;
     address: string;
+    countryCode: string;
     zipPostalCode: string;
     email: string;
     //country TODO later

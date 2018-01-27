@@ -18,16 +18,11 @@ import { AdminModule } from './admin/admin.module';
 import { ProgramModule } from './program/program.module';
 import { FollowupModule } from './followup/followup.module';
 
+import { NavService } from './shared/nav.service';
+import { LoginSessionService } from './login/login-session.service';
+import { BasicAuthGuardService } from './login/basic-auth-gaurd.service';
 import { StatusService } from './shared/status.service';
 import { EnumService } from './shared/enum.service';
-import { CaptureSessionService } from './capture/capture-session.service';
-import { DevoteeService } from './devotee/devotee.service';
-import { HistoryService } from './devotee/history.service';
-import { YatraService } from './admin/yatra.service';
-import { ProgramService } from './program/program.service';
-import { ProgramAssignmentService } from './program/program-assignment.service';
-import { ProgramAreaSubscriptionService } from './program/program-area-subscription.service';
-import { FollowupVolunteerService } from './followup/followup-volunteer.service';
 import { HttpService } from './shared/http.service';
 
 @NgModule({
@@ -53,17 +48,12 @@ import { HttpService } from './shared/http.service';
     FollowupModule,
   ],
   providers: [
+    NavService,
+    LoginSessionService,
+    BasicAuthGuardService,
     HttpService,
     EnumService,
     StatusService,
-    CaptureSessionService,
-    DevoteeService,
-    HistoryService,
-    YatraService,
-    ProgramService,
-    ProgramAreaSubscriptionService,
-    FollowupVolunteerService,
-    ProgramAssignmentService,
   ],
   bootstrap: [AppComponent]
 })

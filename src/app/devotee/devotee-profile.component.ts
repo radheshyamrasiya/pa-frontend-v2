@@ -3,9 +3,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbDateStruct, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { Devotee } from '../model/devotee.model';
-import { routeConstants, statusType } from '../shared/app-properties';
+import { routeConstants, statusType, connectionProperties } from '../shared/app-properties';
 
-import { DevoteeService } from './devotee.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 import { EnumService } from '../shared/enum.service';
 
@@ -24,7 +24,7 @@ export class DevoteeProfileComponent implements OnInit {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private devoteeService: DevoteeService,
+        private httpService: HttpService,
         private modalService: NgbModal,
         private statusService: StatusService,
         private enumService: EnumService,
@@ -35,11 +35,12 @@ export class DevoteeProfileComponent implements OnInit {
         this.resetDevotee = new Devotee();
 
         this.activatedRoute.params.subscribe((params: Params) => {
-            this.devoteeService.loadDevotee(+params[routeConstants.paramDevoteeId])
+            this.httpService.getData(connectionProperties.devotees, "/" + params[routeConstants.paramDevoteeId])
             .subscribe(devotee => {
-                this.devotee = devotee;
-                this.resetDevotee = devotee;
+                this.devotee = devotee as Devotee;
+                this.resetDevotee = devotee as Devotee;
                 if (this.devotee.dob) {
+                    this.devotee.dob = new Date(this.devotee.dob);
                     this.datePicker = { 
                         year: this.devotee.dob.getFullYear(),
                         month: this.devotee.dob.getMonth()+1,
@@ -59,7 +60,7 @@ export class DevoteeProfileComponent implements OnInit {
 
     onUpdateClick() {
         this.devotee.dob = new Date(this.datePicker.year + "-" + this.datePicker.month + "-" + this.datePicker.day);
-        this.devoteeService.updateDevotee(this.devotee)
+        this.httpService.putAndReturnData(connectionProperties.devotees,"/" + this.devotee.id, this.devotee)
         .subscribe(devotee => {
             this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
         }, err => {
@@ -70,6 +71,7 @@ export class DevoteeProfileComponent implements OnInit {
     onResetClick() {
         this.devotee = this.resetDevotee;
         if (this.devotee.dob) {
+            this.devotee.dob = new Date(this.devotee.dob);
             this.datePicker = { 
                 year: this.devotee.dob.getFullYear(),
                 month: this.devotee.dob.getMonth()+1,

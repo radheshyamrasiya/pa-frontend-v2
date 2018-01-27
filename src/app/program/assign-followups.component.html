@@ -1,1 +1,25 @@
 Happy Assignment!!!
+
+List of Participants
+<ul class="list-group">
+    <div *ngFor="let participant of participants.dataList">
+        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+            {{participant.attendeeName}} <span class="oi oi-trash" (click)="onRemoveParticipantClick(participant.id)"></span>
+        </li>
+    </div>
+</ul>
+
+List of Volunteers
+<select [(ngModel)]="selectedValue">
+    <options *ngFor="let volunteer of volunteers.dataList" value={{volunteer.id}}>
+        {{volunteer.devoteeName}}
+    </options>
+</select>
+Selected Value is : {{selectedValue}}
+<ul class="list-group">
+    <div *ngFor="let volunteer of volunteers.dataList">
+        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+            {{volunteer.devoteeName}} <span class="oi oi-trash" (click)="onRemoveParticipantClick(volunteer.id)"></span>
+        </li>
+    </div>
+</ul>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { routeConstants } from '../shared/app-properties';
+import { routeConstants, connectionProperties } from '../shared/app-properties';
 import { ProgramAssignment, ProgramAssignmentPage } from '../model/program-assignment.model';
-import { Paging } from '../model/paging.model';
+import { Paging } from '../model/entity.model';
+import { Devotee } from '../model/devotee.model';
 
-import { ProgramAssignmentService } from '../program/program-assignment.service';
-import { DevoteeService } from '../devotee/devotee.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 
 @Component({
@@ -20,8 +20,7 @@ export class AddParticipantsComponent implements OnInit {
     programId: number;
 
     constructor(
-        private programAssignmentService: ProgramAssignmentService,
-        private devoteeService: DevoteeService,
+        private httpService: HttpService,
         private activatedRoute: ActivatedRoute,
         private statusService: StatusService,
         private router: Router,
@@ -29,7 +28,7 @@ export class AddParticipantsComponent implements OnInit {
 
     ngOnInit() { 
         this.contents = new ProgramAssignmentPage();
-        this.contents.programAssignmentList = [];
+        this.contents.dataList = [];
         this.contents.paging = new Paging();
 
         this.activatedRoute.params.subscribe(params => {
@@ -39,25 +38,31 @@ export class AddParticipantsComponent implements OnInit {
     }
 
     loadContents(page: number) {
-        this.programAssignmentService.loadProgramAssignmentList(this.programId, page)
+        this.httpService.getList(connectionProperties.listProgramAssignment, {
+            page: page,
+            pathParams: "/" + this.programId,
+        })
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
-                this.contents = volunteerList;
+                this.contents = volunteerList as ProgramAssignmentPage;
             } 
         });
     }
 
     onParticipantAddClick() {
-        this.devoteeService.getDevoteeByEmailId(this.email).subscribe(devotee => {
+        this.httpService.getData(connectionProperties.devoteesByEmailId, {
+            queryParams: {email: this.email}
+        })
+        .subscribe(devotee => {
             if (devotee==undefined || devotee == null) {
                 this.statusService.error("No devotee found for email id: " + this.email);
                 return
             }
             let programAssignment =  new ProgramAssignment();
-            programAssignment.attendeeId = devotee.id;
+            programAssignment.attendeeId = (<Devotee>devotee).id;
             programAssignment.programId = this.programId;
             
-            this.programAssignmentService.createProgramAssignment(programAssignment)
+            this.httpService.postAndReturnList(connectionProperties.createProgramAssignment,'', programAssignment)
             .subscribe(volunteerList => {
                 if (volunteerList!= undefined && volunteerList!=null) {
                     this.contents = volunteerList;
@@ -67,7 +72,7 @@ export class AddParticipantsComponent implements OnInit {
     }
 
     onRemoveParticipantClick(assignmentId: number) {
-        this.programAssignmentService.deleteProgramAssignment(this.programId, assignmentId)
+        this.httpService.deleteAndReturnList(connectionProperties.deleteProgramAssignment, "/" + this.programId + "/" + assignmentId)
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
                 this.contents = volunteerList;

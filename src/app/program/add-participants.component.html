@@ -11,7 +11,7 @@
 List of Participants
     
 <ul class="list-group">
-    <div *ngFor="let participant of contents.programAssignmentList">
+    <div *ngFor="let participant of contents.dataList">
         <li class="list-group-item d-flex justify-content-between align-items-center py-2">
             {{participant.attendeeName}} <span class="oi oi-trash" (click)="onRemoveParticipantClick(participant.id)"></span>
         </li>

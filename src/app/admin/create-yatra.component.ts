@@ -5,11 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Devotee } from '../model/devotee.model';
 import { Yatra } from '../model/yatra.model';
 
-import { statusType, routeConstants } from '../shared/app-properties';
+import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 
-import { DevoteeService } from '../devotee/devotee.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
-import { YatraService } from './yatra.service';
 import { EnumService } from '../shared/enum.service';
 
 @Component({
@@ -25,9 +24,8 @@ export class CreateYatraComponent implements OnInit {
 
     constructor(
         private modalService: NgbModal,
-        private devoteeService: DevoteeService,
+        private httpService: HttpService,
         private statusService: StatusService,
-        private yatraService: YatraService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private enumService: EnumService,
@@ -40,13 +38,13 @@ export class CreateYatraComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => {
             let yatraId = params[routeConstants.paramsYatraId];
             if (yatraId != undefined || yatraId != null) {
-                this.yatraService.loadYatra(+yatraId)
+                this.httpService.getData(connectionProperties.getYatra, "/" + yatraId)
                 .subscribe(yatra => {
                     this.isCreate = false;
-                    this.yatra = yatra;
-                    this.devoteeService.loadDevotee(this.yatra.yatraAdmin)
+                    this.yatra = yatra as Yatra;
+                    this.httpService.getData(connectionProperties.devotees, "/" + this.yatra.yatraAdmin)
                     .subscribe(devotee => {
-                        this.devotee = devotee;
+                        this.devotee = devotee as Devotee;
                     }, err => {
                         //
                     })
@@ -60,10 +58,16 @@ export class CreateYatraComponent implements OnInit {
     onSelectYatraAdminClick(content) {
         this.modalService.open(content).result.then((result) => {
             if (result=="fetch") {
-                this.devoteeService.getDevoteeByEmailId(this.emailAddress)
+                this.httpService.getData(connectionProperties.devoteesByEmailId, {
+                    queryParams: {email: this.emailAddress}
+                })
                 .subscribe((devotee) => {
-                    this.yatra.yatraAdmin = devotee.id;
-                    this.devotee = devotee;
+                    if (devotee == null) {
+                        this.statusService.error("Devotee not found!");
+                    } else {
+                        this.devotee = devotee as Devotee;
+                        this.yatra.yatraAdmin = (<Devotee>devotee).id;
+                    }
                 }, err => {
                     this.statusService.setFlag("Email not found! Unable to fetch devotee", statusType.error);
                 });
@@ -93,7 +97,7 @@ export class CreateYatraComponent implements OnInit {
 
     onRegisterYatraClick() {
         if (!this.validatePage()) return;
-        this.yatraService.createYatra(this.yatra)
+        this.httpService.postAndReturnData(connectionProperties.createYatra,'',this.yatra)
         .subscribe(responseYatra => {
             //Handle Success
         }, err => {
@@ -103,7 +107,7 @@ export class CreateYatraComponent implements OnInit {
 
     onUpdateYatraDetailsClick() {
         if (!this.validatePage()) return;
-        this.yatraService.updateYatra(this.yatra)
+        this.httpService.putAndReturnData(connectionProperties.updateYatra, "/" + this.yatra.id, this.yatra)
         .subscribe(responseYatra => {
             //Handle Success
         }, err => {

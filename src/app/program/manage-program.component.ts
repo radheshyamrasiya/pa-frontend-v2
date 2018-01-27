@@ -4,10 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Program } from '../model/program.model';
 import { ProgramAreaSubscription, ProgramAreaSubscriptionPage } from '../model/program-area-subscription.model';
-import { statusType, routeConstants } from '../shared/app-properties';
+import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 
-import { ProgramService } from './program.service';
-import { ProgramAreaSubscriptionService } from './program-area-subscription.service';
+import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 import { EnumService } from '../shared/enum.service';
 
@@ -25,8 +24,7 @@ export class ManageProgramComponent implements OnInit {
 
     constructor(
         private modalService: NgbModal,
-        private programService: ProgramService,
-        private programAreaSubscription: ProgramAreaSubscriptionService,
+        private httpService: HttpService,
         private statusService: StatusService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -37,12 +35,12 @@ export class ManageProgramComponent implements OnInit {
         this.program = new Program();
         this.areaSubscription = new ProgramAreaSubscriptionPage();
         this.countryCodeText = "";
-        this.areaSubscription.programAreaSubscriptionList = [];
+        this.areaSubscription.dataList = [];
         this.activatedRoute.params.subscribe(params => {
             let programId = +params[routeConstants.paramsProgramId];
-            this.programService.loadProgram(+programId)
+            this.httpService.getData(connectionProperties.getProgram, "/" + programId)
             .subscribe(program => {
-                this.program = program;
+                this.program = program as Program;
                 this.loadProgramAreaSubscription();
             }, err => {
                     //
@@ -51,22 +49,22 @@ export class ManageProgramComponent implements OnInit {
     }
 
     loadProgramAreaSubscription() {
-        this.programAreaSubscription.loadProgramAreaSubscriptionList(this.program.id)
+        this.httpService.getList(connectionProperties.listProgramAreaSubscription, '/' + this.program.id)
         .subscribe(areaSubscription => {
             this.areaSubscription = areaSubscription;
-            if (this.areaSubscription.programAreaSubscriptionList.length > 0)
-                this.countryCodeText = this.areaSubscription.programAreaSubscriptionList[0].countryCode; 
+            if (this.areaSubscription.dataList.length > 0)
+                this.countryCodeText = (<ProgramAreaSubscription>this.areaSubscription.dataList[0]).countryCode; 
         }, err => {
             //Hande error
         });
     }
 
     deleteProgramAreaSubscription(subscriptionId: number) {
-        this.programAreaSubscription.deleteProgramAreaSubscription(this.program.id, subscriptionId)
+        this.httpService.deleteAndReturnList(connectionProperties.deleteProgramAreaSubscription, "/" + this.program.id + "/" + subscriptionId)
         .subscribe(areaSubscription => {
             this.areaSubscription = areaSubscription;
-            if (this.areaSubscription.programAreaSubscriptionList.length > 0)
-                this.countryCodeText = this.areaSubscription.programAreaSubscriptionList[0].countryCode; 
+            if (this.areaSubscription.dataList.length > 0)
+                this.countryCodeText = (<ProgramAreaSubscription>this.areaSubscription.dataList[0]).countryCode; 
         }, err => {
             //Hande error
         });
@@ -87,11 +85,11 @@ export class ManageProgramComponent implements OnInit {
         paSubscription.countryCode = this.countryCodeText;
         paSubscription.programId = this.program.id;
         paSubscription.zipPostalCode = this.postalCode;
-        this.programAreaSubscription.createProgramAreaSubscription(paSubscription)
+        this.httpService.postAndReturnList(connectionProperties.createProgramAreaSubscription, '', paSubscription)
         .subscribe(areaSubscription => {
             this.areaSubscription = areaSubscription;
-            if (this.areaSubscription.programAreaSubscriptionList.length > 0)
-                this.countryCodeText = this.areaSubscription.programAreaSubscriptionList[0].countryCode; 
+            if (this.areaSubscription.dataList.length > 0)
+                this.countryCodeText = (<ProgramAreaSubscription>this.areaSubscription.dataList[0]).countryCode; 
                 this.postalCode = "";
         }, err => {
             //Hande error
@@ -99,7 +97,7 @@ export class ManageProgramComponent implements OnInit {
     }
 
     onUpdateProgramClick() {
-        this.programService.updateProgram(this.program)
+        this.httpService.putAndReturnData(connectionProperties.updateProgram, "/" + this.program.id, this.program)
         .subscribe(responseProgram => {
             //Handle Success
         }, err => {

@@ -1,18 +1,66 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { routeConstants } from '../shared/app-properties';
+import { userRoles } from '../login/user-roles';
+import { LoginSessionService } from '../login/login-session.service';
 
 @Component ({
     selector: 'dashboard',
     templateUrl: './dashboard.component.html',
 })
 
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
+    enableMyFollowups = false;
+    enableMyPrograms = false;
+    enableCaptureContact = false;
+    enableCapturedList= false;
+    enableYatraAdmin = false;
+    enableSuperAdmin = false;
 
     constructor(
         private router: Router,
+        private loginService: LoginSessionService,
     ) {}
+
+    ngOnInit() {
+        console.log(this.loginService.getRole());
+        if (this.loginService.getRole() == userRoles.DEVOTEE) {
+            this.enableMyFollowups = true;
+            //this.enableMyPrograms = true;
+            this.enableCaptureContact = true;
+            this.enableCapturedList= true;
+            //this.enableYatraAdmin = true;
+            //this.enableSuperAdmin = true;
+        }
+
+        if (this.loginService.getRole() == userRoles.MENTOR) {
+            this.enableMyFollowups = true;
+            this.enableMyPrograms = true;
+            this.enableCaptureContact = true;
+            this.enableCapturedList= true;
+            //this.enableYatraAdmin = true;
+            //this.enableSuperAdmin = true;
+        }
+
+        if (this.loginService.getRole() == userRoles.YATRA_ADMIN) {
+            //this.enableMyFollowups = true;
+            //this.enableMyPrograms = true;
+            //this.enableCaptureContact = true;
+            //this.enableCapturedList= true;
+            this.enableYatraAdmin = true;
+            //this.enableSuperAdmin = true;
+        }
+
+        if (this.loginService.getRole() == userRoles.ADMIN) {
+            this.enableMyFollowups = true;
+            this.enableMyPrograms = true;
+            this.enableCaptureContact = true;
+            this.enableCapturedList= true;
+            this.enableYatraAdmin = true;
+            this.enableSuperAdmin = true;
+        }
+    }
 
     onMyFollowupsClick(): void {
         this.router.navigate([routeConstants.followup,routeConstants.followupProgram]);

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Yatra, YatraPage } from '../model/yatra.model';
-import { Paging } from '../model/paging.model';
-import { YatraService } from './yatra.service';
-import { routeConstants } from '../shared/app-properties';
+import { Paging } from '../model/entity.model';
+import { HttpService } from '../shared/http.service';
+import { routeConstants, connectionProperties } from '../shared/app-properties';
+import { NavService } from '../shared/nav.service';
 
 @Component({
     selector: 'yatra-list-component',
@@ -16,7 +17,8 @@ export class YatraListComponent implements OnInit {
     contents: YatraPage;
 
     constructor(
-        private yatraService: YatraService,
+        private httpService: HttpService,
+        private navService: NavService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
     ) { }
@@ -39,9 +41,17 @@ export class YatraListComponent implements OnInit {
 
     loadContents(page?: number) {
         if(page == undefined) {
-            page = this.yatraService.pageNumber;
+            let pageNum = this.navService.getNum("yatraListPageNo");
+            (pageNum==null)?page=0:page=pageNum;
+        } else {
+            this.navService.setNum("yatraListPageNo", page);
         }
-        this.yatraService.loadYatraList(page)
+        this.httpService.getList(
+            connectionProperties.listYatra,
+            {
+                page: page
+            }
+        )
         .subscribe(contents => {
             this.contents = contents;
         });

@@ -1,5 +1,5 @@
 <ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
-    <div *ngFor="let devotee of contents.devoteeList">
+    <div *ngFor="let devotee of contents.dataList">
       <ngb-panel id="{{devotee.id}}_id">
         <ng-template ngbPanelTitle>
           <span class="float-left w-50">{{devotee.name}}</span>

@@ -1,6 +1,6 @@
-import { Paging } from './paging.model';
+import { Entity, Page, Paging } from './entity.model';
 
-export class History {
+export class History extends Entity{
     id: number;
     comment: string;
     rating: number;
@@ -12,7 +12,6 @@ export class History {
     ratedDevoteeName: string;
 }
 
-export class HistoryPage {
-    historyList: History[];
-    paging: Paging;
+export class HistoryPage extends Page{
+
 }
