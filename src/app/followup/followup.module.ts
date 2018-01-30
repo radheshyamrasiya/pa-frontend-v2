@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { CallResponseComponent } from './call-response.component';
@@ -13,6 +14,7 @@ import { FollowupRoutingModule } from './followup-routing.module';
     imports: [
         NgbModule,
         BrowserModule,
+        FormsModule,
         FollowupRoutingModule,
     ],
     exports: [],

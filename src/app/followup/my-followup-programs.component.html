@@ -1,3 +1,17 @@
-<div *ngFor="let program of programList" class="card">
-    <span class="float-left w-100 btn btn-secondary" (click)="followupForProgram(program.id)">{{program.name}}</span>
+<div *ngFor="let followupProgram of contents.dataList">
+    <div class="card">
+        <div class="card-body">
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onStartFollowup(followupProgram.programId)"><span class="oi oi-pencil"></span></button>
+            {{followupProgram.programName}} <br>
+        </div>
+    </div>
 </div>
+    
+<div>
+    <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
+    <button class="btn btn-primary my-3" (click)="loadContents(this.contents.paging.pageNumber-1)" [disabled]=contents.paging.first> &lt; Prev </button>
+    <button class="btn btn-primary my-3 float-right" (click)="loadContents(this.contents.paging.pageNumber+1)" [disabled]=contents.paging.last>Next &gt;</button>
+</div>
+<button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
+    Back
+</button>

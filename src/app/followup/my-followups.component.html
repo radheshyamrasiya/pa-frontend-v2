@@ -1,31 +1,31 @@
-<ngb-accordion [closeOthers]="true" activeIds="static-1">
-  <div *ngFor="let devotee of devoteeList">
-    <ngb-panel id="{{devotee.id}}_id">
+<ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
+  <div *ngFor="let followupAttendee of contents.dataList">
+    <ngb-panel id="{{followupAttendee.attendeeId}}_id">
       <ng-template ngbPanelTitle>
-        <span class="float-left w-50">{{devotee.name}}</span>
-        <span class="float-right w-50" style="text-align: right">{{devotee.phone}}</span>
+        <span class="float-left w-50">{{followupAttendee.attendeeName}}</span>
+        <span class="float-right w-50" style="text-align: right">{{followupAttendee.attendeePhone}}</span>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="row">
           <div class="col">
-              <span (click)="onPhoneClick(devotee.id)">
-              <a href="tel:{{devotee.phone}}" class="w-100 btn btn-light btn-sm">
+              <span (click)="onPhoneClick(followupAttendee.attendeeId)">
+              <a href="tel:{{followupAttendee.attendeePhone}}" class="w-100 btn btn-light btn-sm">
                   <span class="oi oi-phone w-100"></span><br>Call
               </a>
             </span>
           </div>
           <div class="col">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onHistoryClick(devotee.id)">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onHistoryClick(followupAttendee.attendeeId)">
                 <span class="oi oi-document"></span><br>History
             </button>
           </div>
           <div class="col">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onProfileClick(devotee.id)">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onProfileClick(followupAttendee.attendeeId)">
                 <span class="oi oi-person"></span><br>Profile
             </button>
           </div>
           <div class="col">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onCommentClick(devotee.id)">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onCommentClick(followupAttendee.attendeeId)">
                 <span class="oi oi-pencil"></span><br>Comment
             </button>
           </div>
@@ -34,3 +34,9 @@
     </ngb-panel>
   </div>
 </ngb-accordion>
+<div>
+    <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
+    <button class="btn btn-primary my-3" (click)="loadContents(this.contents.paging.pageNumber-1)" [disabled]=contents.paging.first> &lt; Prev </button>
+    <button class="btn btn-primary my-3 float-right" (click)="loadContents(this.contents.paging.pageNumber+1)" [disabled]=contents.paging.last>Next &gt;</button>
+</div>
+<button class="btn btn-primary" (click)="onBackClick()">Back</button>

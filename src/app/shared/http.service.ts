@@ -51,6 +51,7 @@ export class HttpService {
     }
 
     private crudOperation(method: string, url: string, body?: any, params?: any): Observable<any> {
+        console.log(method + ' : ' + url + ' : ' + body + ' : ' + params);
         switch(method) {
             case "get":
                 return this.http.get(connectionProperties.baseUrl + url, {
@@ -142,8 +143,8 @@ export class HttpService {
                 observer.complete();
             }, err => {
                 this.statusService.error("Error performing action");
-                observer.throw(err);
-                observer.complete();
+                observer.error(err);
+                //observer.complete();
             });
         });
     }

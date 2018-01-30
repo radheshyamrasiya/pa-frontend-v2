@@ -59,6 +59,14 @@ export class WriteCommentComponent implements OnInit {
     }
 
     onBackClick() {
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
+        let programId: number;
+        this.activatedRoute.params.subscribe(params => {
+            programId = +params[routeConstants.paramsProgramId];
+            if(this.router.routerState.snapshot.url.startsWith(routeConstants.followup,1)) {
+                this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });    
+            } else {
+                this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
+            }    
+        });
     }
 }

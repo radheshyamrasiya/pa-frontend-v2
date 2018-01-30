@@ -1,64 +1,146 @@
 <div class="card">
     <div class="card-body">
-        <div class="card-title">{{followupDevotee.name}}</div>
-        <div class="row justify-content-center">
-            <div class="col pr-0">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.coming">
-                <span class="oi oi-circle-check"></span><br>Coming
-            </button>
-            </div>
-            <div class="col pl-0">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.notComing">
-                <span class="oi oi-circle-x"></span><br>Not Coming
-            </button>
-            </div>
-        </div>
-        <div class="row justify-content-start">
-            <div class="col pr-0">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.doubtful">
-                <span class="oi oi-cloudy"></span><br>Doubtful
-            </button>
-            </div>
-            <div class="col pl-0">
-            <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.travelOut">
-                <span class="oi oi-briefcase"></span><br>Travel Out
-            </button>
-            </div>
-        </div>
-        <div class="row justify-content-start">
-                <div class="col pr-0">
-                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.callAgain">
-                    <span class="oi oi-action-redo"></span><br>Call Again
-                </button>
+        <div class="card-title">{{devotee.name}}</div>
+        
+        <div data-toggle="buttons" ngbRadioGroup name="radioBasic" [(ngModel)]="followup.response">
+            <div class="row justify-content-center">
+                <div class="col pr-0 btn-group-toggle">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.coming">
+                    <span class="oi oi-circle-check"></span><br>Coming
+                    </label>
                 </div>
-                <div class="col pl-0">
-                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.wrongNumber">
-                    <span class="oi oi-trash"></span><br>Wrong Number
-                </button>
+                <div class="col pr-0 btn-group-toggle">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.notComing">
+                    <span class="oi oi-circle-x"></span><br>Not Coming
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col pr-0">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.doubtful">
+                    <span class="oi oi-cloudy"></span><br>Doubtful
+                    </label>
+                </div>
+                <div class="col pr-0">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.travelOut">
+                    <span class="oi oi-briefcase"></span><br>Travel Out
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col pr-0">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.callAgain">
+                    <span class="oi oi-cloudy"></span><br>Call Again
+                    </label>
+                </div>
+                <div class="col pr-0">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.wrongNumber">
+                    <span class="oi oi-briefcase"></span><br>Wrong Number
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col pr-0">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.removeMe">
+                    <span class="oi oi-cloudy"></span><br>Remove Me
+                    </label>
+                </div>
+                <div class="col pr-0">
+                    <label ngbButtonLabel class="w-100 btn btn-light btn-sm">
+                    <input ngbButton type="radio" [value]="callResponse.permanentlyShifted">
+                    <span class="oi oi-briefcase"></span><br>Permanently Shifted
+                    </label>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-start">
-            <div class="col pr-0">
-                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.removeMe">
-                    <span class="oi oi-ban"></span><br>Remove Me
-                </button>
-            </div>
-            <div class="col pl-0">
-                <button type="button" class="w-100 btn btn-light btn-sm" (click)="response=callResponse.permanentlyShifted">
-                    <span class="oi oi-compass"></span><br>Permanently Shifted
-                </button>
-            </div>
-        </div>
+        
+        <hr>
+        {{followup.response}}
+        
     </div>
 </div>
 
-<div *ngIf="response" class="card">
-    <div class="card-body" style="justify-content: center">
-        <div class="alert alert-primary" role="alert">{{response}}</div>
+<div class="card">
+    <div class="card-title">
+        
+    </div>
+    <div class="card-body">
+        Rate {{devotee.legalName}} <ngb-rating max="5" [(rate)]="followup.rating"></ngb-rating> ({{followup.rating}})
+        <br>
+        <label for="followupComment">Followup Comment</label>
+        <textarea class="form-control" id="followupComment" rows="3" [(ngModel)]="followup.comment"></textarea>
+        <br>
+        %of followup completion to be implemented later
+        <br>
         <p align="center">
-        <button type="button" class="btn btn-primary" (click)="onSaveClick()">
-                Save Response
-        </button>
+            <button type="button" class="btn btn-primary" (click)="onSaveClick()">
+                Save and Proceed
+            </button>
+            <button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
+                Back
+            </button>
         </p>
     </div>
 </div>
+
+
+
+
+
+
+<!-- <div class="row justify-content-center">
+        <div class="col pr-0">
+        <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.coming">
+            <span class="oi oi-circle-check"></span><br>Coming
+        </button>
+        </div>
+        <div class="col pl-0">
+        <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.notComing">
+            <span class="oi oi-circle-x"></span><br>Not Coming
+        </button>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col pr-0">
+        <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.doubtful">
+            <span class="oi oi-cloudy"></span><br>Doubtful
+        </button>
+        </div>
+        <div class="col pl-0">
+        <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.travelOut">
+            <span class="oi oi-briefcase"></span><br>Travel Out
+        </button>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+            <div class="col pr-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.callAgain">
+                <span class="oi oi-action-redo"></span><br>Call Again
+            </button>
+            </div>
+            <div class="col pl-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.wrongNumber">
+                <span class="oi oi-trash"></span><br>Wrong Number
+            </button>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col pr-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.removeMe">
+                <span class="oi oi-ban"></span><br>Remove Me
+            </button>
+        </div>
+        <div class="col pl-0">
+            <button type="button" class="w-100 btn btn-light btn-sm" (click)="followup.response=callResponse.permanentlyShifted">
+                <span class="oi oi-compass"></span><br>Permanently Shifted
+            </button>
+        </div>
+    </div> -->

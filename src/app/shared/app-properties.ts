@@ -50,22 +50,34 @@ export const connectionProperties = {
     createFollowupVolunteer: '/followUpVolunteer',
     deleteFollowupVolunteer: '/followUpVolunteer',
 
-    //Followup
+    //FollowupAssignment
+    allFollowups: '/followUpAssignmentPage',
+    followupAssignmentByProgram: '/followUpAssignmentsByProgramPage',
     myFollowUpDevoteeList: '/followUpAssignmentByVolunteerPage', // /volunteerId
     myFollowUpListByProgram: '/followUpAssignmentAttendeesForVolunteerByProgramPage', // /volunteerId/programId
     createFollowup: '/followUpAssignment',
     deleteFollowup: '/followUpAssignment', // /id
+    deleteFollowupAssignmentsOfProgram: '/followUpAssignmentDeleteForProgram', //programId
+    myFollowupPrograms: '/followUpProgramsForVolunteerPage', // /volunteerId - Returns list of programs
+    autoAssignFollowup: '/autoFollowUpAssignment', // programId
+
+    //Followup Record
+    getSpecificFollowupRecord: '/specificFollowUpRecord', // programId, attendeeId, volunteerId
+    getFollowupRecordById: '/followUp', // followupId
+    createFollowupRecord: '/followUp',
+    updateFollowupRecord: '/followUp', // followupId
+    deleteFollowupRecordOfProgram: '/deleteFollowUpOfProgram', //programId
 };
 
 export const callResponse = {
-    coming: "Coming",
-    notComing: "Not Coming",
-    doubtful: "Doubtful",
-    travelOut: "Travelling Outstation",
-    callAgain: "Call Again",
-    wrongNumber: "Wrong Number",
-    removeMe: "Remove Me",
-    permanentlyShifted: "Permanently Shifted",
+    coming: "COMING",
+    notComing: "NOT_COMING",
+    doubtful: "DOUBTFUL",
+    travelOut: "TRAVELLING_OUTSTATION",
+    callAgain: "CALL_AGAIN",
+    wrongNumber: "WRONG_NUMBER",
+    removeMe: "REMOVE_ME",
+    permanentlyShifted: "PERMANENTLY_SHIFTED",
 };
 
 export const routeConstants = {
@@ -107,7 +119,7 @@ export const routeConstants = {
 
 //For history comments
 export const colorCode = [
-    "", //value 0
+    "text-white bg-secondary", //value 0
     "text-white bg-danger", //value 1
     "text-white bg-danger", //value 2
     "text-white bg-warning", //value 3

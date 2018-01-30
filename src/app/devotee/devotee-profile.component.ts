@@ -62,7 +62,7 @@ export class DevoteeProfileComponent implements OnInit {
         this.devotee.dob = new Date(this.datePicker.year + "-" + this.datePicker.month + "-" + this.datePicker.day);
         this.httpService.putAndReturnData(connectionProperties.devotees,"/" + this.devotee.id, this.devotee)
         .subscribe(devotee => {
-            this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
+            this.onBackClick();
         }, err => {
             this.statusService.setFlag("Error updating devotee", statusType.error);
         });
@@ -83,7 +83,15 @@ export class DevoteeProfileComponent implements OnInit {
     }
 
     onBackClick() {
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
+        let programId: number;
+        this.activatedRoute.params.subscribe(params => {
+            programId = +params[routeConstants.paramsProgramId];
+            if(this.router.routerState.snapshot.url.startsWith(routeConstants.followup,1)) {
+                this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });    
+            } else {
+                this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
+            }    
+        });
     }
 
     //Modal trigger

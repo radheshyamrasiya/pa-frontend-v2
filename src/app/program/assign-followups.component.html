@@ -1,25 +1,53 @@
-Happy Assignment!!!
-
-List of Participants
-<ul class="list-group">
-    <div *ngFor="let participant of participants.dataList">
-        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-            {{participant.attendeeName}} <span class="oi oi-trash" (click)="onRemoveParticipantClick(participant.id)"></span>
-        </li>
-    </div>
-</ul>
-
-List of Volunteers
-<select [(ngModel)]="selectedValue">
-    <options *ngFor="let volunteer of volunteers.dataList" value={{volunteer.id}}>
-        {{volunteer.devoteeName}}
-    </options>
-</select>
-Selected Value is : {{selectedValue}}
-<ul class="list-group">
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel id="unassigned">
+        <ng-template ngbPanelTitle>
+            <span class="float-left w-75">Unassigned Participants</span>
+            <span class="float-right w-25" style="text-align: right">({{unassignedCount}})</span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            <button type="button" class="btn btn-sm btn-primary my-3" (click)="onAutoAssign()">
+                Auto Assign
+            </button>
+            <ul class="list-group">
+                <div *ngFor="let participant of unassignedParticipants">
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                        {{participant.attendeeName}}
+                        <select [(ngModel)]="volunteerAssignments[participant.attendeeId]">
+                            <option *ngFor="let volunteer of volunteers.dataList" value={{volunteer.devoteeId}}>
+                                {{volunteer.devoteeName}}
+                            </option>
+                        </select>
+                        <span class="oi oi-plus" (click)="onAssignFollowup(participant.attendeeId)"></span>
+                    </li>
+                </div>
+            </ul>
+        </ng-template>
+    </ngb-panel>
     <div *ngFor="let volunteer of volunteers.dataList">
-        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-            {{volunteer.devoteeName}} <span class="oi oi-trash" (click)="onRemoveParticipantClick(volunteer.id)"></span>
-        </li>
+        <ngb-panel id="{{volunteer.devoteeId}}_id">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-75">{{volunteer.devoteeName}}</span>
+                <div *ngIf="assignmentCount[volunteer.devoteeId]; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock><span class="float-right w-25" style="text-align: right">({{assignmentCount[volunteer.devoteeId]}})</span></ng-template>
+                <ng-template #elseBlock><span class="float-right w-25" style="text-align: right">(0)</span></ng-template>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <ul class="list-group">
+                    <div *ngFor="let attendee of allAttendeesOfVolunteers[volunteer.devoteeId]">
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                            {{attendee.devoteeName}} <span class="oi oi-trash" (click)="onRemoveVolunteerAssignment(attendee.assignmentId)"></span>
+                        </li>
+                    </div>
+                </ul>    
+            </ng-template>
+        </ngb-panel>
     </div>
-</ul>
+</ngb-accordion>
+
+<button type="button" class="btn btn-primary my-3" (click)="onClearAssignmentsClick()">
+    Clear All Assignments
+</button>
+
+<button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
+    Back
+</button>

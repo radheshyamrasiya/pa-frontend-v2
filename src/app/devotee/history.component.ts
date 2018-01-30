@@ -18,6 +18,7 @@ export class HistoryComponent implements OnInit {
     colorCodeList: string[];
     devoteeId: number;
 
+
     constructor(
         private httpService: HttpService,
         private router: Router,
@@ -33,6 +34,8 @@ export class HistoryComponent implements OnInit {
         this.contents.paging.last = true;
         this.activatedRoute.params.subscribe(params => {
             this.devoteeId = +params[routeConstants.paramDevoteeId];
+            console.log(this.router.routerState.snapshot.url);
+            console.log(routeConstants.followup);
             if (this.devoteeId == undefined || this.devoteeId == null)
                 return
             this.httpService.getList(connectionProperties.historyOf, {
@@ -50,7 +53,15 @@ export class HistoryComponent implements OnInit {
     }
 
     onBackClick() {
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devoteeId} });
+        let programId: number;
+        this.activatedRoute.params.subscribe(params => {
+            programId = +params[routeConstants.paramsProgramId];
+            if(this.router.routerState.snapshot.url.startsWith(routeConstants.followup,1)) {
+                this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devoteeId} });    
+            } else {
+                this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devoteeId} });
+            }    
+        });
     }
 
 
