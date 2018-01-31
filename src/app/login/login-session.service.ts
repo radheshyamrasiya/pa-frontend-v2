@@ -28,7 +28,7 @@ export class LoginSessionService implements OnInit {
         private httpService: HttpService,
         private router: Router,
         private statusService: StatusService,
-        private enumService: EnumService,
+        public enumService: EnumService,
     ) {}
 
     ngOnInit(): void {

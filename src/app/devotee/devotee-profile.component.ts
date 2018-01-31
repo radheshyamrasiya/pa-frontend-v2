@@ -27,7 +27,7 @@ export class DevoteeProfileComponent implements OnInit {
         private httpService: HttpService,
         private modalService: NgbModal,
         private statusService: StatusService,
-        private enumService: EnumService,
+        public enumService: EnumService,
     ) {}
 
     ngOnInit() {
@@ -59,7 +59,10 @@ export class DevoteeProfileComponent implements OnInit {
     }
 
     onUpdateClick() {
-        this.devotee.dob = new Date(this.datePicker.year + "-" + this.datePicker.month + "-" + this.datePicker.day);
+        if (this.datePicker != undefined) {
+            this.devotee.dob = new Date(this.datePicker.year + "-" + this.datePicker.month + "-" + this.datePicker.day);
+        }
+        
         this.httpService.putAndReturnData(connectionProperties.devotees,"/" + this.devotee.id, this.devotee)
         .subscribe(devotee => {
             this.onBackClick();

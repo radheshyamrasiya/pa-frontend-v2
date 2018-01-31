@@ -28,7 +28,7 @@ export class CreateYatraComponent implements OnInit {
         private statusService: StatusService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private enumService: EnumService,
+        public enumService: EnumService,
     ) { }
 
     ngOnInit() {
