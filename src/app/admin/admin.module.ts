@@ -12,6 +12,7 @@ import { SuperAdminComponent } from './super-admin.component';
 import { SuperAdminHolderComponent } from './super-admin-holder.component';
 import { YatraListComponent } from './yatra-list.component';
 import { CreateProgramComponent } from './create-program.component';
+import { ListProgramComponent } from './list-program.component';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { CreateProgramComponent } from './create-program.component';
         YatraAdminHolderComponent,
         YatraComponent,
         CreateProgramComponent,
+        ListProgramComponent,
     ],
     providers: [],
 })

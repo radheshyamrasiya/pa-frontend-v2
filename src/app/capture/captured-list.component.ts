@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from  '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DevoteeMin, DevoteeMinPage, Devotee } from '../model/devotee.model';
+import { CaptureContact, CaptureContactPage } from '../model/capture-contact.model';
 import { Paging } from '../model/entity.model';
 
 //import { CaptureSessionService } from './capture-session.service';
@@ -17,7 +17,7 @@ import { NavService } from '../shared/nav.service';
 })
 
 export class CapturedListComponent implements OnInit {
-    contents: DevoteeMinPage;
+    contents: CaptureContactPage;
     activePanel: string;
     @Input() form: FormGroup;
 
@@ -31,7 +31,7 @@ export class CapturedListComponent implements OnInit {
 
     ngOnInit() {
         this.activePanel = "";
-        this.contents = new DevoteeMinPage();
+        this.contents = new CaptureContactPage();
         this.contents.paging = new Paging();
         this.contents.paging.first = true;
         this.contents.paging.last = true;
@@ -71,7 +71,7 @@ export class CapturedListComponent implements OnInit {
             {
                 pathParams: "/" + this.loginService.getDevoteeId(),
                 page: page,
-                sortString: "introDate,desc"
+                sortString: "timestamp,desc"
             }
         ).subscribe(contents => {
             this.contents = contents;

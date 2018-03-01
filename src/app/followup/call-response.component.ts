@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { routeConstants, statusType, connectionProperties, callResponse } from '../shared/app-properties';
-import { Devotee } from '../model/devotee.model';
 import { HttpService } from "../shared/http.service";
 import { LoginSessionService } from '../login/login-session.service';
 
+import { Devotee } from '../model/devotee.model';
 import { Followup } from '../model/followup.model';
 import { History } from '../model/history.model';
 import { StatusService } from '../shared/status.service';
@@ -16,7 +16,8 @@ import { StatusService } from '../shared/status.service';
 })
 
 export class CallResponseComponent implements OnInit {
-    devotee: Devotee;
+    displayAttendee: Devotee;
+    taskCompletionIndex: number;
     followup: Followup;
     callResponse;
 
@@ -29,50 +30,50 @@ export class CallResponseComponent implements OnInit {
     ) {};
 
     ngOnInit() {
+        this.displayAttendee = new Devotee();
         this.callResponse = callResponse;
-        this.devotee = new Devotee;
         this.followup = new Followup;
         this.followup.rating = 0;
+        this.taskCompletionIndex = 0;
         this.followup.volunteerId = this.loginSession.devoteeId;
 
         this.followup.response = callResponse.callAgain;
 
-        this.activatedRoute.params.subscribe((params: Params) => {
-            this.followup.attendeeId = +params[routeConstants.paramDevoteeId];
+        this.activatedRoute.params.subscribe((params: Params) => { 
+            this.followup.attendeeId = +params[routeConstants.paramDevoteeId]; 
             this.followup.programId = +params[routeConstants.paramsProgramId];
-
-            this.httpService.getData(connectionProperties.devotees, "/" + this.followup.attendeeId)
-            .subscribe(devotee => {
-                this.devotee = new Devotee;
-                this.devotee = devotee as Devotee;
-                
-                this.httpService.getData(connectionProperties.getSpecificFollowupRecord,
-                    '/' + this.followup.programId +
-                    '/' + this.followup.attendeeId + 
-                    '/' + this.followup.volunteerId
-                ).subscribe(followupRecord => {
-                    console.log(followupRecord);
-                    this.followup = followupRecord as Followup;
-                }, err => {
-                    this.statusService.error("No Followup Record");
-                    //Since followup record is not there create new record
-                    //We have to find a better way to identify whether
-                    //to create a new record
-                    //This call may fail for technical resons too
-                    this.followup.rating = 0;
-                    this.followup.timestamp = Date.now();
-                    this.httpService.postAndReturnData(connectionProperties.createFollowupRecord, '', this.followup)
-                    .subscribe(follwup => {
-                        //created a new followup record
-                        this.followup = follwup as Followup;
-                    }, err => {
-                        //handle error of creating new followup record
-                    });
-                });
-            }, err => {
-                //Route to a different Page
-            });
+            
+            this.fetchAttendee(this.followup.attendeeId);
+            this.fetchOrCreateFollowupRecord();
         });
+    }
+
+    fetchAttendee(attendeeId: number) {
+        this.httpService.getData(connectionProperties.devotees, 
+            '/' + attendeeId
+        ).subscribe(devotee => {
+            this.displayAttendee = devotee as Devotee;
+        }, err => {
+            //Handle Error
+        })
+    }
+
+    fetchOrCreateFollowupRecord() {
+        this.httpService.getData(connectionProperties.getSpecificFollowupRecord,
+            '/' + this.followup.programId +
+            '/' + this.followup.attendeeId + 
+            '/' + this.followup.volunteerId
+        ).subscribe(followupRecord => {
+            console.log(followupRecord);
+            this.followup = followupRecord as Followup;
+            this.taskCompletionIndex = this.followup.taskStatus/20;
+        }, err => {
+            //Handle Error 
+        });
+    }
+
+    onCompletionClick() {
+        this.followup.taskStatus = this.taskCompletionIndex * 20;
     }
 
     onSaveClick() {
@@ -101,7 +102,6 @@ export class CallResponseComponent implements OnInit {
         }, err => {
             this.statusService.error("Error updating history");
         });
-
         //Go Back
         this.onBackClick();
     }
@@ -111,7 +111,7 @@ export class CallResponseComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => {
             programId = +params[routeConstants.paramsProgramId];
             if(this.router.routerState.snapshot.url.startsWith(routeConstants.followup,1)) {
-                this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });    
+                this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.displayAttendee.id} });    
             }    
         });
     }

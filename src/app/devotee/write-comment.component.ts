@@ -52,6 +52,7 @@ export class WriteCommentComponent implements OnInit {
         this.httpService.postAndReturnData(connectionProperties.writeHistory, '', this.history)
         .subscribe(history => {
             //Check the object if needed
+            this.statusService.success("Updated Successfully");
         }, err => {
             console.log(err);
         });

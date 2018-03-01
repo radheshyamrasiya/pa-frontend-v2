@@ -1,16 +1,13 @@
 <div *ngFor="let yatra of contents.dataList">
     <div class="card">
         <div class="card-body">
-            {{yatra.yatraName}}
-            <span class="font-italic small">
-                &nbsp;({{yatra.yatraType}})
-            </span> <br>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onCreateProgram(yatra.id)">Create Program</button>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onListPrograms(yatra.id)">List Programs</button>
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onYatraUpdate(yatra.id)"><span class="oi oi-pencil"></span></button>
+            {{yatra.yatraName}}<span class="font-italic small">&nbsp;({{yatra.yatraType}})</span> <br>
+            <span class="font-italic small">{{yatra.yatraAddress}}</span>
         </div>
     </div>
 </div>
-        
+    
 <div>
     <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
     <button class="btn btn-primary my-3" (click)="loadContents(this.contents.paging.pageNumber-1)" [disabled]=contents.paging.first> &lt; Prev </button>

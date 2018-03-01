@@ -1,12 +1,9 @@
-<div *ngFor="let yatra of contents.dataList">
+<div *ngFor="let program of contents.dataList">
     <div class="card">
         <div class="card-body">
-            {{yatra.yatraName}}
-            <span class="font-italic small">
-                &nbsp;({{yatra.yatraType}})
-            </span> <br>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onCreateProgram(yatra.id)">Create Program</button>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onListPrograms(yatra.id)">List Programs</button>
+            <button type="button" class="btn btn-info btn-sm my-2" (click)="onProgramUpdate(program.id)"><span class="oi oi-pencil"></span></button>
+            {{program.name}}<span class="font-italic small">&nbsp;({{program.type}})</span> <br>
+            <span class="font-italic small">{{program.targetAudience}}</span>
         </div>
     </div>
 </div>

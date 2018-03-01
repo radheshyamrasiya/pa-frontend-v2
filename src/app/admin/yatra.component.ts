@@ -35,6 +35,10 @@ export class YatraComponent implements OnInit {
         this.router.navigate([routeConstants.yatra, routeConstants.createProgram, yatraId]);
     }
 
+    onListPrograms(yatraId: number) {
+        this.router.navigate([routeConstants.yatra, routeConstants.listProgram, yatraId]);
+    }
+
     onBackClick() {
         this.router.navigate(['../'], {relativeTo: this.activatedRoute});
     }

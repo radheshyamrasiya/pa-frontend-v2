@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
+import { isNumeric } from "rxjs/util/isNumeric"
 
 import { Devotee } from '../model/devotee.model';
 import { Program } from '../model/program.model';
@@ -44,21 +45,22 @@ export class CreateProgramComponent implements OnInit {
                 this.router.navigate(['../']);
             } else if (yatraId != undefined) {
                 this.program.parentYatraId = yatraId;
-            }else if (programId != undefined) {
-                this.isCreate = false;
-                this.httpService.getData(connectionProperties.getProgram, "/" + programId)
-                .subscribe(program => {
+                if (isNumeric(programId)) {
                     this.isCreate = false;
-                    this.program = program as Program;
-                    this.httpService.getData(connectionProperties.devotees, '/' + this.program.mentorId)
-                    .subscribe(devotee => {
-                        this.devotee = devotee as Devotee;
+                    this.httpService.getData(connectionProperties.getProgram, "/" + programId)
+                    .subscribe(program => {
+                        this.isCreate = false;
+                        this.program = program as Program;
+                        this.httpService.getData(connectionProperties.devotees, '/' + this.program.mentorId)
+                        .subscribe(devotee => {
+                            this.devotee = devotee as Devotee;
+                        }, err => {
+                            //
+                        })
                     }, err => {
                         //
                     })
-                }, err => {
-                    //
-                })
+                }
             }
         });
     }
@@ -120,9 +122,13 @@ export class CreateProgramComponent implements OnInit {
     }
 
     onBackClick() {
-        if (this.isCreate)
-            this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
-        else
-            this.router.navigate(['../../../'], {relativeTo: this.activatedRoute});
+        if(this.router.routerState.snapshot.url.startsWith(routeConstants.yatra + '/' + routeConstants.editProgram, 1)) {
+            this.router.navigate(['../../../', routeConstants.listProgram, this.program.parentYatraId], {relativeTo: this.activatedRoute});
+        } else {
+            if (this.isCreate)
+                this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+            else
+                this.router.navigate(['../../../'], {relativeTo: this.activatedRoute});
+        }
     }
 }

@@ -30,7 +30,8 @@ export const connectionProperties = {
 
     //Program
     listProgram: '/programPage',
-    listProgramByMentor: '/programPage',
+    listProgramByMentor: '/programPageByMentorId',
+    listProgramByYatra: '/programPageByYatraId',
     getProgram: '/programs',
     updateProgram: '/programs',
     createProgram: '/programs',
@@ -100,6 +101,8 @@ export const routeConstants = {
     //Yatra
     yatra: 'yatra',
     createProgram: 'create-program',
+    editProgram: 'edit-program',
+    listProgram: 'list-program',
     paramsYatraAdminId: 'yatraAdminId',
     updateProgram: 'update-program',
     //Program

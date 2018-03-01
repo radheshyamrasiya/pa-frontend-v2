@@ -1,31 +1,31 @@
 <ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
-    <div *ngFor="let devotee of contents.dataList">
-      <ngb-panel id="{{devotee.id}}_id">
+    <div *ngFor="let captureContact of contents.dataList">
+      <ngb-panel id="{{captureContact.capturedDevoteeId}}_id">
         <ng-template ngbPanelTitle>
-          <span class="float-left w-50">{{devotee.name}}</span>
-          <span class="float-right w-50" style="text-align: right">{{devotee.phone}}</span>
+          <span class="float-left w-50">{{captureContact.capturedDevoteeName}}</span>
+          <span class="float-right w-50" style="text-align: right">{{captureContact.capturedDevoteePhone}}</span>
         </ng-template>
         <ng-template ngbPanelContent>
           <div class="row">
             <div class="col">
-                <span (click)="onPhoneClick(devotee.id)">
-                <a href="tel:{{devotee.phone}}" class="w-100 btn btn-light btn-sm">
+                <span (click)="onPhoneClick(captureContact.capturedDevoteeId)">
+                <a href="tel:{{captureContact.capturedDevoteePhone}}" class="w-100 btn btn-light btn-sm">
                     <span class="oi oi-phone w-100"></span><br>Call
                 </a>
               </span>
             </div>
             <div class="col">
-              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onHistoryClick(devotee.id)">
+              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onHistoryClick(captureContact.capturedDevoteeId)">
                   <span class="oi oi-document"></span><br>History
               </button>
             </div>
             <div class="col">
-              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onProfileClick(devotee.id)">
+              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onProfileClick(captureContact.capturedDevoteeId)">
                   <span class="oi oi-person"></span><br>Profile
               </button>
             </div>
             <div class="col">
-              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onCommentClick(devotee.id)">
+              <button type="button" class="w-100 btn btn-light btn-sm" (click)="onCommentClick(captureContact.capturedDevoteeId)">
                   <span class="oi oi-pencil"></span><br>Comment
               </button>
             </div>

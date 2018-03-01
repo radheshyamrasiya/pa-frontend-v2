@@ -55,9 +55,9 @@ export class MyProgramsComponent implements OnInit {
         if(page == undefined) {
             page = 0;
         }
-        this.httpService.getList(connectionProperties.listProgram, {
+        this.httpService.getList(connectionProperties.listProgramByMentor, {
             page: page,
-            //pathParams: "/" + this.loginService.getDevoteeId(),
+            pathParams: "/" + this.loginService.getDevoteeId(),
         })
         .subscribe(contents => {
             this.contents = contents as ProgramPage;

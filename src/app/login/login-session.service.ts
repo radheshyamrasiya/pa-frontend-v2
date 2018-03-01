@@ -52,6 +52,7 @@ export class LoginSessionService implements OnInit {
                 this.statusService.setDefaultFlag(this.devoteeName);
                 this.router.navigate([routeConstants.dashboard]);
                 this.enumService.loadEnums();
+                console.log(this.enumService.enums);
             }, err => {
                 console.log(err);
                 this.loginStatus = LoginStatus.loggedOut;
