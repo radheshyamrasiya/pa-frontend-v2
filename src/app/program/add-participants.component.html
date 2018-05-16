@@ -1,7 +1,7 @@
 <div class="form-group">
     <label for="participantsInput">Add participants</label>
     <div class="input-group">
-        <input type="text" class="form-control" id="participantsInput" placeholder="Type the email of participant" aria-label="Add a Participant" [(ngModel)]="email">
+        <input type="text" class="form-control" id="participantsInput" placeholder="Type name/email/phone to search" aria-label="Add a Participant" [(ngModel)]="email" [class.is-invalid]="searchFailed" [ngbTypeahead]="emailSearch">
         <span class="input-group-btn">
             <button class="btn btn-secondary" type="button" (click)="onParticipantAddClick()"><span class="oi oi-plus"></span></button>
         </span>

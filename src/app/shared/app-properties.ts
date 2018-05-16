@@ -16,6 +16,7 @@ export const connectionProperties = {
     devoteeList: '/devoteesPage',
     devoteesByEmailId: '/devoteeByEmail',
     myCapturedListUrl: '/myCapturedListPage',
+    devoteeGlobalSearch: '/devoteeGlobalSearchPage',
 
     //History
     writeHistory: '/devoteeHistory',

@@ -4,6 +4,7 @@ export class DevoteeMin extends Entity {
     id: number;
     name: string;
     phone: string;
+    email: string;
     area: string;
     pin: string;
 }
