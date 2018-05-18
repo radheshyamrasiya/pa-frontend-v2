@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { of } from 'rxjs/observable/of';
-import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge } from 'rxjs/operators';
 
 import { routeConstants, connectionProperties } from '../shared/app-properties';
 import { ProgramAssignment, ProgramAssignmentPage } from '../model/program-assignment.model';
@@ -21,12 +19,7 @@ import { StatusService } from '../shared/status.service';
 export class AddParticipantsComponent implements OnInit {
     activePanel: string;
     contents: ProgramAssignmentPage;
-    email: string;
     programId: number;
-
-    emailSearching = false;
-    emailSearchFailed = false;
-    hideSearchingWhenUnsubscribed = new Observable(() => () => this.emailSearching = false);
 
     devoteeList: DevoteeMin[];
     searchText: string;
@@ -69,33 +62,6 @@ export class AddParticipantsComponent implements OnInit {
         });
     }
 
-    searchDevotee(term: string) {
-        if (term === '') return of([]);
-        
-        return this.httpService.getList(
-            connectionProperties.devoteeGlobalSearch,
-            "/" + this.email
-        ).pipe(
-            tap((searchResult) => console.log(JSON.stringify((searchResult as ProgramAssignmentPage).dataList))),
-            map(searchResult =>  (searchResult as DevoteeMinPage).dataList.map(assignment => (assignment as DevoteeMin).name))
-        );
-    }
-    emailSearch = (text$: Observable<string>) => text$.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        tap(() => this.emailSearching = true),
-        switchMap(
-            term => this.searchDevotee(term as string).pipe(
-                tap(() => {
-                    this.emailSearchFailed = false
-                    console.log("second place")
-                }),
-            )
-        ),
-        tap(() => this.emailSearching = false),
-        merge(this.hideSearchingWhenUnsubscribed)
-    );
-
     textChange() {
         if (this.searchText === '') {
             this.devoteeList = [];
@@ -121,27 +87,6 @@ export class AddParticipantsComponent implements OnInit {
                     this.contents = participantList;
             } 
         });
-        /*
-        this.httpService.getData(connectionProperties.devoteesByEmailId, {
-            queryParams: {email: this.email}
-        })
-        .subscribe(devotee => {
-            if (devotee==undefined || devotee == null) {
-                this.statusService.error("No devotee found for email id: " + this.email);
-                return
-            }
-            let programAssignment =  new ProgramAssignment();
-            programAssignment.attendeeId = (<Devotee>devotee).id;
-            programAssignment.programId = this.programId;
-            
-            this.httpService.postAndReturnList(connectionProperties.createProgramAssignment,'', programAssignment)
-            .subscribe(volunteerList => {
-                if (volunteerList!= undefined && volunteerList!=null) {
-                    this.contents = volunteerList;
-                } 
-            });
-        });
-        */
     }
 
     onRemoveParticipantClick(assignmentId: number) {
