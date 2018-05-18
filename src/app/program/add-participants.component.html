@@ -6,17 +6,66 @@
             <button class="btn btn-secondary" type="button" (click)="onParticipantAddClick()"><span class="oi oi-plus"></span></button>
         </span>
     </div>
+    <input type="text" class="form-control" id="participantSearch" placeholder="Type name/email/phone to search" aria-label="Add a Participant" [(ngModel)]="searchText" (keyup.enter)="textChange()">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Devotee</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let devotee of devoteeList">
+            <tr>
+                <td>{{devotee.name}} | {{devotee.phone}} | {{devotee.email}}</td>
+                <td><button class="btn btn-secondary btn-sm" type="button" (click)="onParticipantAddClick(devotee.id)">Add</button></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
     
 List of Participants
     
-<ul class="list-group">
+<ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
     <div *ngFor="let participant of contents.dataList">
-        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-            {{participant.attendeeName}} <span class="oi oi-trash" (click)="onRemoveParticipantClick(participant.id)"></span>
-        </li>
+        <ngb-panel id="{{participant.attendeeId}}_id">
+            <ng-template ngbPanelTitle>
+                <span class="float-left w-50">{{participant.attendeeName}}</span>
+                <span class="float-right w-50" style="text-align: right">{{participant.attendeePhone}}</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <div class="row">
+                    <div class="col">
+                        <span (click)="onPhoneClick(participant.attendeeId)">
+                            <a href="tel:{{participant.attendeePhone}}" class="w-100 btn btn-light btn-sm">
+                                <span class="oi oi-phone w-100"></span><br>Call
+                            </a>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-light btn-sm" (click)="onHistoryClick(participant.attendeeId)">
+                            <span class="oi oi-document"></span><br>History
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-light btn-sm" (click)="onProfileClick(participant.attendeeId)">
+                            <span class="oi oi-person"></span><br>Profile
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-light btn-sm" (click)="onCommentClick(participant.attendeeId)">
+                            <span class="oi oi-pencil"></span><br>Comment
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-light btn-sm" (click)="onRemoveParticipantClick(participant.id)">
+                            <span class="oi oi-trash"></span><br>Remove
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-panel>
     </div>
-</ul>
+</ngb-accordion>
     
 <div>
     <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>

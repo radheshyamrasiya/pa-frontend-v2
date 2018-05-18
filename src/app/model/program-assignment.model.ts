@@ -6,6 +6,8 @@ export class ProgramAssignment extends Entity{
     programName: string;
     attendeeId: number;
     attendeeName: string;
+    attendeePhone: string;
+    attendeeEmail: string;
 }
 
 export class ProgramAssignmentPage extends Page{

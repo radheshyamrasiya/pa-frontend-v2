@@ -1,14 +1,38 @@
 <div *ngFor="let program of contents.dataList">
     <div class="card">
         <div class="card-body">
-            {{program.name}}
+            {{program.name}} <br>
             <span class="font-italic small">
                 &nbsp;(Type: {{program.type}} Target Audiance: {{program.targetAudience}})
             </span> <br>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onManageProgram(program.id)">Manage Program</button>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onAddParticipants(program.id)">Add Participants</button>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onAddFollowupVolunteers(program.id)">Add Followup Volunteers</button>
-            <button type="button" class="btn btn-info btn-sm my-2" (click)="onAssignFollowups(program.id)">Assign Followups</button>
+            
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onManageProgram(program.id)">
+                        <span class="oi oi-cog w-100"></span><br>Manage
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAddParticipants(program.id)">
+                        <span class="oi oi-plus"></span><br>Participants
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAddFollowupVolunteers(program.id)">
+                        <span class="oi oi-plus"></span><br>Volunteers
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAssignFollowups(program.id)">
+                        <span class="oi oi-people"></span><br>Assign Followups
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAssignFollowups(program.id)">
+                        <span class="oi oi-people"></span><br>Followup Status
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -65,6 +65,8 @@ export class WriteCommentComponent implements OnInit {
             programId = +params[routeConstants.paramsProgramId];
             if(this.router.routerState.snapshot.url.startsWith(routeConstants.followup,1)) {
                 this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });    
+            } else if (this.router.routerState.snapshot.url.startsWith(routeConstants.myPrograms + '/' + routeConstants.addParticipants, 1)) {
+                this.router.navigate(['../../../', programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
             } else {
                 this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
             }    

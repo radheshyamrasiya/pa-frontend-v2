@@ -11,6 +11,10 @@ import { AddParticipantsComponent } from './add-participants.component';
 import { AddFollowupVolunteersComponent } from './add-followup-volunteers.component';
 import { AssignFollowupsComponent } from './assign-followups.component';
 
+import { DevoteeProfileComponent } from '../devotee/devotee-profile.component';
+import { HistoryComponent } from '../devotee/history.component';
+import { WriteCommentComponent } from '../devotee/write-comment.component';
+
 const routes: Routes = [
   {
     path: routeConstants.myPrograms,
@@ -26,6 +30,27 @@ const routes: Routes = [
         path: routeConstants.addParticipants + '/:' + routeConstants.paramsProgramId,
         component:  AddParticipantsComponent,
         canActivate: [BasicAuthGuardService],
+      },
+      {
+        path: routeConstants.addParticipants,
+        canActivate: [BasicAuthGuardService],
+        children: [
+          { 
+            path: routeConstants.devoteeProfile + '/:' + routeConstants.paramsProgramId + '/:' + routeConstants.paramDevoteeId, 
+            component: DevoteeProfileComponent,
+            canActivate: [BasicAuthGuardService],
+          },
+          { 
+            path: routeConstants.history + '/:' + routeConstants.paramsProgramId + '/:' + routeConstants.paramDevoteeId, 
+            component: HistoryComponent,
+            canActivate: [BasicAuthGuardService],
+          },
+          { 
+            path: routeConstants.writeComment + '/:' + routeConstants.paramsProgramId + '/:' + routeConstants.paramDevoteeId, 
+            component: WriteCommentComponent,
+            canActivate: [BasicAuthGuardService],
+          },
+        ]
       },
       {
         path: routeConstants.addFollowupVolunteers + '/:' + routeConstants.paramsProgramId,

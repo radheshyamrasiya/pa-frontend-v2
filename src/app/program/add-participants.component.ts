@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge } from 'rxjs/operators';
 
 import { routeConstants, connectionProperties } from '../shared/app-properties';
@@ -12,30 +13,23 @@ import { Devotee, DevoteeMinPage, DevoteeMin } from '../model/devotee.model';
 import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 
-const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
-  'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
-  'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-  'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
-  'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
-  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-
 @Component({
     selector: 'add-participants',
     templateUrl: 'add-participants.component.html'
 })
 
 export class AddParticipantsComponent implements OnInit {
+    activePanel: string;
     contents: ProgramAssignmentPage;
-    typeAheadDevoteeSearch: DevoteeMinPage;
-    devoteeList: DevoteeMin[];
     email: string;
     programId: number;
 
     emailSearching = false;
     emailSearchFailed = false;
     hideSearchingWhenUnsubscribed = new Observable(() => () => this.emailSearching = false);
+
+    devoteeList: DevoteeMin[];
+    searchText: string;
 
     constructor(
         private httpService: HttpService,
@@ -45,12 +39,20 @@ export class AddParticipantsComponent implements OnInit {
     ) { }
 
     ngOnInit() { 
+        this.activePanel = "";
         this.contents = new ProgramAssignmentPage();
         this.contents.dataList = [];
         this.contents.paging = new Paging();
 
+        this.devoteeList = [];
+
         this.activatedRoute.params.subscribe(params => {
             this.programId = +params[routeConstants.paramsProgramId];
+        });
+
+        this.activatedRoute.queryParams.subscribe(params => {
+            if (params["id"]) 
+                this.activePanel = params["id"] + "_id";
         });
         this.loadContents(0);
     }
@@ -68,29 +70,58 @@ export class AddParticipantsComponent implements OnInit {
     }
 
     searchDevotee(term: string) {
-        console.log("reached here");
+        if (term === '') return of([]);
         
         return this.httpService.getList(
             connectionProperties.devoteeGlobalSearch,
             "/" + this.email
-        ).pipe(map(searchResult => searchResult[1]));
+        ).pipe(
+            tap((searchResult) => console.log(JSON.stringify((searchResult as ProgramAssignmentPage).dataList))),
+            map(searchResult =>  (searchResult as DevoteeMinPage).dataList.map(assignment => (assignment as DevoteeMin).name))
+        );
     }
     emailSearch = (text$: Observable<string>) => text$.pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        map(term => (term as string).length < 2 ? []
-            : states.filter(v => v.toLowerCase().indexOf((term as string).toLowerCase()) > -1).slice(0, 10))
-        /*tap(() => this.emailSearching = true),
+        tap(() => this.emailSearching = true),
         switchMap(
             term => this.searchDevotee(term as string).pipe(
-                tap(() => this.emailSearchFailed = false),
+                tap(() => {
+                    this.emailSearchFailed = false
+                    console.log("second place")
+                }),
             )
         ),
         tap(() => this.emailSearching = false),
-        merge(this.hideSearchingWhenUnsubscribed)*/
+        merge(this.hideSearchingWhenUnsubscribed)
     );
 
-    onParticipantAddClick() {
+    textChange() {
+        if (this.searchText === '') {
+            this.devoteeList = [];
+            return;
+        }
+        
+        this.httpService.getList(
+            connectionProperties.devoteeGlobalSearch,
+            "/" + this.searchText
+        ).subscribe(devoteePage => {
+            this.devoteeList = (devoteePage as DevoteeMinPage).dataList as DevoteeMin[];
+        });        
+    }
+
+    onParticipantAddClick(addDevoteeId) {
+        let programAssignment =  new ProgramAssignment();
+        programAssignment.attendeeId = addDevoteeId;
+        programAssignment.programId = this.programId;
+            
+        this.httpService.postAndReturnList(connectionProperties.createProgramAssignment,'', programAssignment)
+        .subscribe(participantList => {
+            if (participantList!= undefined && participantList!=null) {
+                    this.contents = participantList;
+            } 
+        });
+        /*
         this.httpService.getData(connectionProperties.devoteesByEmailId, {
             queryParams: {email: this.email}
         })
@@ -110,6 +141,7 @@ export class AddParticipantsComponent implements OnInit {
                 } 
             });
         });
+        */
     }
 
     onRemoveParticipantClick(assignmentId: number) {
@@ -121,7 +153,23 @@ export class AddParticipantsComponent implements OnInit {
         });
     }
 
+    onPhoneClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, routeConstants.writeComment, this.programId, devoteeId]);
+    }
+
+    onHistoryClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, routeConstants.history, this.programId, devoteeId]);
+    }
+
+    onProfileClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, routeConstants.devoteeProfile, this.programId, devoteeId]);
+    }
+
+    onCommentClick(devoteeId: string): void {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, routeConstants.writeComment, this.programId, devoteeId]);
+    }
+
     onBackClick() {
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        this.router.navigate([routeConstants.myPrograms]);
     }
 }
