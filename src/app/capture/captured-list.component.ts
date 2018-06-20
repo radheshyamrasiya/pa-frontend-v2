@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CaptureContact, CaptureContactPage } from '../model/capture-contact.model';
 import { Paging } from '../model/entity.model';
 
-//import { CaptureSessionService } from './capture-session.service';
 import { HttpService } from '../shared/http.service';
 import { LoginSessionService } from '../login/login-session.service';
 import { routeConstants, connectionProperties } from '../shared/app-properties';

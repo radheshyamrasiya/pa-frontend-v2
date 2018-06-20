@@ -9,8 +9,11 @@ import { ManageProgramComponent } from './manage-program.component';
 import { AddParticipantsComponent } from './add-participants.component';
 import { AddFollowupVolunteersComponent } from './add-followup-volunteers.component';
 import { AssignFollowupsComponent } from './assign-followups.component';
+import { MarkAttendanceComponent } from './mark-attendance.component';
 
 import { ProgramRoutingModule } from './program-routing.module';
+import { SharedModule } from '../shared/shared.module';
+
 
 @NgModule({
     imports: [
@@ -18,6 +21,7 @@ import { ProgramRoutingModule } from './program-routing.module';
         FormsModule,
         BrowserModule,
         ProgramRoutingModule,
+        SharedModule,
     ],
     exports: [],
     declarations: [
@@ -27,6 +31,7 @@ import { ProgramRoutingModule } from './program-routing.module';
         AddParticipantsComponent,
         AddFollowupVolunteersComponent,
         AssignFollowupsComponent,
+        MarkAttendanceComponent,
     ],
     providers: [],
 })

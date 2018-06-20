@@ -1,0 +1,33 @@
+<ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
+  <div *ngFor="let devotee of devoteeDisplayParams.contents.dataList">
+      <ngb-panel id="{{devotee.id}}_id">
+          <ng-template ngbPanelTitle>
+              <span class="float-left w-50">{{devotee.name}}</span>
+              <span class="float-right w-50" style="text-align: right">
+                  {{devotee.phone}} <span class={{devoteeDisplayParams.quickActionIcon}} (click)="quickActionPerformed(devotee.id, devoteeDisplayParams.contents.paging.pageNumber)"></span>
+              </span>
+          </ng-template>
+          <!--
+              TODO: Check if there are any ations to be performed
+              then display the tabs
+          -->
+          <ng-template ngbPanelContent>
+              <div class="row">
+                  <div *ngFor="let action of devoteeDisplayParams.displayActions">
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-light btn-sm" (click)="actionPerformed(action.buttonText, devotee.id, devoteeDisplayParams.contents.paging.pageNumber)">
+                            <span class={{action.buttonIcon}}></span><br>{{action.buttonText}}
+                        </button>
+                    </div>
+                  </div>
+              </div>
+          </ng-template>
+      </ngb-panel>
+  </div>
+</ngb-accordion>
+  
+<div>
+  <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=devoteeDisplayParams.contents.paging.first> &lt; &lt;</button>
+  <button class="btn btn-primary my-3" (click)="loadContents(devoteeDisplayParams.contents.paging.pageNumber-1)" [disabled]=devoteeDisplayParams.contents.paging.first> &lt; Prev </button>
+  <button class="btn btn-primary my-3 float-right" (click)="loadContents(devoteeDisplayParams.contents.paging.pageNumber+1)" [disabled]=devoteeDisplayParams.contents.paging.last>Next &gt;</button>
+</div>

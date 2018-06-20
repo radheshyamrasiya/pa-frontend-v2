@@ -1,0 +1,17 @@
+<div class="form-group">
+  <input type="text" class="form-control" id="participantSearch" placeholder="Type name/email/phone + enter to search" aria-label="Add a Participant" [(ngModel)]="searchText" (keyup.enter)="textChange()">
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Devotee</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let devotee of contents.dataList">
+          <tr>
+              <td>{{devotee.name}} | {{devotee.phone}} | {{devotee.email}}</td>
+              <td><button class="btn btn-secondary btn-sm" type="button" (click)="actionPerformed(devotee.id)">{{actionButtonText}}</button></td>
+          </tr>
+      </tbody>
+  </table>
+</div>

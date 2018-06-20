@@ -36,6 +36,9 @@ export const connectionProperties = {
     getProgram: '/programs',
     updateProgram: '/programs',
     createProgram: '/programs',
+    getProgramAttendance: '/programAttendanceByProgramAndDatePage',
+    markAttendance: '/programAttendance',
+    removeAttendance: '/programAttendance',
 
     //Program Area Subscription
     listProgramAreaSubscription: '/programAreaSubscriptionByProgramPage',
@@ -111,6 +114,7 @@ export const routeConstants = {
     addParticipants: 'add-participants',
     addFollowupVolunteers: 'add-followup-volunteers',
     assignFollowups: 'assign-followups',
+    markAttendance: 'mark-attendance',
     //Followup Feature
     followup: 'followup',
     followupProgram: 'followup-program',

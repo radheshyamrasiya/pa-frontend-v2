@@ -10,6 +10,7 @@ import { ManageProgramComponent } from './manage-program.component';
 import { AddParticipantsComponent } from './add-participants.component';
 import { AddFollowupVolunteersComponent } from './add-followup-volunteers.component';
 import { AssignFollowupsComponent } from './assign-followups.component';
+import { MarkAttendanceComponent } from './mark-attendance.component';
 
 import { DevoteeProfileComponent } from '../devotee/devotee-profile.component';
 import { HistoryComponent } from '../devotee/history.component';
@@ -60,6 +61,11 @@ const routes: Routes = [
       {
         path: routeConstants.assignFollowups + '/:' + routeConstants.paramsProgramId,
         component:  AssignFollowupsComponent,
+        canActivate: [BasicAuthGuardService],
+      },
+      {
+        path: routeConstants.markAttendance + '/:' + routeConstants.paramsProgramId,
+        component:  MarkAttendanceComponent,
         canActivate: [BasicAuthGuardService],
       },
       {

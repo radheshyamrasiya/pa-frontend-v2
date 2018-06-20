@@ -1,0 +1,27 @@
+  <strong>Attendance Date</strong>
+  <div class="input-group">
+    <input class="form-control" placeholder="yyyy-mm-dd"
+              name="dp" [(ngModel)]="attendanceDate" ngbDatepicker #d="ngbDatepicker">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+          <span class="oi oi-calendar"></span>
+      </button>
+    </div>
+  </div><br>
+
+  <strong>Search Devotee for Attendance</strong>
+  <app-devotee-search 
+    [searchType]="'global'"
+    [actionButtonText]="'mark'"
+    (onActionPerformed)="markAttendanceForDevotee($event[0])"
+  >
+  </app-devotee-search><br>
+
+  <strong>List of Attendees</strong>
+  <app-devotee-display
+    [devoteeDisplayParams]='devoteeDisplayParams'
+    (onActionPerformed)="actionCallBack($event[0], $event[1], $event[2])"
+    (loadContentsCallback)="loadContents($event[0])"
+    (quickActionCallback)="removeAttendance($event[0], $event[1])"
+  >
+  </app-devotee-display>

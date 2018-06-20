@@ -47,6 +47,10 @@ export class MyProgramsComponent implements OnInit {
         this.router.navigate([routeConstants.myPrograms, routeConstants.assignFollowups, programId]);
     }
 
+    onMarkAttendance(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.markAttendance, programId]);
+    } 
+
     onBackClick() {
         this.router.navigate(['../'], {relativeTo: this.activatedRoute});
     }
