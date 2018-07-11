@@ -13,6 +13,7 @@ import { SuperAdminHolderComponent } from './super-admin-holder.component';
 import { YatraListComponent } from './yatra-list.component';
 import { CreateProgramComponent } from './create-program.component';
 import { ListProgramComponent } from './list-program.component';
+import { ManageUserAccountComponent } from './manage-user-account.component';
 
 @NgModule({
     imports: [
@@ -33,6 +34,8 @@ import { ListProgramComponent } from './list-program.component';
         YatraComponent,
         CreateProgramComponent,
         ListProgramComponent,
+        //Login
+        ManageUserAccountComponent,
     ],
     providers: [],
 })

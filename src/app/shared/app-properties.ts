@@ -36,7 +36,9 @@ export const connectionProperties = {
     getProgram: '/programs',
     updateProgram: '/programs',
     createProgram: '/programs',
-    getProgramAttendance: '/programAttendanceByProgramAndDatePage',
+    createProgramSession: '/programSession',
+    getSessionByProgramAndDate: '/programSessionOfProgramByDate', //program id and date
+    getProgramAttendance: '/programAttendanceBySessionPage', //Session id
     markAttendance: '/programAttendance',
     removeAttendance: '/programAttendance',
 
@@ -89,6 +91,7 @@ export const routeConstants = {
     dashboard: 'dashboard',
     //Login Feature
     login: 'login',
+    manageUserAccount: 'manage-user-account',
     //Devotee Feature
     devoteeProfile: 'devotee-profile',
     history: 'devotee-history',

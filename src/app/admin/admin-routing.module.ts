@@ -13,6 +13,7 @@ import { SuperAdminComponent } from './super-admin.component';
 import { YatraListComponent } from './yatra-list.component';
 import { CreateProgramComponent } from './create-program.component';
 import { ListProgramComponent } from './list-program.component';
+import { ManageUserAccountComponent } from './manage-user-account.component';
 
 const routes: Routes = [
     {
@@ -69,6 +70,11 @@ const routes: Routes = [
             },
         ]
     },
+    { 
+        path: routeConstants.manageUserAccount,
+        component:  ManageUserAccountComponent,
+        canActivate: [BasicAuthGuardService],
+    }
 ];
 
 @NgModule({

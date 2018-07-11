@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit{
     enableCapturedList= false;
     enableYatraAdmin = false;
     enableSuperAdmin = false;
+    manageUserAccount = false;
 
     constructor(
         private router: Router,
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit{
             this.enableCapturedList= true;
             //this.enableYatraAdmin = true;
             //this.enableSuperAdmin = true;
+            //this.manageUserAccount = true;
         }
 
         if (this.loginService.getRole() == userRoles.MENTOR) {
@@ -41,6 +43,7 @@ export class DashboardComponent implements OnInit{
             this.enableCapturedList= true;
             //this.enableYatraAdmin = true;
             //this.enableSuperAdmin = true;
+            this.manageUserAccount = true;
         }
 
         if (this.loginService.getRole() == userRoles.YATRA_ADMIN) {
@@ -50,6 +53,7 @@ export class DashboardComponent implements OnInit{
             //this.enableCapturedList= true;
             this.enableYatraAdmin = true;
             //this.enableSuperAdmin = true;
+            this.manageUserAccount = true;
         }
 
         if (this.loginService.getRole() == userRoles.ADMIN) {
@@ -59,6 +63,7 @@ export class DashboardComponent implements OnInit{
             this.enableCapturedList= true;
             this.enableYatraAdmin = true;
             this.enableSuperAdmin = true;
+            this.manageUserAccount = true;
         }
     }
 
@@ -84,5 +89,9 @@ export class DashboardComponent implements OnInit{
 
     onSuperAdminClick() {
         this.router.navigate([routeConstants.superAdmin]);
+    }
+
+    onManageUserAccountClick() {
+        this.router.navigate([routeConstants.manageUserAccount]);
     }
 }

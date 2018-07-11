@@ -1,7 +1,5 @@
 export class AttendanceAdd {
     id: number;
-    attendanceDate: Date;
-	programId: number;
+	sessionId: number;
 	devoteeId: number;
-	topic: string;
 }

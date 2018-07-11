@@ -1,5 +1,10 @@
+<div *ngIf="this.devoteeDisplayParams.contents.dataList.length==0">
+    No records to display
+</div>
 <ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
-  <div *ngFor="let devotee of devoteeDisplayParams.contents.dataList">
+    
+    
+    <div *ngFor="let devotee of devoteeDisplayParams.contents.dataList">
       <ngb-panel id="{{devotee.id}}_id">
           <ng-template ngbPanelTitle>
               <span class="float-left w-50">{{devotee.name}}</span>
@@ -23,7 +28,7 @@
               </div>
           </ng-template>
       </ngb-panel>
-  </div>
+    </div>
 </ngb-accordion>
   
 <div>

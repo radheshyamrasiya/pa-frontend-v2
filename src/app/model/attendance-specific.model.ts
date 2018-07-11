@@ -2,9 +2,6 @@ import { DevoteeMin } from './devotee.model';
 import { Page } from './entity.model';
 
 export class AttendanceSpecific {
-    attendanceDate: Date;
-	programId: number;
-    topic: string;
     attendanceId: {
         attendanceId: number;
         devoteeId: number;
