@@ -56,22 +56,21 @@ export class CreateYatraComponent implements OnInit {
     }
 
     onSelectYatraAdminClick(content) {
-        this.modalService.open(content).result.then((result) => {
-            if (result=="fetch") {
-                this.httpService.getData(connectionProperties.devoteesByEmailId, {
-                    queryParams: {email: this.emailAddress}
-                })
+        this.modalService.open(content).result.then((devoteeId: number) => {
+            console.log(`Clicked Devotee with id ${devoteeId}`);
+            this.httpService.getData(`${connectionProperties.devotees}/${devoteeId}`)
                 .subscribe((devotee) => {
-                    if (devotee == null) {
-                        this.statusService.error("Devotee not found!");
+                    if (devotee ===  null) {
+                        this.statusService.error("Devotee not found");
                     } else {
                         this.devotee = devotee as Devotee;
-                        this.yatra.yatraAdmin = (<Devotee>devotee).id;
+                        this.yatra.yatraAdmin = this.devotee.id;
                     }
-                }, err => {
-                    this.statusService.setFlag("Email not found! Unable to fetch devotee", statusType.error);
-                });
-            }
+                }, (err) => {
+                    this.statusService.setFlag("Unable to fetch devotee", statusType.error);
+                })
+        }, (err) => {
+            console.log(`dismiss called with reason ${err}`);
         });
     }
 
@@ -99,9 +98,14 @@ export class CreateYatraComponent implements OnInit {
         if (!this.validatePage()) return;
         this.httpService.postAndReturnData(connectionProperties.createYatra,'',this.yatra)
         .subscribe(responseYatra => {
-            //Handle Success
+            // Handle success
+            const yatraDetails = responseYatra as Yatra;
+            this.statusService.success(`Created ${yatraDetails.yatraName} successfully!`);
+            this.onBackClick();
+
         }, err => {
             //Handle Error
+            this.statusService.error('There was a problem with registering this yatra, please contact admin');
         });
     }
 
@@ -110,15 +114,20 @@ export class CreateYatraComponent implements OnInit {
         this.httpService.putAndReturnData(connectionProperties.updateYatra, "/" + this.yatra.id, this.yatra)
         .subscribe(responseYatra => {
             //Handle Success
+            const yatraDetails = responseYatra as Yatra;
+            this.statusService.success(`Updated ${yatraDetails.yatraName} successfully!`);
+            this.onBackClick();
         }, err => {
             //Handle Error
+          this.statusService.error('There was a problem with updating this yatra, please contact admin');
         });
     }
 
     onBackClick() {
-        if (this.isCreate)
+        if (this.isCreate) {
             this.router.navigate(['../'], {relativeTo: this.activatedRoute});
-        else
-            this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        } else {
+            this.router.navigate([routeConstants.superAdmin, routeConstants.listYatra]);
+        }
     }
 }

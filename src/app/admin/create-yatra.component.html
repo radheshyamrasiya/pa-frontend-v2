@@ -25,7 +25,7 @@
     <label for="yatraAdminInput">Yatra Admin</label>
     <div class="input-group">
         <input type="text" class="form-control" id="yatraAdminInput" placeholder="Select Yatra Admin" [(ngModel)]='devotee.displayName' disabled>
-        <button class="btn btn-primary" (click)="onSelectYatraAdminClick(fetchDevoteeByEmail)">Select</button>
+        <button class="btn btn-primary" (click)="onSelectYatraAdminClick(searchDevotee)">Search</button>
     </div>
 </div>
 
@@ -39,21 +39,19 @@
 <button class="btn btn-primary" (click)="onBackClick()" id="updateButton">Back</button>
 
 
-<ng-template #fetchDevoteeByEmail let-c="close" let-d="dismiss">
+<ng-template #searchDevotee let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title">Fetch Devotee</h4>
+        <h4 class="modal-title">Search Devotee</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <label for="emailAddressInput">Enter devotee email id</label>
-            <input type="text" class="form-control" id="emailAddressInput" placeholder="Type email address" [(ngModel)]='emailAddress'>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('cancel')">Cancel</button>
-        <button type="button" class="btn btn-outline-dark" (click)="c('fetch')">Fetch</button>
+        <app-devotee-search 
+            [searchType]="'global'"
+            [actionButtonText]="'Select'"
+            (onActionPerformed)="c($event[0])"
+          >
+          </app-devotee-search>
     </div>
 </ng-template>

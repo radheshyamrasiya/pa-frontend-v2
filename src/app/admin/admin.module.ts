@@ -15,12 +15,15 @@ import { CreateProgramComponent } from './create-program.component';
 import { ListProgramComponent } from './list-program.component';
 import { ManageUserAccountComponent } from './manage-user-account.component';
 
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
     imports: [
         NgbModule,
         FormsModule,
         BrowserModule,
         AdminRoutingModule,
+        SharedModule,
     ],
     exports: [],
     declarations: [
