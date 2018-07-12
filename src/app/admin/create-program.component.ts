@@ -66,18 +66,17 @@ export class CreateProgramComponent implements OnInit {
     }
 
     onSelectMentorClick(content) {
-        this.modalService.open(content).result.then((result) => {
-            if (result=="fetch") {
-                this.httpService.getData(connectionProperties.devoteesByEmailId, {
-                    queryParams: {email: this.emailAddress}
-                })
+        this.modalService.open(content).result.then((devoteeId: number) => {
+            console.log(`Clicked Devotee with id ${devoteeId}`);
+            this.httpService.getData(`${connectionProperties.devotees}/${devoteeId}`)
                 .subscribe((devotee) => {
-                    this.program.mentorId = (<Devotee>devotee).id;
                     this.devotee = devotee as Devotee;
-                }, err => {
-                    this.statusService.setFlag("Email not found! Unable to fetch devotee", statusType.error);
-                });
-            }
+                    this.program.mentorId = this.devotee.id;
+                }, (err) => {
+                    this.statusService.setFlag("Unable to fetch devotee", statusType.error);
+                })
+        }, (err) => {
+            console.log(`dismiss called with reason ${err}`);
         });
     }
 
@@ -106,8 +105,11 @@ export class CreateProgramComponent implements OnInit {
         this.httpService.postAndReturnData(connectionProperties.createProgram,'',this.program)
         .subscribe(responseProgram => {
             //Handle Success
+            this.statusService.success(`Created program ${this.program.name} successfully!`);
+            this.onBackClick();
         }, err => {
             //Handle Error
+            this.statusService.error('Unable to create program, please contact admin');
         });
     }
 
@@ -116,8 +118,11 @@ export class CreateProgramComponent implements OnInit {
         this.httpService.putAndReturnData(connectionProperties.updateProgram,"/" + this.program.id,this.program)
         .subscribe(responseProgram => {
             //Handle Success
+            this.statusService.success(`Updated program ${this.program.name} successfully!`);
+            this.onBackClick();
         }, err => {
             //Handle Error
+            this.statusService.error(`Unable to update program, please contact admin`);
         });
     }
 
