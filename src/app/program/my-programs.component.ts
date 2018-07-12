@@ -35,6 +35,10 @@ export class MyProgramsComponent implements OnInit {
         this.router.navigate([routeConstants.myPrograms, routeConstants.manageProgram, programId]);
     }
 
+    onManageSessions(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.manageSessions, programId]);
+    }
+
     onAddParticipants(programId: number) {
         this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, programId]);
     }

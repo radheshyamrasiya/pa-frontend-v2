@@ -29,9 +29,6 @@ export class MarkAttendanceComponent implements OnInit {
   programId: number;
 
   sessionId: number;
-  isValidSession: boolean;
-
-  sessionCreateUpdate: string;
 
   //Processed values of backend response
   session: ProgramSession;
@@ -53,9 +50,6 @@ export class MarkAttendanceComponent implements OnInit {
 
     //Initializing Session
     this.session = new ProgramSession();
-    this.session.topic = "";
-    this.isValidSession = false;
-    this.sessionCreateUpdate = "Create Session";
 
     //Setting the Attendance Date Picker of to today's date
     let now = new Date();
@@ -99,30 +93,13 @@ export class MarkAttendanceComponent implements OnInit {
       '/' + this.programId + '/' + this.session.sessionDate)
     .subscribe(response => {
       this.session = response as ProgramSession;
-      this.isValidSession = true;
+      console.log(this.session);
       this.loadContents(0);
-      this.sessionCreateUpdate = "Update Session";
     }, err => {
       //Handle Error
+      this.session = new ProgramSession;
       this.initialiseDevoteeDisplayParams();
-      this.isValidSession = false;
-      this.sessionCreateUpdate = "Create Session";
     });
-  }
-  
-  createUpdateSession() {
-    if (this.sessionCreateUpdate == "Create Session") { 
-      this.httpService.post(connectionProperties.createProgramSession, this.session)
-      .subscribe(response => {
-        this.session = JSON.parse(response._body) as ProgramSession;
-      });
-    } else if (this.sessionCreateUpdate == "Update Session"){
-      this.httpService.put(connectionProperties.createProgramSession
-        + "/" + this.session.id, this.session)
-        .subscribe(response => {
-          this.session = JSON.parse(response._body) as ProgramSession;
-        })
-    }
   }
 
   prepareAttendeeList(): DevoteeMinPage {
@@ -136,14 +113,13 @@ export class MarkAttendanceComponent implements OnInit {
     let attendanceDate: Date;
     attendanceDate = new Date(
       this.attendanceDate.year, 
-      this.attendanceDate.month,
+      this.attendanceDate.month-1,
       this.attendanceDate.day
     );
     return attendanceDate;
   }
 
   markAttendanceForDevotee(devoteeId: number, page:number) {
-    if (!this.isValidSession) return;
     let attendanceAdd = new AttendanceAdd();
     attendanceAdd.sessionId = this.session.id;
     attendanceAdd.devoteeId = devoteeId;
@@ -189,19 +165,6 @@ export class MarkAttendanceComponent implements OnInit {
       default:
         //Wrong action in callback
     }
-  }
-
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
-      if (result == 'Fetch Session') {
-        this.session.id = null;
-        this.session.topic = "";
-        this.isValidSession = false;
-        this.loadSession();
-      }
-    }, (reason) => {
-      //Do nothing if the dialog is closed by x button or some other means
-    })
   }
 
   onBackClick() {

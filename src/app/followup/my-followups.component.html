@@ -6,6 +6,13 @@
         </div>
     </div>
 </div>
+<div class="card">
+    <div class="card-body">
+        <h6 class="card-title"> Followup for Session </h6>
+        Date: {{program.currentFollowupSessionDate}}<br>
+        Topic: {{program.currentFollowupSessionTopic}}<br>
+    </div>
+</div>
 <hr>
 <ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
   <div *ngFor="let followupAttendee of contents.dataList">

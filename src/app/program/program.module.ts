@@ -13,6 +13,7 @@ import { MarkAttendanceComponent } from './mark-attendance.component';
 
 import { ProgramRoutingModule } from './program-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ManageSessionsComponent } from './manage-sessions.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SharedModule } from '../shared/shared.module';
         AddFollowupVolunteersComponent,
         AssignFollowupsComponent,
         MarkAttendanceComponent,
+        ManageSessionsComponent,
     ],
     providers: [],
 })

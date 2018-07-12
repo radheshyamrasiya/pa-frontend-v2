@@ -1,7 +1,10 @@
 import { Entity, Page, Paging } from './entity.model';
 
 export class Followup extends Entity{
-    id: number;
+	id: number;
+	followupForSessionId: number;
+	followupForSessionDate: Date;
+	followupForSessionTopic: string;
 	volunteerId: number;
 	attendeeId: number;
 	programId: number;

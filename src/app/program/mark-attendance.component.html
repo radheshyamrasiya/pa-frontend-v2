@@ -1,51 +1,42 @@
-<button class="btn btn-sm" (click)="open(fetchSessionDate)">Select Session Date</button>  
-<br>
-Session for date: {{attendanceDate.day}}-{{attendanceDate.month}}-{{attendanceDate.year}}
-<div class="form-group">
-    <label for="topicInput">Topic of Session</label>
-    <input type="text" class="form-control" id="topicInput" placeholder="Enter the topic of the session" aria-label="Session Topic" [(ngModel)]="session.topic">
-</div>
-<button class="btn btn-sm" (click)="createUpdateSession()">{{this.sessionCreateUpdate}}</button>
-<br>
-
-  <strong>Search Devotee for Attendance</strong>
-  <app-devotee-search 
-    [searchType]="'global'"
-    [actionButtonText]="'mark'"
-    (onActionPerformed)="markAttendanceForDevotee($event[0])"
-  >
-  </app-devotee-search><br>
-
-  <strong>List of Attendees</strong>
-  <app-devotee-display
-    [devoteeDisplayParams]='devoteeDisplayParams'
-    (onActionPerformed)="actionCallBack($event[0], $event[1], $event[2])"
-    (loadContentsCallback)="loadContents($event[0])"
-    (quickActionCallback)="removeAttendance($event[0], $event[1])"
-  >
-  </app-devotee-display>
-
-  <button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>
-
-  <ng-template #fetchSessionDate let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title">Select Session Date</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
+<div class="input-group">
+    <input class="form-control" placeholder="yyyy-mm-dd"
+          name="dp" [(ngModel)]="attendanceDate" ngbDatepicker #d="ngbDatepicker">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+        <span class="oi oi-calendar"></span>
+      </button>
+      <button class="btn btn-outline-info" (click)="loadSession()" type="button">
+        <span class="oi oi-pencil"></span>
       </button>
     </div>
-    <div class="modal-body">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-              name="dp" [(ngModel)]="attendanceDate" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-            <span class="oi oi-calendar"></span>
-          </button>
-        </div>
-      </div>
+  </div>  
+<br>
+Session Date: {{session.sessionDate}} <br>
+Session Topic: {{session.topic}} <br>
+<br>
+<div *ngIf="session.id==undefined else validSession"><strong>Select a valid session date</strong></div>
+ 
+<ng-template #validSession>
+    <div class="card">
+      <div class="card-body"> <h6 class="card-title"> Mark Attendance </h6>
+        <strong>Search Devotee for Attendance</strong>
+        <app-devotee-search 
+          [searchType]="'global'"
+          [actionButtonText]="'mark'"
+          (onActionPerformed)="markAttendanceForDevotee($event[0])"
+        >
+        </app-devotee-search><br>
+
+        <strong>List of Attendees</strong>
+        <app-devotee-display
+          [devoteeDisplayParams]='devoteeDisplayParams'
+          (onActionPerformed)="actionCallBack($event[0], $event[1], $event[2])"
+          (loadContentsCallback)="loadContents($event[0])"
+          (quickActionCallback)="removeAttendance($event[0], $event[1])"
+        >
+        </app-devotee-display>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c('Fetch Session')">Fetch Session</button>
-    </div>
-  </ng-template>
+  </div>
+</ng-template>
+
+<button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>

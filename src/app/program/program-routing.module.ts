@@ -11,6 +11,7 @@ import { AddParticipantsComponent } from './add-participants.component';
 import { AddFollowupVolunteersComponent } from './add-followup-volunteers.component';
 import { AssignFollowupsComponent } from './assign-followups.component';
 import { MarkAttendanceComponent } from './mark-attendance.component';
+import { ManageSessionsComponent } from './manage-sessions.component';
 
 import { DevoteeProfileComponent } from '../devotee/devotee-profile.component';
 import { HistoryComponent } from '../devotee/history.component';
@@ -25,6 +26,11 @@ const routes: Routes = [
       {
         path: routeConstants.manageProgram + '/:' + routeConstants.paramsProgramId,
         component:  ManageProgramComponent,
+        canActivate: [BasicAuthGuardService],
+      },
+      {
+        path: routeConstants.manageSessions + '/:' + routeConstants.paramsProgramId,
+        component:  ManageSessionsComponent,
         canActivate: [BasicAuthGuardService],
       },
       {
