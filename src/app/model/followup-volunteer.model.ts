@@ -6,6 +6,7 @@ export class FollowupVolunteer extends Entity{
     devoteeId: number;
     programName: string;
     devoteeName: string;
+    followupVolunteer: boolean;
 }
 
 export class FollowupVolunteerPage extends Page{
