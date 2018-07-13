@@ -11,6 +11,9 @@ export class Program extends Entity{
     type: string;
     targetAudience: string;
     followupDescription: string[];
+    currentFollowupSession: number;
+    currentFollowupSessionDate: Date;
+    currentFollowupSessionTopic: string;
 }
 
 export class ProgramPage extends Page{

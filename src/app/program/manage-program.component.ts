@@ -3,6 +3,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Program } from '../model/program.model';
+import { ProgramSession } from '../model/program-session.model';
 import { ProgramAreaSubscription, ProgramAreaSubscriptionPage } from '../model/program-area-subscription.model';
 import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 
@@ -16,6 +17,9 @@ import { EnumService } from '../shared/enum.service';
 })
 
 export class ManageProgramComponent implements OnInit {
+    //Date Picker data
+    attendanceDate;
+
     program: Program;
     areaSubscription: ProgramAreaSubscriptionPage;
     task: string;
@@ -32,6 +36,14 @@ export class ManageProgramComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        //Setting the Attendance Date Picker of to today's date
+        let now = new Date();
+        this.attendanceDate = {
+            year: now.getFullYear(),
+            month: now.getMonth() + 1,
+            day: now.getDate()
+        };
+
         this.program = new Program();
         this.areaSubscription = new ProgramAreaSubscriptionPage();
         this.countryCodeText = "";
@@ -46,6 +58,30 @@ export class ManageProgramComponent implements OnInit {
                     //
             });
         });
+    }
+
+    getAttendanceDateFromPicker(): Date {
+        let attendanceDate: Date;
+        attendanceDate = new Date(
+            this.attendanceDate.year, 
+            this.attendanceDate.month-1,
+            this.attendanceDate.day
+        );
+        return attendanceDate;
+    }
+
+    onFetchCurrentFollowupSession() {
+        this.httpService.getData(connectionProperties.getSessionByProgramAndDate
+            + "/" + this.program.id
+            + "/" + this.getAttendanceDateFromPicker()
+        ).subscribe(session => {
+            let sessionObj = session as ProgramSession;
+            this.program.currentFollowupSession = sessionObj.id;
+            this.program.currentFollowupSessionDate = sessionObj.sessionDate;
+            this.program.currentFollowupSessionTopic = sessionObj.topic;
+        }, err => {
+            this.program.currentFollowupSession = undefined;
+        })
     }
 
     loadProgramAreaSubscription() {

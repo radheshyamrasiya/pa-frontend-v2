@@ -1,0 +1,71 @@
+<strong>Create New Sessions</strong>
+  <div class="input-group">
+    <input class="form-control" placeholder="yyyy-mm-dd"
+          name="dp" [(ngModel)]="attendanceDate" ngbDatepicker #d="ngbDatepicker">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+        <span class="oi oi-calendar"></span>
+      </button>
+      <button class="btn btn-outline-info" (click)="loadCreateUpdateSession(createUpdateSession)" type="button">
+        <span class="oi oi-pencil"></span>
+      </button>
+    </div>
+  </div>
+<br>
+<strong>List of Sessions</strong>
+
+<div *ngIf="contents.dataList.length==0">
+  No sessions yet
+</div>
+
+<ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
+  <div *ngFor="let sessionItem of contents.dataList">
+    <ngb-panel id="{{sessionItem.id}}_id">
+        <ng-template ngbPanelTitle>
+            <span class="float-left w-50">{{sessionItem.sessionDate}}</span>
+            <span class="float-right w-50" style="text-align: right">
+                {{sessionItem.topic}}
+            </span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            <div class="row">
+              <div class="col">
+                  <button class="btn btn-outline-info" (click)="updateSession(createUpdateSession,sessionItem.sessionDate)" type="button">
+                      <span class="oi oi-pencil"></span>
+                  </button>
+              </div>
+            </div>
+        </ng-template>
+    </ngb-panel>
+  </div>
+</ngb-accordion>
+
+<div>
+<button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
+<button class="btn btn-primary my-3" (click)="loadContents(contents.paging.pageNumber-1)" [disabled]=contents.paging.first> &lt; Prev </button>
+<button class="btn btn-primary my-3 float-right" (click)="loadContents(contents.paging.pageNumber+1)" [disabled]=contents.paging.last>Next &gt;</button>
+</div>
+
+
+  <ng-template #createUpdateSession let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Session Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+          <label for="topicInput">Topic of Session</label>
+          <input type="text" class="form-control" id="topicInput" placeholder="Enter the topic of the session" aria-label="Session Topic" [(ngModel)]="session.topic">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div *ngIf="session.id!=undefined; else createSessionButtonBlock">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Update Session')">Update Session</button>
+      </div>
+      <ng-template #createSessionButtonBlock>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Create Session')">Create Session</button>
+      </ng-template>
+    </div>
+  </ng-template>

@@ -38,6 +38,7 @@ export const connectionProperties = {
     createProgram: '/programs',
     createProgramSession: '/programSession',
     getSessionByProgramAndDate: '/programSessionOfProgramByDate', //program id and date
+    getSessionByProgram: '/programSessionByProgramPage', //programId
     getProgramAttendance: '/programAttendanceBySessionPage', //Session id
     markAttendance: '/programAttendance',
     removeAttendance: '/programAttendance',
@@ -114,6 +115,7 @@ export const routeConstants = {
     updateProgram: 'update-program',
     //Program
     manageProgram: 'manage-program',
+    manageSessions: 'manage-sessions',
     addParticipants: 'add-participants',
     addFollowupVolunteers: 'add-followup-volunteers',
     assignFollowups: 'assign-followups',
