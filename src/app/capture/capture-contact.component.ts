@@ -77,7 +77,7 @@ export class CaptureContactComponent implements OnInit {
                 this.createHistoryEntry(devoteeObj.id);
                 this.initialiseForNewCapture();
             }, err =>{
-                //TODO: Handle Error
+                //TODO: Handle Error 
             });
         }
     }
