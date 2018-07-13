@@ -5,6 +5,7 @@ export class FollowupVolunteer extends Entity{
     programId: number;
     devoteeId: number;
     programName: string;
+    programArea: string;
     devoteeName: string;
 }
 

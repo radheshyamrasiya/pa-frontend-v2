@@ -15,6 +15,7 @@ export const connectionProperties = {
     devotees: '/devotees',
     devoteeList: '/devoteesPage',
     devoteesByEmailId: '/devoteeByEmail',
+    devoteesByPhone: '/devoteeByPhone', //phone no
     myCapturedListUrl: '/myCapturedListPage',
     devoteeGlobalSearch: '/devoteeGlobalSearchPage',
 
@@ -55,6 +56,7 @@ export const connectionProperties = {
 
     //Followup Volunteer
     listFollowupVolunteer: '/followUpVolunteerByProgramPage',
+    listProgramsByVolunteer: '/followUpProgramsByVolunteerPage', //volunteer id
     createFollowupVolunteer: '/followUpVolunteer',
     deleteFollowupVolunteer: '/followUpVolunteer',
 
@@ -151,3 +153,4 @@ export const welcomeMessage = "Hare Krishna! Welcome to Preaching Assistant";
 export const greeting = "Hare Krishna, ";
 
 export const dbRequestPageSize = 5;
+
