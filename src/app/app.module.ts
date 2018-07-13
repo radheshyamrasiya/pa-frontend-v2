@@ -17,6 +17,7 @@ import { DevoteeModule } from './devotee/devotee.module';
 import { AdminModule } from './admin/admin.module';
 import { ProgramModule } from './program/program.module';
 import { FollowupModule } from './followup/followup.module';
+import { UserModule } from './user/user.module';
 
 import { NavService } from './shared/nav.service';
 import { LoginSessionService } from './login/login-session.service';
@@ -46,6 +47,7 @@ import { HttpService } from './shared/http.service';
     AdminModule,
     ProgramModule,
     FollowupModule,
+    UserModule,
   ],
   providers: [
     NavService,

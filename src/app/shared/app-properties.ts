@@ -9,7 +9,10 @@ export const connectionProperties = {
 
     //Enums
     enums: '/enumModels',
-    
+
+    //User
+    changePassword: '/changePassword',
+
     //Devotee
     capture: '/devotees',
     devotees: '/devotees',
@@ -128,6 +131,10 @@ export const routeConstants = {
     //Program Feature
     myPrograms: 'my-programs',
     paramsProgramId: 'programId',
+    //User related
+    user: 'user',
+    changePassword: 'edit-password',
+    editProfile: 'edit-profile',
 };
 
 //For history comments
