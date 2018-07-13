@@ -26,7 +26,7 @@ export class AddFollowupVolunteersComponent implements OnInit {
         private router: Router,
     ) { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.contents = new FollowupVolunteerPage();
         this.contents.dataList = [];
         this.contents.paging = new Paging();
@@ -45,30 +45,25 @@ export class AddFollowupVolunteersComponent implements OnInit {
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
                 this.contents = volunteerList;
-            } 
+            }
         });
     }
 
-    onVolunteerAddClick() {
-        this.httpService.getData(connectionProperties.devoteesByEmailId, {
-            queryParams: {email: this.email}
-        })
-        .subscribe(devotee => {
-            if (devotee==undefined || devotee == null) {
-                this.statusService.error("No devotee found for email id: " + this.email);
-                return
-            }
-            let followupVolunteer =  new FollowupVolunteer();
-            followupVolunteer.devoteeId = (<Devotee>devotee).id;
-            followupVolunteer.programId = this.programId;
-            
-            this.httpService.postAndReturnList(connectionProperties.createFollowupVolunteer, '', followupVolunteer)
-            .subscribe(volunteerList => {
-                if (volunteerList!= undefined && volunteerList!=null) {
-                    this.contents = volunteerList;
-                } 
-            });
-        });
+    onVolunteerAddClick(devoteeId: number) {
+        console.log(`You want to add devotee ${devoteeId} as volunteer`);
+        this.httpService.getData(`${connectionProperties.devotees}/${devoteeId}`)
+            .subscribe((devotee) => {
+                let followupVolunteer = new FollowupVolunteer();
+                followupVolunteer.devoteeId = (<Devotee>devotee).id;
+                followupVolunteer.programId = this.programId;
+
+                this.httpService.postAndReturnList(connectionProperties.createFollowupVolunteer, '', followupVolunteer)
+                    .subscribe(volunteerList => {
+                        if (volunteerList != undefined && volunteerList != null) {
+                            this.contents = volunteerList;
+                        }
+                    })
+            })
     }
 
     onRemoveVolunteerClick(assignmentId: number) {
@@ -76,8 +71,30 @@ export class AddFollowupVolunteersComponent implements OnInit {
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
                 this.contents = volunteerList;
-            } 
+            }
         });
+    }
+
+    onAddAsFollowupVolunteerClick(assignment: any) {
+        assignment.followupVolunteer = true;
+        this.httpService.putAndReturnData(`${connectionProperties.createFollowupVolunteer}/${assignment.id}`, '', assignment)
+            .subscribe((assignmentData) => {
+                // success, do nothing since already did optimistic update
+            }, (err) => {
+                this.statusService.error(`Failed to add as followup volunteer`);
+                assignment.followupVolunteer = false;
+            })
+    }
+
+    onRemoveAsFollowupVolunteerClick(assignment: any) {
+        assignment.followupVolunteer = false;
+        this.httpService.putAndReturnData(`${connectionProperties.createFollowupVolunteer}/${assignment.id}`, '', assignment)
+            .subscribe((assignmentData) => {
+                // success, do nothing since already did optimistic update
+            }, (err) => {
+                this.statusService.error('Failed to remove as followup volunteer');
+                assignment.followupVolunteer = true;
+            })
     }
 
     onBackClick() {

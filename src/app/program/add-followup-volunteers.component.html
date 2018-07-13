@@ -1,22 +1,41 @@
-<div class="form-group">
-    <label for="volunteerInput">Add followup volunteer</label>
-    <div class="input-group">
-        <input type="text" class="form-control" id="VolunteerInput" placeholder="Add a Followup Task" aria-label="Type volunteer email id" [(ngModel)]="email">
-        <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button" (click)="onVolunteerAddClick()"><span class="oi oi-plus"></span></button>
-        </span>
-    </div>
-</div>
+<app-devotee-search
+    [searchType]="'global'"
+    [actionButtonText]="'Add'"
+    (onActionPerformed)="onVolunteerAddClick($event[0])"
+>
+</app-devotee-search>
 
-List of Volunteers
+List of Volunteers ({{ this.contents.paging.totalElements }})
+<ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
+        <div *ngFor="let assignment of contents.dataList">
+            <ngb-panel id="{{assignment.devoteeId}}_id">
+                <ng-template ngbPanelTitle>
+                    <div class="d-flex justify-content-between align-items-center">
+                                <span>
+                                    {{assignment.devoteeName}}
+                                    <span *ngIf="assignment.followupVolunteer" class="font-italic">(Followup volunteer)</span>
+                                </span>
+                                <span class="oi oi-trash" (click)="onRemoveVolunteerClick(assignment.id)"></span>
+                    </div>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="row">
+                        <div *ngIf="assignment.followupVolunteer===false" class="col">
+                            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onAddAsFollowupVolunteerClick(assignment)">
+                                <span class="oi oi-plus"></span><br>Add as Followup Volunteer
+                            </button>
+                        </div>
+                        <div *ngIf="assignment.followupVolunteer" class="col">
+                            <button type="button" class="w-100 btn btn-light btn-sm" (click)="onRemoveAsFollowupVolunteerClick(assignment)">
+                                <span class="oi oi-plus"></span><br>Remove as Followup Volunteer
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </div>
+    </ngb-accordion>
 
-<ul class="list-group">
-    <div *ngFor="let assignment of contents.dataList">
-        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-            {{assignment.devoteeName}} <span class="oi oi-trash" (click)="onRemoveVolunteerClick(assignment.id)"></span>
-        </li>
-    </div>
-</ul>
 
 <div>
     <button class="btn btn-primary my-3" (click)="loadContents(0)" [disabled]=contents.paging.first> &lt; &lt;</button>
