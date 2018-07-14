@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { routeConstants, statusType } from './shared/app-properties';
+import { LoginStatus } from './shared/app-properties';
 import { LoginSessionService } from './login/login-session.service';
 import { StatusService } from './shared/status.service';
 
@@ -12,12 +13,15 @@ import { StatusService } from './shared/status.service';
 })
 
 export class AppComponent implements OnInit {
+  public LoginStatus;
 
   constructor(
     private router: Router,
     private loginService: LoginSessionService,
     public statusService: StatusService,
-  ) {}
+  ) {
+    this.LoginStatus = LoginStatus;
+  }
 
   ngOnInit() {
     this.statusService.resetDefaultFlag();
@@ -25,6 +29,11 @@ export class AppComponent implements OnInit {
 
   onDashboardClick(): void {
     this.router.navigate([routeConstants.dashboard]);
+  }
+
+  onChangePasswordClick(): void {
+    console.log('password edit');
+    this.router.navigate([routeConstants.user, routeConstants.changePassword]);
   }
 
   onLogoutClick(): void {

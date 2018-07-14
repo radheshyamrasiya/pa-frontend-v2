@@ -8,9 +8,14 @@
     <button type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onDashboardClick()">
         <span class="oi oi-home"></span>
     </button>
-    <button type="button" class="btn btn-secondary float-right bg-info mx-2 my-2" (click)="onLogoutClick()">
+    <span class="float-right">
+      <button *ngIf="this.loginService.loginStatus===LoginStatus.loggedIn" type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onChangePasswordClick()">
+        <span class="oi oi-lock-locked"></span>
+      </button>
+      <button type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onLogoutClick()">
         <span class="oi oi-account-logout"></span>
-    </button>
+      </button>
+    </span>
     </div>
     <div class="bg-light py-2">
         <router-outlet></router-outlet>

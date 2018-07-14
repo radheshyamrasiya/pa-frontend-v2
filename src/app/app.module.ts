@@ -18,6 +18,7 @@ import { AdminModule } from './admin/admin.module';
 import { ProgramModule } from './program/program.module';
 import { FollowupModule } from './followup/followup.module';
 import { ReportsModule } from './reports/reports.module';
+import { UserModule } from './user/user.module';
 
 import { NavService } from './shared/nav.service';
 import { LoginSessionService } from './login/login-session.service';
@@ -48,6 +49,7 @@ import { HttpService } from './shared/http.service';
     ProgramModule,
     FollowupModule,
     ReportsModule,
+    UserModule,
   ],
   providers: [
     NavService,
