@@ -87,6 +87,7 @@ export const connectionProperties = {
 
     //Reports
     followupReport: '/followUpReport', //mentorId/programId - programId can be 0 for all program
+    attendanceReport: '/programAttendanceGeneralReport', //programId
 };
 
 export const callResponse = {

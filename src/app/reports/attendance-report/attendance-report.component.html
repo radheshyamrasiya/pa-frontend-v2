@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-body"><h6 class="card-title">Attendance Report of {{attendanceReport.programName}}</h6>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let colName of attendanceReport.columnNames">{{colName}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rowData of attendanceReport.reportRows">
+            <td *ngFor="let colName of attendanceReport.columnNames">{{rowData[colName]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

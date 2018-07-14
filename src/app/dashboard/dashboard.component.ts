@@ -6,6 +6,7 @@ import { userRoles } from '../login/user-roles';
 import { LoginSessionService } from '../login/login-session.service';
 
 import { FollowupReportComponent } from '../reports/followup-report/followup-report.component';
+import { AttendanceReportComponent } from '../reports/attendance-report/attendance-report.component';
 
 @Component ({
     selector: 'dashboard',

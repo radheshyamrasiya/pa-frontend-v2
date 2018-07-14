@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FollowupReportComponent } from './followup-report/followup-report.component';
+import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 
 @NgModule({
     imports: [
@@ -13,9 +14,11 @@ import { FollowupReportComponent } from './followup-report/followup-report.compo
     ],
     exports: [
         FollowupReportComponent,
+        AttendanceReportComponent,
     ],
     declarations: [
         FollowupReportComponent,
+        AttendanceReportComponent,
     ],
     providers: [
     ],
