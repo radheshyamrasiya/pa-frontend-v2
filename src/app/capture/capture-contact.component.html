@@ -1,10 +1,21 @@
 <div class="form-group">
+    <label for="contactNumberInput">Contact Number</label>
+    <div class="input-group">
+        <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='devotee.smsPhone'>
+        <button class="btn btn-outline-primary" id="checkDevotee" (click)="onCheckDevoteeClick()">
+            Exist?
+        </button>
+    </div>
+</div>
+
+<div class="form-group">
     <label for="nameInput">Name</label>
     <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='devotee.legalName'>
 </div>
+
 <div class="form-group">
-    <label for="contactNumberInput">Contact Number</label>
-    <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='devotee.smsPhone'>
+    <label for="emailInput">Email</label>
+    <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='devotee.email'>
 </div>
 <div class="form-group">
     <label for="areaInput">Area</label>
@@ -12,7 +23,45 @@
 </div>
 <div class="form-group">
     <label for="postalCodeInput">ZIP/Postal Code</label>
-    <input type="tel" class="form-control" id="postalCodeInput" placeholder="ZIP/Postal Code" [(ngModel)]='devotee.zipPostalCode'>
+    <input type="text" class="form-control" id="postalCodeInput" placeholder="ZIP/Postal Code" [(ngModel)]='devotee.zipPostalCode'>
 </div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div ngbDropdown>
+            <button class="btn btn-outline-primary" id="programMenu" ngbDropdownToggle>
+                Interested In
+            </button>
+            <div ngbDropdownMenu aria-labelledby="programMenu">
+                <a class="dropdown-item" (click)="programAssignment.programId=undefined; programAssignment.programName='None'">None</a>
+                <div *ngFor="let volPgms of volunteeringPrograms.dataList">
+                    <a class="dropdown-item" (click)="programAssignment.programId=volPgms.programId; programAssignment.programName=volPgms.programName +'('+volPgms.programArea+')'">{{volPgms.programName}}({{volPgms.programArea}})</a>
+                </div>
+            </div>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="programAssignment.programName" disabled>
+    </div>
+</div>
+
+<div *ngIf="!toggleAdditionalDetails else additionalDetails">May enter additional details</div>
+
+<ng-template #additionalDetails>
+<div class="card">
+    <div class="card-body"> <h6 class="card-title"> Additional Details </h6>
+        <div class="form-group">
+            <label for="cpaturedDuringInput">Where did you meet the contact?</label>
+            <input type="text" class="form-control" id="cpaturedDuringInput" placeholder="at Book Distribution or Visitor to temple?" [(ngModel)]='capturedAt'>
+        </div>
+
+        <ngb-rating max="5" [(rate)]="captureHistory.rating"></ngb-rating> ({{captureHistory.rating}})
+
+        <div class="form-group">
+            <label for="captureComment">Any other Interests/Comments</label>
+            <textarea class="form-control" id="captureComment" rows="3" [(ngModel)]="captureHistory.comment"></textarea>
+        </div>
+    </div>
+</div>
+</ng-template>
+<button class="btn btn-primary" (click)="toggleAdditionalDetails=!toggleAdditionalDetails"><span class="oi oi-plus"></span></button>
 <button class="btn btn-primary" (click)="onCaptureClick()">Capture</button>
 <button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>

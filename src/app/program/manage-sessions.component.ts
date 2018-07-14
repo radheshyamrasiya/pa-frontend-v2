@@ -129,4 +129,8 @@ export class ManageSessionsComponent implements OnInit {
       //Do nothing if the dialog is closed by x button or some other means
     })
   }
+
+  onBackClick() {
+    this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+  }
 }
