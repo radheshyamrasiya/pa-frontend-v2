@@ -64,7 +64,19 @@
 <div *ngIf="this.selectedDevotee && this.selectedDevotee.userAccountId">
     <div class="card">
         <div class="card-body">
-            <button class="btn btn-primary" (click)="onResetPasswordClick()">Reset Password</button>
+            <div *ngIf="!this.resetPasswordRespData">
+                <button class="btn btn-primary" (click)="onResetPasswordClick()">Reset Password</button>
+            </div>
+            <div *ngIf="this.resetErrorMsg">{{ this.resetErrorMsg }}</div>
+            <div *ngIf="this.resetPasswordRespData">
+                Password has been reset for {{ this.resetPasswordRespData.devoteeName }}
+                <br/>
+                Credentials are as below:
+                <br/>
+                Username: {{ this.resetPasswordRespData.username }}
+                <br/>
+                Password: harekrishna
+            </div>
         </div>
     </div>
 </div>

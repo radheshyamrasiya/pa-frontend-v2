@@ -38,8 +38,11 @@ export class LoginSessionService implements OnInit {
 
     login(username: string, password: string): void {
         //Authentication Code
+        const queryParams = {
+            username
+        };
         this.httpService
-            .get(connectionProperties.login + "/" + username)
+            .get(connectionProperties.login, '', queryParams)
             .subscribe(res => {
                 let loginResponse = JSON.parse(res._body);
                 this.loginStatus = LoginStatus.loggedIn;

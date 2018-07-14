@@ -23,6 +23,8 @@ export class ManageUserAccountComponent implements OnInit {
     accountEmail: string;
     selectedRole : string;
     userAccountRespData: Login;
+    resetPasswordRespData: Login;
+    resetErrorMsg :string;
 
     constructor(
         //private modalService: NgbModal,
@@ -52,6 +54,8 @@ export class ManageUserAccountComponent implements OnInit {
         this.accountEmail = null;
         this.selectedRole = null;
         this.createErrorMsg = null;
+        this.resetPasswordRespData = null;
+        this.resetErrorMsg = null;
     }
 
     onDevoteeSelectClick(devoteeId: number) {
@@ -92,6 +96,12 @@ export class ManageUserAccountComponent implements OnInit {
     }
 
     onResetPasswordClick() {
-        console.log("You clicked on reset password");
+        const userAccountId = this.selectedDevotee.userAccountId;
+        this.httpService.putAndReturnData(`${connectionProperties.resetPassword}/${userAccountId}`, '', {})
+            .subscribe((respData) => {
+                this.resetPasswordRespData = respData as Login;
+            }, (err) => {
+                this.resetErrorMsg = 'Unable to reset password for given devotee';
+            });
     }
 }
