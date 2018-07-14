@@ -36,6 +36,10 @@ export class AppComponent implements OnInit {
     this.router.navigate([routeConstants.user, routeConstants.changePassword]);
   }
 
+  onProfileEditClick(): void {
+    this.router.navigate([routeConstants.user, routeConstants.editProfile]);
+  }
+
   onLogoutClick(): void {
     this.loginService.logout();
   }

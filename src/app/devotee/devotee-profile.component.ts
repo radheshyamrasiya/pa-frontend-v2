@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, UrlSegment } from '@angular/router';
 import { NgbDateStruct, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Location } from '@angular/common';
 
 import { Devotee } from '../model/devotee.model';
 import { routeConstants, statusType, connectionProperties } from '../shared/app-properties';
@@ -8,6 +9,7 @@ import { routeConstants, statusType, connectionProperties } from '../shared/app-
 import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 import { EnumService } from '../shared/enum.service';
+import { LoginSessionService } from '../login/login-session.service';
 
 @Component({
     selector: 'devotee-profile',
@@ -18,6 +20,7 @@ export class DevoteeProfileComponent implements OnInit {
     devotee: Devotee;
     resetDevotee: Devotee;
     datePicker: NgbDateStruct;
+    disableSpiritualInfoEdit: boolean;
 
     displayDob: string;
 
@@ -28,14 +31,25 @@ export class DevoteeProfileComponent implements OnInit {
         private modalService: NgbModal,
         private statusService: StatusService,
         public enumService: EnumService,
+        public location: Location,
+        public loginService: LoginSessionService
     ) {}
 
     ngOnInit() {
         this.devotee = new Devotee();
         this.resetDevotee = new Devotee();
+        this.disableSpiritualInfoEdit = false;
 
-        this.activatedRoute.params.subscribe((params: Params) => {
-            this.httpService.getData(connectionProperties.devotees, "/" + params[routeConstants.paramDevoteeId])
+        let devoteeId;
+        if (this.location.path().split('/').indexOf(routeConstants.editProfile) > -1) {
+            devoteeId = this.loginService.devoteeId;
+            this.disableSpiritualInfoEdit = true;
+        } else {
+            devoteeId = this.activatedRoute.snapshot.paramMap.get('devoteeId')
+        }
+
+        if (devoteeId) {
+            this.httpService.getData(connectionProperties.devotees, "/" + devoteeId)
             .subscribe(devotee => {
                 this.devotee = devotee as Devotee;
                 this.resetDevotee = devotee as Devotee;
@@ -50,7 +64,12 @@ export class DevoteeProfileComponent implements OnInit {
             }, err => {
                 //Route to a different Page
             });
-        });
+        }
+
+        // this.activatedRoute.params.subscribe((params: Params) => {
+        //     console.log("Params");
+        //     console.log(params);
+        // });
     }
 
     onDateChange() {
@@ -93,6 +112,8 @@ export class DevoteeProfileComponent implements OnInit {
                 this.router.navigate(['../../../', routeConstants.followupProgram, programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });    
             } else if (this.router.routerState.snapshot.url.startsWith(routeConstants.myPrograms + '/' + routeConstants.addParticipants, 1)) {
                 this.router.navigate(['../../../', programId], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
+            } else if (this.router.routerState.snapshot.url.startsWith(routeConstants.user + '/' + routeConstants.editProfile )) {
+                this.router.navigate(['../../']);
             } else {
                 this.router.navigate(['../../'], {relativeTo: this.activatedRoute, queryParams: {id: this.devotee.id} });
             }    

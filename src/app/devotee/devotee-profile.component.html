@@ -115,30 +115,35 @@
         <ngb-panel id="spiritual_info">
             <ng-template ngbPanelTitle>
                 <span class="float-left w-100">Spiritual Information</span>
+                <span *ngIf="disableSpiritualInfoEdit">(Read only)</span>
             </ng-template>
             <ng-template ngbPanelContent>
                 <!--Preferred Language Field-->
                 <div class="form-group">
                     <label for="preferredLanguageInput">Preferred Language</label>
                     <input type="text" class="form-control" id="preferredLanguageInput"  placeholder="Preferred Language"
+                        [disabled]="disableSpiritualInfoEdit"
                         [(ngModel)]='devotee.preferredLanguage'>
                 </div>
                 <!--Books Read Field-->
                 <div class="form-group">
                     <label for="booksReadInput">Srila Prabhupada Books Read</label>
                     <input type="text" class="form-control" id="booksReadInput" placeholder="Books Read" 
+                        [disabled]="disableSpiritualInfoEdit"
                         [(ngModel)]='devotee.booksRead'>
                 </div>
                 <!--Monthly Contribution Field-->
                 <div class="form-group">
                     <label for="monthlyContributionInput">Monthly Contribution</label>
                     <input type="number" class="form-control" id="addressInput"  placeholder="Monthly Contribution"
+                        [disabled]="disableSpiritualInfoEdit"
                         [(ngModel)]='devotee.monthlyContribution'>
                 </div>
                 <!--Siksha Level Field-->
                 <div class="form-group">
                     <label for="sikshaLevelInput">Siksha Level</label>
                     <input type="text" class="form-control" id="sikshaLevelInput" placeholder="Siksha Level" 
+                        [disabled]="disableSpiritualInfoEdit"
                         [(ngModel)]='devotee.sikshaLevel'>
                 </div>            
             </ng-template>
