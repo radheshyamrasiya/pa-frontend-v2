@@ -18,6 +18,7 @@ import { Login } from '../model/login.model';
 
 export class ManageUserAccountComponent implements OnInit {
     selectedDevotee: Devotee;
+    selectedDevoteeUserAccount: Login;
     createErrorMsg: string;
     availableRoles: [string];
     accountEmail: string;
@@ -56,6 +57,7 @@ export class ManageUserAccountComponent implements OnInit {
         this.createErrorMsg = null;
         this.resetPasswordRespData = null;
         this.resetErrorMsg = null;
+        this.selectedDevoteeUserAccount = null;
     }
 
     onDevoteeSelectClick(devoteeId: number) {
@@ -64,6 +66,16 @@ export class ManageUserAccountComponent implements OnInit {
                 this.selectedDevotee = devotee as Devotee;
                 this.resetVals();
                 this.accountEmail = this.selectedDevotee.email;
+
+                if (this.selectedDevotee.userAccountId) {
+                    const userAccountId = this.selectedDevotee.userAccountId;
+                    this.httpService.getData(`${connectionProperties.getUserAccount}/${userAccountId}`, '')
+                        .subscribe((respData) => {
+                            this.selectedDevoteeUserAccount = respData as Login;
+                        }, (err) => {
+                            // do nothing
+                        })
+                }
             }, (err) => {
                     this.statusService.setFlag("Unable to fetch devotee details", statusType.error);
             })

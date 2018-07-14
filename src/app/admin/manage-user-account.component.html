@@ -20,7 +20,13 @@
                 </div>
                 <div class="row">
                     <div class="col-4 font-weight-bold">Email:</div>
-                    <div class="col-8">{{ this.selectedDevotee.email }}</div>
+                    <div class="col-8">{{ this.selectedDevotee.email }}
+                        <span *ngIf="!this.selectedDevotee.email">NA</span>
+                    </div>
+                </div>
+                <div *ngIf="this.selectedDevoteeUserAccount" class="row">
+                    <div class="col-4 font-weight-bold">Role:</div>
+                    <div class="col-8">{{ this.selectedDevoteeUserAccount.role }}</div>
                 </div>
             </div>
         </div>
