@@ -16,7 +16,6 @@ export class FollowupReportComponent implements OnInit {
 
   @Input() programId: number; //0 represents all programs
   @Input() mentorId: number; //defaults to logged in user
-  @Input() dashboard: boolean;
   @Input() detailed: boolean;
   
 
