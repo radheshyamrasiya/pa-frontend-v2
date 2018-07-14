@@ -56,4 +56,6 @@ export class Devotee extends Entity {
     capturedBy: number;
     capturedFor: string;
     introDate: string;
+
+    userAccountId: number
 }

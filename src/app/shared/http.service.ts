@@ -124,7 +124,7 @@ export class HttpService {
                 observer.complete();
             }, err => {
                 this.statusService.error("Error performing action");
-                observer.throw(err);
+                observer.error(err);
                 observer.complete();
             });
         });

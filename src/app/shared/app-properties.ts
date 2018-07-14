@@ -13,6 +13,9 @@ export const connectionProperties = {
     //User
     changePassword: '/changePassword',
 
+    // User Account
+    createUserAccount: '/userAccount',
+
     //Devotee
     capture: '/devotees',
     devotees: '/devotees',
