@@ -165,7 +165,7 @@ export class AssignFollowupsComponent implements OnInit {
     }
 
     onAutoAssign() {
-        this.httpService.get(connectionProperties.autoAssignFollowup + '/' + this.programId)
+        this.httpService.post(connectionProperties.autoAssignFollowup + '/' + this.programId,{})
         .subscribe(status => {
             this.statusService.success("Auto Assign Completed");
             this.loadAssignments();

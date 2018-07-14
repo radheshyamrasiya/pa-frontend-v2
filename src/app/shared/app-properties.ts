@@ -69,7 +69,7 @@ export const connectionProperties = {
     deleteFollowup: '/followUpAssignment', // /id
     deleteFollowupAssignmentsOfProgram: '/followUpAssignmentDeleteForProgram', //programId
     myFollowupPrograms: '/followUpProgramsForVolunteerPage', // /volunteerId - Returns list of programs
-    autoAssignFollowup: '/autoFollowUpAssignment', // programId
+    autoAssignFollowup: '/followUpAssignment/auto', // programId
 
     //Followup Record
     getSpecificFollowupRecord: '/specificFollowUpRecord', // programId, attendeeId, volunteerId
@@ -77,6 +77,9 @@ export const connectionProperties = {
     createFollowupRecord: '/followUp',
     updateFollowupRecord: '/followUp', // followupId
     deleteFollowupRecordOfProgram: '/deleteFollowUpOfProgram', //programId
+
+    //Reports
+    followupReport: '/followUpReport', //mentorId/programId - programId can be 0 for all program
 };
 
 export const callResponse = {
