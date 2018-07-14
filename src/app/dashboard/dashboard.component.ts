@@ -5,6 +5,8 @@ import { routeConstants } from '../shared/app-properties';
 import { userRoles } from '../login/user-roles';
 import { LoginSessionService } from '../login/login-session.service';
 
+import { FollowupReportComponent } from '../reports/followup-report/followup-report.component';
+
 @Component ({
     selector: 'dashboard',
     templateUrl: './dashboard.component.html',
