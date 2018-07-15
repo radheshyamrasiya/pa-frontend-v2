@@ -1,3 +1,7 @@
+<div class="row justify-content-md-center">
+    <div class="col spo-disp-comp">
+      <h5>Select a Session</h5>
+<i>Choose a valid session date and click on pen to edit</i><br>
 <div class="input-group">
     <input class="form-control" placeholder="yyyy-mm-dd"
           name="dp" [(ngModel)]="attendanceDate" ngbDatepicker #d="ngbDatepicker">
@@ -14,9 +18,11 @@
 Session Date: {{session.sessionDate}} <br>
 Session Topic: {{session.topic}} <br>
 <br>
+<hr>
 <div *ngIf="session.id==undefined else validSession"><strong>Select a valid session date</strong></div>
  
 <ng-template #validSession>
+    <h5>Manage Attendance</h5>
     <div class="card">
       <div class="card-body"> <h6 class="card-title"> Mark Attendance </h6>
         <strong>Search Devotee for Attendance</strong>
@@ -40,3 +46,6 @@ Session Topic: {{session.topic}} <br>
 </ng-template>
 
 <button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>
+
+</div>
+</div>

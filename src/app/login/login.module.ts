@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 
 import { LoginRoutingModule } from './login-routing.module';
+import { LandingPageComponent } from './landing-page.component';
 
 @NgModule({
     imports: [
@@ -12,9 +13,12 @@ import { LoginRoutingModule } from './login-routing.module';
         FormsModule,
         LoginRoutingModule,
     ],
-    exports: [],
+    exports: [
+        LoginComponent,
+    ],
     declarations: [
         LoginComponent,
+        LandingPageComponent,
     ],
     providers: [
     ],

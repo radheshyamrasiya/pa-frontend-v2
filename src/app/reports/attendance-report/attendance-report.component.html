@@ -1,7 +1,7 @@
-<div class="card">
+<div class="card spo-disp-comp">
   <div class="card-body"><h6 class="card-title">Attendance Report of {{attendanceReport.programName}}</h6>
     <div class="table-responsive">
-      <table class="table table-striped">
+      <table class="table table-striped" style="display:block; overflow-x:auto">
         <thead>
           <tr>
             <th scope="col" *ngFor="let colName of attendanceReport.columnNames">{{colName}}</th>

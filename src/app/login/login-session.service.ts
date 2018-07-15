@@ -63,7 +63,7 @@ export class LoginSessionService implements OnInit {
                 this.password = "";
                 this.devoteeId = 0;
                 this.statusService.resetDefaultFlag();
-                this.router.navigate([routeConstants.login]);
+                this.router.navigate([routeConstants.welcome]);
             });
     }
 
@@ -73,7 +73,7 @@ export class LoginSessionService implements OnInit {
         this.password = "";
         this.devoteeId = 0;
         this.statusService.resetDefaultFlag();
-        this.router.navigate([routeConstants.login]);
+        this.router.navigate([routeConstants.welcome]);
     }
 
     getDevoteeId(): number {

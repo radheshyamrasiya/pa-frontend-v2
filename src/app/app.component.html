@@ -1,26 +1,80 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container rounded bg-light">
-    <div class="sticky-top bg-light">
-        <br>
-    <div class="{{statusService.status}} py-0" role="alert">
-        {{statusService.message}}
+<div class="container-fluid rounded bg-white">
+  <div class="row bg-dark text-warning">
+    <div class="col-7">
+      <ul class="nav">
+				<li class="nav-item">
+					<a class="navbar-toggler btn btn-sm" (click)="isCollapsed = !isCollapsed"
+							[attr.aria-expanded]="!isCollapsed" aria-controls="sideBar">
+							<span class="oi oi-menu"></span>
+					</a>
+				</li>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer" (click)="onDashboardClick()"><span class="oi oi-dashboard"></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer" (click)="onDashboardClick()"><span class="oi oi-home"></span></a>
+        </li>
+    	</ul>
     </div>
-    <button type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onDashboardClick()">
-        <span class="oi oi-home"></span>
-    </button>
-    <span class="float-right">
-      <button *ngIf="this.loginService.loginStatus===LoginStatus.loggedIn" type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onChangePasswordClick()">
-        <span class="oi oi-lock-locked"></span>
-      </button>
-      <button *ngIf="this.loginService.loginStatus===LoginStatus.loggedIn" type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onProfileEditClick()">
-          <span class="oi oi-person"></span>
-      </button>
-      <button type="button" class="btn btn-secondary bg-info mx-2 my-2" (click)="onLogoutClick()">
-        <span class="oi oi-account-logout"></span>
-      </button>
-    </span>
+    <div class="col">
+    	<ul class="nav justify-content-end">
+        <li class="nav-item" *ngIf="this.loginService.loginStatus===LoginStatus.loggedIn">
+          <a class="nav-link disabled" style="cursor: pointer" (click)="onChangePasswordClick()"><span class="oi oi-lock-locked"></span></a>
+				</li>
+				<li class="nav-item" *ngIf="this.loginService.loginStatus===LoginStatus.loggedIn">
+					<a class="nav-link disabled" style="cursor: pointer" (click)="onProfileEditClick()"><span class="oi oi-person"></span></a>
+				</li>
+				<li class="nav-item" *ngIf="this.loginService.loginStatus===LoginStatus.loggedIn">
+					<a class="nav-link disabled" style="cursor: pointer" (click)="onLogoutClick()"><span class="oi oi-account-logout"></span></a>
+				</li>
+    	</ul>
     </div>
-    <div class="bg-light py-2">
-        <router-outlet></router-outlet>
-    </div>
-</div>
+	</div>
+
+		<div class="row justify-content-md-center" style="min-height:600px">
+			<div class="col col-sm-12 col-md-12 col-lg-2 col-xl-2  bg-dark text-white pb-2" id="sideBar" [ngbCollapse]="isCollapsed">
+					<a class="btn" *ngIf="canShow('followup')" (click)="onMyFollowupsClick()">Followups</a> <br>
+					<a class="btn" *ngIf="canShow('program')" (click)="onMyProgramsClick()">Programs</a> <br>
+					<a class="btn" *ngIf="canShow('capture')" (click)="onCaptureContactClick()">Capture</a> <br>
+					<a class="btn" *ngIf="canShow('capture')" (click)="onCapturedListClick()">Contacts</a> <br>
+					<a class="btn" *ngIf="canShow('yatra')" (click)="onYatraAdminClick()">Yatra</a> <br>
+					<a class="btn" *ngIf="canShow('super')" (click)="onSuperAdminClick()">Admin</a> <br>
+					<a class="btn" *ngIf="canShow('userAccount')" (click)="onManageUserAccountClick()">User Account</a> <br>
+					<login-page *ngIf="!isLoggedIn()"></login-page>
+			</div>
+			<div class="col col-md-12 col-lg-10 col-xl-10 p-5">
+					<router-outlet></router-outlet>
+			</div>
+		</div>
+
+		<div class="row bg-secondary" style="height:10px;">
+
+		</div>
+		<div class="row bg-dark text-white py-5">
+			<div class="col">
+				<div class="card bg-dark text-white">
+					<div class="card-body"> <h6 class="card-title">About Us</h6>
+						We are volunteers of ISKCON
+					</div>
+				</div> 
+			</div>
+			<div class="col">
+					<div class="card bg-dark text-white">
+						<div class="card-body"> <h6 class="card-title">Our Gratitude</h6>
+							To Srila Prabhupada
+						</div>
+					</div> 
+				</div>
+				<div class="col">
+						<div class="card bg-dark text-white">
+							<div class="card-body"> <h6 class="card-title">Contact Us</h6>
+								SacredPrayer.org
+								Email Address
+								Updates
+							</div>
+						</div> 
+					</div>
+		</div>
+		
+	</div>

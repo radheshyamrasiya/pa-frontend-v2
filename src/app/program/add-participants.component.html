@@ -1,3 +1,6 @@
+<div class="row justify-content-md-center">
+        <div class="col spo-disp-comp">
+<h5>Add Participants</h5>
 <div class="form-group">
     <label for="participantSearch">Add participants</label>
     <input type="text" class="form-control" id="participantSearch" placeholder="Type name/email/phone + enter to search" aria-label="Add a Participant" [(ngModel)]="searchText" (keyup.enter)="textChange()">
@@ -69,3 +72,6 @@ List of Participants ({{ this.contents.paging.totalElements }})
 <button type="button" class="btn btn-primary my-3" (click)="onBackClick()">
     Back
 </button>
+
+</div>
+</div>

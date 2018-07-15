@@ -1,7 +1,6 @@
-  <div class="card">
-    <div class="card-body"> <h5 class="card-title"> Followup Stats </h5>
+  <div class="row">
       <div *ngFor="let programReportDisplay of followupReport.programReportList">
-          <div class="card m-2">
+          <div class="card m-2 col spo-disp-comp">
             <div class="card-header">
                 Program Report: {{programReportDisplay.programName}}
             </div>
@@ -45,4 +44,3 @@
           </div>
       </div>
     </div>
-  </div>

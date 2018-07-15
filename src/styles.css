@@ -3,7 +3,11 @@
 @import '~bootstrap/dist/css/bootstrap.min.css'; 
 @import '~open-iconic-fonts/css/open-iconic-bootstrap.min.css';
 
-body {
-    max-width: 575.98px;
+body {    
     margin: 0 auto;
+}
+
+.spo-disp-comp {
+    max-width: 400px;
+    padding:0;
 }

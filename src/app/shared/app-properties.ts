@@ -106,6 +106,7 @@ export const routeConstants = {
     dashboard: 'dashboard',
     //Login Feature
     login: 'login',
+    welcome: 'welcome',
     manageUserAccount: 'manage-user-account',
     //Devotee Feature
     devoteeProfile: 'devotee-profile',

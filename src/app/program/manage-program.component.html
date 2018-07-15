@@ -1,4 +1,7 @@
-<h3> {{program.name}} </h3>
+<div class="row justify-content-md-center">
+        <div class="col spo-disp-comp">
+
+<h5> Manage {{program.name}} </h5>
 <span class="font-italic small">
     (Type: {{program.type}}&nbsp;Target Audiance: {{program.targetAudience}})
 </span> <br> <br>
@@ -39,6 +42,7 @@
 </ul>
 
 <br>
+<hr>
 <div class="form-group">
 <label for="sessionPick">Assign current followup session</label>
 <div class="input-group">
@@ -120,3 +124,6 @@
         <button type="button" class="btn btn-outline-dark" (click)="c('ok')">Ok</button>
     </div>
 </ng-template>
+
+</div>
+</div>
