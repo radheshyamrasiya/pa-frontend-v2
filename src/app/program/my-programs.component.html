@@ -10,39 +10,9 @@
             <span class="font-italic small">
                 &nbsp;(Type: {{program.type}} Target Audiance: {{program.targetAudience}})
             </span> <br>
-            
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onManageProgram(program.id)">
-                        <span class="oi oi-cog w-100"></span><br>Manage
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onManageSessions(program.id)">
-                        <span class="oi oi-microphone w-100"></span><br>Sessions
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAddParticipants(program.id)">
-                        <span class="oi oi-plus"></span><br>Participants
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAddFollowupVolunteers(program.id)">
-                        <span class="oi oi-plus"></span><br>Volunteers
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAssignFollowups(program.id)">
-                        <span class="oi oi-people"></span><br>Followups
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onMarkAttendance(program.id)">
-                        <span class="oi oi-check"></span><br>Attendance
-                    </button>
-                </div>
-            </div>
+            <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onManageProgram(program.id)">
+                    <span class="oi oi-cog w-100"></span><br>Manage
+                </button>            
         </div>
     </div>
 </div>

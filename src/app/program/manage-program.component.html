@@ -1,7 +1,37 @@
 <div class="row justify-content-md-center">
         <div class="col spo-disp-comp">
 
-<h5> Manage {{program.name}} </h5>
+
+                <h5>Program Actions</h5>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onManageSessions(program.id)">
+                            <span class="oi oi-microphone w-100"></span><br>Sessions
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAddParticipants(program.id)">
+                            <span class="oi oi-plus"></span><br>Participants
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAddFollowupVolunteers(program.id)">
+                            <span class="oi oi-plus"></span><br>Volunteers
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onAssignFollowups(program.id)">
+                            <span class="oi oi-people"></span><br>Followups
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="w-100 btn btn-info btn-sm my-2" (click)="onMarkAttendance(program.id)">
+                            <span class="oi oi-check"></span><br>Attendance
+                        </button>
+                    </div>
+                </div>
+                <hr>
+<h5> {{program.name}} Details</h5>
 <span class="font-italic small">
     (Type: {{program.type}}&nbsp;Target Audiance: {{program.targetAudience}})
 </span> <br> <br>
@@ -13,9 +43,8 @@
 </div>
 
 <div class="form-group">
-    <label for="addressInput">Where does this proghram happen?</label>
-    <textarea class="form-control" rows="5" id="addressInput"  placeholder="Address location of the program"
-    [(ngModel)]='program.address'></textarea>
+    <label for="addressInput">Where does this program happen?</label>
+    <input type="text" class="form-control" id="addressInput" placeholder="Program Location" aria-label="Program Location" [(ngModel)]="program.address">
 </div>
 
 <div class="form-group">
@@ -65,7 +94,7 @@
 </div>
 
 <button class="btn btn-primary my-3" (click)="onUpdateProgramClick()">
-    Update Program
+    Update {{program.name}} Details
 </button>
 <button class="btn btn-primary my-3" (click)="onAreaSubscriptionClick(areaSubscriptionModal)">
     Area Subscription
@@ -73,6 +102,9 @@
 <button class="btn btn-primary my-3" (click)="onBackClick()">
     Back
 </button>
+
+
+
 
 <ng-template #areaSubscriptionModal let-c="close" let-d="dismiss">
     <div class="modal-header">

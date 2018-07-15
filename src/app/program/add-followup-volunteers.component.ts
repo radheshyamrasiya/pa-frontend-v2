@@ -98,6 +98,6 @@ export class AddFollowupVolunteersComponent implements OnInit {
     }
 
     onBackClick() {
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['../../',routeConstants.manageProgram,this.programId], {relativeTo: this.activatedRoute});
     }
 }

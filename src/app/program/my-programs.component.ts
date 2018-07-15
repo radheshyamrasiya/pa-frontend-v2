@@ -33,26 +33,6 @@ export class MyProgramsComponent implements OnInit {
 
     onManageProgram(programId: number) {
         this.router.navigate([routeConstants.myPrograms, routeConstants.manageProgram, programId]);
-    }
-
-    onManageSessions(programId: number) {
-        this.router.navigate([routeConstants.myPrograms, routeConstants.manageSessions, programId]);
-    }
-
-    onAddParticipants(programId: number) {
-        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, programId]);
-    }
-
-    onAddFollowupVolunteers(programId: number) {
-        this.router.navigate([routeConstants.myPrograms, routeConstants.addFollowupVolunteers, programId]);
-    }
-
-    onAssignFollowups(programId: number) {
-        this.router.navigate([routeConstants.myPrograms, routeConstants.assignFollowups, programId]);
-    }
-
-    onMarkAttendance(programId: number) {
-        this.router.navigate([routeConstants.myPrograms, routeConstants.markAttendance, programId]);
     } 
 
     onBackClick() {

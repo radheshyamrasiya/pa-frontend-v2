@@ -152,6 +152,26 @@ export class ManageProgramComponent implements OnInit {
         this.program.followupDescription.splice(this.program.followupDescription.indexOf(taskItem,0),1);
     }
 
+    onManageSessions(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.manageSessions, programId]);
+    }
+
+    onAddParticipants(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addParticipants, programId]);
+    }
+
+    onAddFollowupVolunteers(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.addFollowupVolunteers, programId]);
+    }
+
+    onAssignFollowups(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.assignFollowups, programId]);
+    }
+
+    onMarkAttendance(programId: number) {
+        this.router.navigate([routeConstants.myPrograms, routeConstants.markAttendance, programId]);
+    }
+
     onBackClick() {
         this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
     }

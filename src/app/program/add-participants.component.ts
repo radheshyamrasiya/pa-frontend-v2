@@ -115,6 +115,6 @@ export class AddParticipantsComponent implements OnInit {
     }
 
     onBackClick() {
-        this.router.navigate([routeConstants.myPrograms]);
+        this.router.navigate(['../../',routeConstants.manageProgram,this.programId], {relativeTo: this.activatedRoute});
     }
 }

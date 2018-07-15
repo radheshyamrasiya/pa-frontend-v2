@@ -175,6 +175,6 @@ export class AssignFollowupsComponent implements OnInit {
     }
 
     onBackClick() {
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['../../',routeConstants.manageProgram,this.programId], {relativeTo: this.activatedRoute});
     }
 }
