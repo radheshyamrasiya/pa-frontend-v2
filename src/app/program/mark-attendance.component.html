@@ -28,6 +28,7 @@ Session Topic: {{session.topic}} <br>
         <strong>Search Devotee for Attendance</strong>
         <app-devotee-search 
           [searchType]="'global'"
+          [searchContextParams]="this.searchContextParams"
           [actionButtonText]="'mark'"
           (onActionPerformed)="markAttendanceForDevotee($event[0])"
         >

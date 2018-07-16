@@ -21,6 +21,7 @@ export class CreateProgramComponent implements OnInit {
     program: Program;
     emailAddress: string;
     isCreate: boolean; //Toggles the visiblity of register/update buttons
+    searchContextParams: any;
 
     constructor(
         private modalService: NgbModal,
@@ -45,6 +46,7 @@ export class CreateProgramComponent implements OnInit {
                 this.router.navigate(['../']);
             } else if (yatraId != undefined) {
                 this.program.parentYatraId = yatraId;
+                this.searchContextParams = {yatraId};
                 if (isNumeric(programId)) {
                     this.isCreate = false;
                     this.httpService.getData(connectionProperties.getProgram, "/" + programId)

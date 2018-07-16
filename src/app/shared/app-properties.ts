@@ -26,6 +26,9 @@ export const connectionProperties = {
     devoteesByPhone: '/devoteeByPhone', //phone no
     myCapturedListUrl: '/myCapturedListPage',
     devoteeGlobalSearch: '/devoteeGlobalSearchPage',
+    // devoteeSearch is the latest search api. It returns
+    // search results as per the role of the user
+    devoteeSearch: '/devoteeSearch',
 
     //History
     writeHistory: '/devoteeHistory',
