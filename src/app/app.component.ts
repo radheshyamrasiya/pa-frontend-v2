@@ -49,9 +49,7 @@ export class AppComponent implements OnInit {
       case "logout":
         return true;
       case "followup":
-        if (this.loginService.getRole() == userRoles.DEVOTEE) {
-          return true;
-        } else return false;
+        return true;
       case "super":
         if (this.loginService.getRole() == userRoles.ADMIN) {
           return true;

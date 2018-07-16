@@ -24,6 +24,8 @@ export class CaptureContactComponent implements OnInit {
     capturedAt: string;
     toggleAdditionalDetails: boolean;
 
+    recordNotExist = false;
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -76,8 +78,10 @@ export class CaptureContactComponent implements OnInit {
                 this.signUpForProgram(devoteeObj.id);
                 this.createHistoryEntry(devoteeObj.id);
                 this.initialiseForNewCapture();
+                this.statusService.success("Successfully submitted");
             }, err =>{
                 //TODO: Handle Error 
+                this.statusService.error("Unable to save");
             });
         }
     }
@@ -129,6 +133,9 @@ export class CaptureContactComponent implements OnInit {
             let phone = this.devotee.smsPhone;
             this.initialiseForNewCapture();
             this.devotee.smsPhone = phone;
+            this.recordNotExist = true;
+            setTimeout(() => this.recordNotExist = false, 3000);
+            //Create New!
         });
     }
 

@@ -7,6 +7,8 @@ import { ProgramSession } from '../model/program-session.model';
 import { ProgramAreaSubscription, ProgramAreaSubscriptionPage } from '../model/program-area-subscription.model';
 import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 
+import { AttendanceReportComponent } from '../reports/attendance-report/attendance-report.component';
+
 import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 import { EnumService } from '../shared/enum.service';
