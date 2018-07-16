@@ -20,8 +20,11 @@
     </table>
 </div>
     
-List of Participants ({{ this.contents.paging.totalElements }})
-    
+List of Participants ({{ contents.paging.totalElements }})
+<div my-2>
+    Sort by Date <a class="btn btn-sm" (click)="loadContents(0, 'dateAdded,desc')"><span class="oi oi-arrow-top"></span></a> &nbsp; &nbsp;  <a class="btn btn-sm" (click)="loadContents(0, 'dateAdded,asc')"><span class="oi oi-arrow-bottom"></span></a>
+    Sort by Name <a class="btn btn-sm" (click)="loadContents(0, 'attendee,desc')"><span class="oi oi-arrow-top"></span></a> &nbsp; &nbsp;  <a class="btn btn-sm" (click)="loadContents(0, 'attendee,asc')"><span class="oi oi-arrow-bottom"></span></a>
+</div>    
 <ngb-accordion [closeOthers]="true" activeIds="{{activePanel}}">
     <div *ngFor="let participant of contents.dataList">
         <ngb-panel id="{{participant.attendeeId}}_id">

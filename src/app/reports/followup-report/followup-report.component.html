@@ -1,8 +1,9 @@
   
       <div *ngFor="let programReportDisplay of followupReport.programReportList">
-          <div class="card m-1 col spo-disp-comp">
+          <div class="card m-1 col spo-disp-comp" style="max-width: 600px;">
             <div class="card-header">
-                Program Report: {{programReportDisplay.programName}} <button class="btn btn-sm btn-info float-right" (click)="onManageProgram(programReportDisplay.programId)"><span class="oi oi-cog"></span></button>
+                Program Report: {{programReportDisplay.programName}} 
+                <button class="btn btn-sm btn-info float-right" (click)="onManageProgram(programReportDisplay.programId)"><span class="oi oi-cog"></span></button>
             </div>
             <div class="card-body">
               <div *ngIf="programReportDisplay.currentFollowUpSessionDate==undefined else sessionExist">No session selected for followup (Select Now!)</div> 
@@ -51,4 +52,3 @@
             </div>
           </div>
       </div>
-    

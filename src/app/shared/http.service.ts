@@ -123,7 +123,6 @@ export class HttpService {
                 observer.next(this.processPageJSON(res));
                 observer.complete();
             }, err => {
-                this.statusService.error("Error performing action");
                 observer.error(err);
                 observer.complete();
             });
@@ -142,7 +141,6 @@ export class HttpService {
                 observer.next(this.processJSON(res));
                 observer.complete();
             }, err => {
-                this.statusService.error("Error performing action");
                 observer.error(err);
                 //observer.complete();
             });

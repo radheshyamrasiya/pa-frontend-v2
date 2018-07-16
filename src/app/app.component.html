@@ -59,7 +59,7 @@
 			<router-outlet></router-outlet>
 			<div id="alert-div" style="top:15px; right:15px; position:fixed; width:300px ">
 					<div  *ngFor="let statusAlert of statusList">
-							<ngb-alert style="float: top" type='{{statusAlert.getStatusString()}}' (close)="statusList.splice(statusList.indexOf(statusAlert),1)">{{statusAlert.message}}</ngb-alert>
+						<ngb-alert style="float: top" type='{{statusAlert.getStatusString()}}' (close)="statusList.splice(statusList.indexOf(statusAlert),1)">{{statusAlert.message}}</ngb-alert>
 					</div>
 			</div>
 		</div>

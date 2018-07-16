@@ -7,6 +7,8 @@ import { ProgramSession } from '../model/program-session.model';
 import { ProgramAreaSubscription, ProgramAreaSubscriptionPage } from '../model/program-area-subscription.model';
 import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 
+import { AttendanceReportComponent } from '../reports/attendance-report/attendance-report.component';
+
 import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
 import { EnumService } from '../shared/enum.service';
@@ -135,9 +137,10 @@ export class ManageProgramComponent implements OnInit {
     onUpdateProgramClick() {
         this.httpService.putAndReturnData(connectionProperties.updateProgram, "/" + this.program.id, this.program)
         .subscribe(responseProgram => {
-            //Handle Success
+            this.statusService.success(`Updated program ${this.program.name} successfully!`);
+            this.onBackClick();
         }, err => {
-            //Handle Error
+            this.statusService.error('Unable to update program, please contact admin');
         });
     }
 

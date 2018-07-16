@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { HttpService } from '../../shared/http.service';
 import { LoginSessionService } from '../../login/login-session.service';
 
@@ -26,6 +28,7 @@ export class FollowupReportComponent implements OnInit {
     private httpService: HttpService,
     private loginService: LoginSessionService,
     private router: Router,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
@@ -44,6 +47,5 @@ export class FollowupReportComponent implements OnInit {
 
   onManageProgram(programId: number) {
     this.router.navigate([routeConstants.myPrograms, routeConstants.manageProgram, programId]);
-}
-
+  }
 }

@@ -181,7 +181,7 @@
                 </div>            
             </ng-template>
         </ngb-panel>
-        <ngb-panel id="general_info">
+        <ngb-panel id="general_info" *ngIf="!disableSpiritualInfoEdit">
             <ng-template ngbPanelTitle>
                 <span class="float-left w-100">General Information</span>
             </ng-template>
@@ -204,13 +204,13 @@
 
     <ng-template #discardContentDates let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title">Discard changes</h4>
+        <h4 class="modal-title">Important Dates</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p>Proceeding to important dates page may discard any un-updated changes made to devotee</p>
+        <p>Coming soon...</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="c('cancel')">Cancel</button>

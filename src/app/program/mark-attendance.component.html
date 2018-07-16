@@ -34,7 +34,7 @@ Session Topic: {{session.topic}} <br>
         >
         </app-devotee-search><br>
 
-        <strong>List of Attendees</strong>
+        <strong>List of Attendees</strong> ({{attendancePaging.totalElements}})
         <app-devotee-display
           [devoteeDisplayParams]='devoteeDisplayParams'
           (onActionPerformed)="actionCallBack($event[0], $event[1], $event[2])"

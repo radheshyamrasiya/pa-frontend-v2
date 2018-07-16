@@ -14,6 +14,7 @@ import { ProgramSession } from '../model/program-session.model';
 
 import { Paging } from '../model/entity.model';
 import { HttpService } from '../shared/http.service';
+import { StatusService } from '../shared/status.service';
 
 import { routeConstants, connectionProperties } from '../shared/app-properties';
 
@@ -42,6 +43,7 @@ export class MarkAttendanceComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
+    private statusService: StatusService,
   ) { }
   devoteeDisplayParams: DevoteeDisplayParams;
 
@@ -131,6 +133,9 @@ export class MarkAttendanceComponent implements OnInit {
     .subscribe(attendanceDetail => {
       //See if it is successful
       this.loadContents(page);
+    }, err=> {
+      if (err.status == 400) this.statusService.error(JSON.parse(err._body).message);
+      else this.statusService.error("Unable to mark attendance");
     });
   }
 
