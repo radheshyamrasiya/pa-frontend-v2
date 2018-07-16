@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { routeConstants, connectionProperties } from '../app-properties';
-import { Paging } from '../../model/entity.model';
+import { Paging, DBQueryParams } from '../../model/entity.model';
 import { Devotee, DevoteeMinPage, DevoteeMin } from '../../model/devotee.model';
 
 import { HttpService } from '../http.service';
@@ -26,6 +26,12 @@ export class DevoteeSearchComponent implements OnInit {
   //identified and displayed differently
   @Input() searchPurpose: number;
 
+
+  // passed by calling component to define the
+  // params for search context. It is an object
+  // which is used as query params in the search api
+  @Input() searchContextParams: any;
+
   //Action call back for from the parent component
   @Input() actionButtonText: string;
 
@@ -46,38 +52,26 @@ export class DevoteeSearchComponent implements OnInit {
   }
 
   textChange() {
-
-    let queryUrl: string;
-
     if (this.searchText === '') {
         this.contents.dataList = [];
         return;
     }
-    
-    switch(this.searchType) {
-      case 'program': 
-        //Program search impl;
-        break;
-      case 'yatra':
-        //TODO: Yatra search impl;
-        break;
-      case 'myCapturedList':
-        //TODO: My Captured List search impl;
-        break; 
-      case 'global':
-        queryUrl = connectionProperties.devoteeGlobalSearch + 
-        "/" + this.searchText;
-        break;
-      default:
-        queryUrl = "";
-    }
 
-    if (queryUrl != "") {
-      this.httpService.getList(queryUrl)
-      .subscribe(devoteePage => {
-          this.contents = devoteePage;
+    const url = `${connectionProperties.devoteeSearch}`;
+    this.searchContextParams = this.searchContextParams || {};
+    const queryParams = Object.assign({q: this.searchText},
+      this.searchContextParams);
+    console.log('Search context params in devotee search');
+    console.log(this.searchContextParams);
+    const params = {
+      queryParams: queryParams,
+      page: 0,
+      pageSize: 5
+    };
+    this.httpService.getList(url, <DBQueryParams>params)
+      .subscribe((devoteePage) => {
+        this.contents = devoteePage;
       });
-    }
   }
 
   actionPerformed(devoteeId:number) {

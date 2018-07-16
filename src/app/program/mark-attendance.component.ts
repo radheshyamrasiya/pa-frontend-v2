@@ -35,6 +35,8 @@ export class MarkAttendanceComponent implements OnInit {
   attendancePaging: Paging;
   attendanceSpecific: AttendanceSpecific;
 
+  searchContextParams: any;
+
   constructor(
     private httpService: HttpService,
     private activatedRoute: ActivatedRoute,
@@ -61,6 +63,7 @@ export class MarkAttendanceComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       this.programId = +params[routeConstants.paramsProgramId];
+      this.searchContextParams ={programId: this.programId};
       this.session.programId = this.programId;
       this.session.sessionDate = this.getAttendanceDateFromPicker();
       

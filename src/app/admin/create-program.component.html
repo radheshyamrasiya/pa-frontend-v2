@@ -63,6 +63,7 @@
       <div class="modal-body">
         <app-devotee-search
           [searchType]="'global'"
+          [searchContextParams]="this.searchContextParams"
           [actionButtonText]="'Select'"
           (onActionPerformed)="c($event[0])"
           >

@@ -3,6 +3,7 @@
 <h5>Add Followup Volunteer</h5>
 <app-devotee-search
     [searchType]="'global'"
+    [searchContextParams]="this.searchContextParams"
     [actionButtonText]="'Add'"
     (onActionPerformed)="onVolunteerAddClick($event[0])"
 >
