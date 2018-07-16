@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { HttpService } from '../../shared/http.service';
 import { LoginSessionService } from '../../login/login-session.service';
 
 import { FollowupReport, FollowupProgramReport, FollowupVolunteerReport } from '../../model/followup-report.model';
-import { connectionProperties } from '../../shared/app-properties';
+import { connectionProperties, routeConstants } from '../../shared/app-properties';
 
 @Component({
   selector: 'app-followup-report',
@@ -24,6 +25,7 @@ export class FollowupReportComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private loginService: LoginSessionService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -39,5 +41,9 @@ export class FollowupReportComponent implements OnInit {
       this.followupReport = followupReport as FollowupReport;
     });
   }
+
+  onManageProgram(programId: number) {
+    this.router.navigate([routeConstants.myPrograms, routeConstants.manageProgram, programId]);
+}
 
 }

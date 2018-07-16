@@ -2,10 +2,13 @@
       <div *ngFor="let programReportDisplay of followupReport.programReportList">
           <div class="card m-1 col spo-disp-comp">
             <div class="card-header">
-                Program Report: {{programReportDisplay.programName}}
+                Program Report: {{programReportDisplay.programName}} <button class="btn btn-sm btn-info float-right" (click)="onManageProgram(programReportDisplay.programId)"><span class="oi oi-cog"></span></button>
             </div>
             <div class="card-body">
-              <strong>Next Session on:</strong> {{programReportDisplay.currentFollowUpSessionDate}} <strong>Topic:</strong> {{programReportDisplay.currentFollowUpSessionTopic}}
+              <div *ngIf="programReportDisplay.currentFollowUpSessionDate==undefined else sessionExist">No session selected for followup (Select Now!)</div> 
+              <ng-template #sessionExist>
+                <strong>Next Session on:</strong> {{programReportDisplay.currentFollowUpSessionDate}} <strong>Topic:</strong> {{programReportDisplay.currentFollowUpSessionTopic}}
+              </ng-template>
               <div class="row">
                 <div class="col alert-success m-2 p-2">
                     <strong>Program Details</strong>
@@ -14,13 +17,18 @@
                     Satus: {{programReportDisplay.percentageCompletionOfFollowup}}% <br>
                 </div>
                 <div class="col alert-success m-2 p-2">
+                  <div *ngIf="programReportDisplay.followUpCounts==undefined">No Stats Available</div>
+                  <div *ngIf="programReportDisplay.followUpCounts!=undefined">
                   <strong>Completion Status</strong>
                   <div class="m-2" *ngFor="let folCntKey of objectKeys(programReportDisplay.followUpCounts)">
                     {{folCntKey}}%: {{programReportDisplay.followUpCounts[folCntKey]}}
-                  </div><br>
+                  </div>
+                  </div>
+                  <div *ngIf="programReportDisplay.responseCounts!=undefined">
                   <strong>Report Status</strong>
                   <div class="m-2" *ngFor="let resCntKey of objectKeys(programReportDisplay.responseCounts)">
                     {{resCntKey}}: {{programReportDisplay.responseCounts[resCntKey]}}
+                  </div>
                   </div>
                 </div>
               </div>
@@ -33,7 +41,7 @@
                   <strong>Completion Status</strong>
                   <div class="m-2" *ngFor="let folCntKey of objectKeys(volunteerReportDisplay.followUpCounts)">
                     {{folCntKey}}%: {{volunteerReportDisplay.followUpCounts[folCntKey]}}
-                  </div><br>
+                  </div>
                   <strong>Report Status</strong>
                   <div class="m-2" *ngFor="let resCntKey of objectKeys(volunteerReportDisplay.responseCounts)">
                     {{resCntKey}}: {{volunteerReportDisplay.responseCounts[resCntKey]}}
