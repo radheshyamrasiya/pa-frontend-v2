@@ -20,6 +20,8 @@ export class ManageSessionsComponent implements OnInit {
   contents: ProgramSessionPage;
   session: ProgramSession;
 
+  activePanel: string;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -29,6 +31,7 @@ export class ManageSessionsComponent implements OnInit {
 
   ngOnInit() {
     //Setting the Attendance Date Picker of to today's date
+    this.activePanel = "";
     let now = new Date();
     this.attendanceDate = {
       year: now.getFullYear(),
@@ -49,6 +52,12 @@ export class ManageSessionsComponent implements OnInit {
       this.programId = +params[routeConstants.paramsProgramId];
       this.loadContents(0);
     });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.id) {
+        this.activePanel = params.id + '_id';
+      }
+    })
   }
 
   getAttendanceDateFromPicker(): Date {

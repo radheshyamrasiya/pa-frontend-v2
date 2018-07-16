@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private loginService: LoginSessionService,
+    public loginService: LoginSessionService,
     public statusService: StatusService,
   ) {
     this.LoginStatus = LoginStatus;

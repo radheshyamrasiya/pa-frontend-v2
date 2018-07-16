@@ -19,6 +19,7 @@ export class AddFollowupVolunteersComponent implements OnInit {
     email: string;
     programId: number;
     searchContextParams: any;
+    activePanel: string;
 
     constructor(
         private httpService: HttpService,
@@ -31,11 +32,18 @@ export class AddFollowupVolunteersComponent implements OnInit {
         this.contents = new FollowupVolunteerPage();
         this.contents.dataList = [];
         this.contents.paging = new Paging();
+        this.activePanel = "";
 
         this.activatedRoute.params.subscribe(params => {
             this.programId = +params[routeConstants.paramsProgramId];
             this.searchContextParams = {programId: this.programId};
+
         });
+        this.activatedRoute.queryParams.subscribe((params) => {
+            if (params['id']) {
+                this.activePanel = params['id'] + '_id';
+            }
+        })
         this.loadContents(0);
     }
 
