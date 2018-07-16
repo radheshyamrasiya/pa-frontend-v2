@@ -101,31 +101,42 @@ export class AppComponent implements OnInit {
     this.loginService.logout();
   }
 
+  inverseSideBar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
   onMyFollowupsClick(): void {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.followup,routeConstants.followupProgram]);
-}
+  }
 
-onMyProgramsClick(): void {
+  onMyProgramsClick(): void {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.myPrograms]);
-}
+  }
 
-onCaptureContactClick(): void {
+  onCaptureContactClick(): void {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.captureContact]);
-}
+  }
 
-onCapturedListClick(): void {
+  onCapturedListClick(): void {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.capturedList]);
-}
+  }
 
-onYatraAdminClick() {
+  onYatraAdminClick() {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.yatra]);
-}
+  }
 
-onSuperAdminClick() {
+  onSuperAdminClick() {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.superAdmin]);
-}
+  }
 
-onManageUserAccountClick() {
+  onManageUserAccountClick() {
+    this.inverseSideBar();
     this.router.navigate([routeConstants.manageUserAccount]);
-}
+  }
 }
