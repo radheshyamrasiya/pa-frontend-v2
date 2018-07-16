@@ -4,7 +4,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { statusType, routeConstants, connectionProperties } from '../shared/app-properties';
 import { HttpService } from '../shared/http.service';
-
+import { StatusService } from '../shared/status.service';
+ 
 import { ProgramSession, ProgramSessionPage } from '../model/program-session.model';
 import { Paging } from '../model/entity.model';
 
@@ -25,6 +26,7 @@ export class ManageSessionsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private httpService: HttpService,
     private modalService: NgbModal,
+    private statusService: StatusService,
   ) { }
 
   ngOnInit() {
@@ -82,9 +84,14 @@ export class ManageSessionsComponent implements OnInit {
       + "/" + this.programId
       + "/" + this.getAttendanceDateFromPicker()
     ).subscribe(session => {
-      this.session = session as ProgramSession;
+      if (session==undefined) {
+        //this.statusService.info("No Session on the selected Date");
+      } else {
+        this.session = session as ProgramSession;
+      }
     }, err => {
       //Handle Error
+      this.statusService.error("Error fetching Session, contact admin");
       this.session = new ProgramSession();
     });
   }

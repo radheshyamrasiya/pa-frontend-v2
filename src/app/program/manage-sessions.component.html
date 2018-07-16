@@ -58,6 +58,7 @@
       </button>
     </div>
     <div class="modal-body">
+      <div *ngIf="session.sessionDate==undefined">No Session on selected date, you can create one</div>
       <div class="form-group">
           <label for="topicInput">Topic of Session</label>
           <input type="text" class="form-control" id="topicInput" placeholder="Enter the topic of the session" aria-label="Session Topic" [(ngModel)]="session.topic">

@@ -47,13 +47,14 @@ export class AddParticipantsComponent implements OnInit {
             if (params["id"]) 
                 this.activePanel = params["id"] + "_id";
         });
-        this.loadContents(0);
+        this.loadContents(0, 'dateAdded,desc');
     }
 
-    loadContents(page: number) {
+    loadContents(page: number, sortString?: string) {
         this.httpService.getList(connectionProperties.listProgramAssignment, {
             page: page,
             pathParams: "/" + this.programId,
+            sortString: sortString,
         })
         .subscribe(volunteerList => {
             if (volunteerList!= undefined && volunteerList!=null) {
@@ -86,6 +87,9 @@ export class AddParticipantsComponent implements OnInit {
             if (participantList!= undefined && participantList!=null) {
                     this.contents = participantList;
             } 
+        }, err => {
+            if (err.status == 400) this.statusService.error(JSON.parse(err._body).message);
+            else this.statusService.error("Unable to add participants");
         });
     }
 

@@ -135,9 +135,10 @@ export class ManageProgramComponent implements OnInit {
     onUpdateProgramClick() {
         this.httpService.putAndReturnData(connectionProperties.updateProgram, "/" + this.program.id, this.program)
         .subscribe(responseProgram => {
-            //Handle Success
+            this.statusService.success(`Updated program ${this.program.name} successfully!`);
+            this.onBackClick();
         }, err => {
-            //Handle Error
+            this.statusService.error('Unable to update program, please contact admin');
         });
     }
 
