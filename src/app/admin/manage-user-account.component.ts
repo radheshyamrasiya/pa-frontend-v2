@@ -77,7 +77,7 @@ export class ManageUserAccountComponent implements OnInit {
                         })
                 }
             }, (err) => {
-                    this.statusService.setFlag("Unable to fetch devotee details", statusType.error);
+                    this.statusService.error("Unable to fetch devotee details");
             })
     }
 

@@ -19,6 +19,7 @@ import { ProgramModule } from './program/program.module';
 import { FollowupModule } from './followup/followup.module';
 import { ReportsModule } from './reports/reports.module';
 import { UserModule } from './user/user.module';
+import { UtilsModule } from './utils/utils.module';
 
 import { NavService } from './shared/nav.service';
 import { LoginSessionService } from './login/login-session.service';
@@ -26,6 +27,7 @@ import { BasicAuthGuardService } from './login/basic-auth-gaurd.service';
 import { StatusService } from './shared/status.service';
 import { EnumService } from './shared/enum.service';
 import { HttpService } from './shared/http.service';
+import { StatusAlertComponent } from './utils/status-alert/status-alert.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { HttpService } from './shared/http.service';
     FollowupModule,
     ReportsModule,
     UserModule,
+    UtilsModule,
   ],
   providers: [
     NavService,

@@ -59,11 +59,13 @@ export const connectionProperties = {
 
     //Program Assignment
     listProgramAssignment: '/programAssignmentByProgramPage',
+    listProgramAssignmentNonPage: '/programAssignmentByProgramList',
     createProgramAssignment: '/programAssignment',
     deleteProgramAssignment: '/programAssignment',
 
-    //Followup Volunteer
-    listFollowupVolunteer: '/followUpVolunteerByProgramPage',
+    //Followup Volunteer: renaming of end points required
+    listFollowupVolunteer: '/volunteerByProgramPage',
+    listFollowupVolunteerNonPage: '/followUpVolunteerByProgramList',
     listProgramsByVolunteer: '/followUpProgramsByVolunteerPage', //volunteer id
     createFollowupVolunteer: '/followUpVolunteer',
     deleteFollowupVolunteer: '/followUpVolunteer',
@@ -71,6 +73,7 @@ export const connectionProperties = {
     //FollowupAssignment
     allFollowups: '/followUpAssignmentPage',
     followupAssignmentByProgram: '/followUpAssignmentsByProgramPage',
+    followupAssignmentByProgramNonPage: '/followUpAssignmentsByProgramList',
     myFollowUpDevoteeList: '/followUpAssignmentByVolunteerPage', // /volunteerId
     myFollowUpListByProgram: '/followUpAssignmentAttendeesForVolunteerByProgramPage', // /volunteerId/programId
     createFollowup: '/followUpAssignment',

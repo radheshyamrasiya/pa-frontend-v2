@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpService } from '../../shared/http.service';
 import { connectionProperties } from '../../shared/app-properties';
@@ -18,6 +19,7 @@ export class AttendanceReportComponent implements OnInit {
 
   constructor(
     private httpService: HttpService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
@@ -36,4 +38,7 @@ export class AttendanceReportComponent implements OnInit {
     }
   }
 
+  onDownloadReport(downloadReportModelContent) {
+    this.modalService.open(downloadReportModelContent, { size: 'sm' });
+  }
 }

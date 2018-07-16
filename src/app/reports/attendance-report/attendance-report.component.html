@@ -1,4 +1,4 @@
-<div class="card spo-disp-comp">
+<div class="card col m-1 spo-disp-comp justify-content-center">
   <div class="card-body"><h6 class="card-title">Attendance Report of {{attendanceReport.programName}}</h6>
     <div class="table-responsive">
       <table class="table table-striped" style="display:block; overflow-x:auto">
@@ -14,5 +14,21 @@
         </tbody>
       </table>
     </div>
+    Download entire report &nbsp;<button class="btn btn-sm btn-info" (click)="onDownloadReport(downloadReportModelContent)">Download</button>
   </div>
 </div>
+
+<ng-template #downloadReportModelContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Coming Soon</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Coming Soon...
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close')">Close</button>
+    </div>
+  </ng-template>

@@ -86,7 +86,7 @@ export class DevoteeProfileComponent implements OnInit {
         .subscribe(devotee => {
             this.onBackClick();
         }, err => {
-            this.statusService.setFlag("Error updating devotee", statusType.error);
+            this.statusService.error("Error updating devotee");
         });
     }
 

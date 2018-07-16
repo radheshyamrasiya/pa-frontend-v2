@@ -1,18 +1,11 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable }     from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/delay';
+import { Subject }     from 'rxjs';
 
-import { statusType, welcomeMessage, greeting } from './app-properties';
+import { Status, StatusType } from '../model/status.model';
 
 @Injectable()
 export class StatusService implements OnInit {
-    message: string;
-    status: string;
-    timestamp: number;
-
-    defaultMessage: string;
-    defaultStatus: string;
+    statusPipe = new Subject<Status>();
 
     constructor() { }
 
@@ -20,46 +13,18 @@ export class StatusService implements OnInit {
         
     }
 
-    setFlag(message: string, status: string) {
-        this.message = message;
-        this.status = status;
-        this.timestamp = Date.now();
-        
-        Observable.of(this.timestamp).delay(3000)
-        .subscribe(ts => {
-            if (ts==this.timestamp) {
-                this.message = this.defaultMessage;
-                this.status = this.defaultStatus;
-            }
-        });
-    }
-
-    setDefaultFlag(devoteeName: string) {
-        this.defaultMessage = greeting + devoteeName;
-        this.defaultStatus = statusType.info;
-
-        this.message = this.defaultMessage;
-        this.status = this.defaultStatus;
-    }
-
-    resetDefaultFlag() {
-        this.defaultMessage = welcomeMessage;
-        this.defaultStatus = statusType.info;
-
-        this.message = this.defaultMessage;
-        this.status = this.defaultStatus;
-    }
-
-    //New Methods
     success(message: string) {
-        this.setFlag(message, statusType.success);
+        let status = new Status(message, StatusType.SUCCESS);
+        this.statusPipe.next(status);
     }
 
     error(message: string) {
-        this.setFlag(message, statusType.error);
+        let status = new Status(message, StatusType.ERROR);
+        this.statusPipe.next(status);
     }
 
     info(message: string) {
-        this.setFlag(message, statusType.info);
+        let status = new Status(message, StatusType.INFO);
+        this.statusPipe.next(status);
     }
 }

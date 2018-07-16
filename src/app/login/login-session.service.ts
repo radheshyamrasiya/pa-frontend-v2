@@ -52,7 +52,7 @@ export class LoginSessionService implements OnInit {
                 this.devoteeName = loginResponse.data.devoteeName;
                 this.role = loginResponse.data.role;
 
-                this.statusService.setDefaultFlag(this.devoteeName);
+                this.statusService.info("Welcome: " + this.devoteeName);
                 this.router.navigate([routeConstants.dashboard]);
                 this.enumService.loadEnums();
                 console.log(this.enumService.enums);
@@ -62,7 +62,6 @@ export class LoginSessionService implements OnInit {
                 this.userName = "";
                 this.password = "";
                 this.devoteeId = 0;
-                this.statusService.resetDefaultFlag();
                 this.router.navigate([routeConstants.welcome]);
             });
     }
@@ -72,7 +71,6 @@ export class LoginSessionService implements OnInit {
         this.userName = "";
         this.password = "";
         this.devoteeId = 0;
-        this.statusService.resetDefaultFlag();
         this.router.navigate([routeConstants.welcome]);
     }
 

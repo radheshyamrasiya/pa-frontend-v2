@@ -62,13 +62,14 @@ export class AssignFollowupsComponent implements OnInit {
     }
 
     loadAssignments() {
-        this.httpService.getList(connectionProperties.followupAssignmentByProgram, {
+        this.httpService.getList(connectionProperties.followupAssignmentByProgramNonPage, {
             page: 0,
             pathParams: "/" + this.programId,
         })
         .subscribe(followupAssignmentList => {
             if (followupAssignmentList!=undefined && followupAssignmentList!=null) {
                 this.followupAssignments = followupAssignmentList as FollowupAssignmentPage;
+                console.log("Assignment Count :" + this.followupAssignments.dataList.length);
                 this.allAttendeesOfVolunteers = {};
                 this.assignmentCount = {};
                 for (let assignments of this.followupAssignments.dataList) {
@@ -89,7 +90,8 @@ export class AssignFollowupsComponent implements OnInit {
                 console.log(this.assignmentCount);
 
                 //Get the list of participants for the program
-                this.httpService.getList(connectionProperties.listProgramAssignment, {
+                //:TODO api change
+                this.httpService.getList(connectionProperties.listProgramAssignmentNonPage, {
                     page: 0,
                     pathParams: "/" + this.programId,
                 })
@@ -97,6 +99,7 @@ export class AssignFollowupsComponent implements OnInit {
                     this.unassignedCount = 0;
                     if (participantList!=undefined && participantList!=null) {
                         this.participants = participantList as ProgramAssignmentPage;
+                        console.log("Participants Count: " + this.participants.dataList.length);
                         this.unassignedParticipants = this.participants.dataList.filter(singleParticipant => {
                             if (followupAssignmentList.dataList.find(item => (<FollowupAssignment>item).attendeeId === (<ProgramAssignment>singleParticipant).attendeeId)!=undefined) {
                                 return false;
@@ -110,13 +113,14 @@ export class AssignFollowupsComponent implements OnInit {
                     }
 
                     //Get the list of volunteers for the program
-                    this.httpService.getList(connectionProperties.listFollowupVolunteer,{
+                    this.httpService.getList(connectionProperties.listFollowupVolunteerNonPage,{
                         page: 0,
                         pathParams: "/" + this.programId,
                     })
                     .subscribe(volunteerList => {
                         if (volunteerList!=undefined && volunteerList!=null) {
                             this.volunteers = volunteerList as FollowupVolunteerPage;
+                            console.log("Volunteer Length" + this.volunteers.dataList.length);
                         }
                     });
                 });

@@ -19,7 +19,7 @@ export class EnumService {
         .subscribe(response => {
             this.enums = JSON.parse(response._body);
         }, err => {
-            this.statusService.setFlag("Critical Error Forms may not load", statusType.error);
+            this.statusService.error("Critical Error Forms may not load");
         });
     }
 }

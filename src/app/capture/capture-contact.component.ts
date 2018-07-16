@@ -84,11 +84,11 @@ export class CaptureContactComponent implements OnInit {
 
     validateDevotee(): boolean {
         if (this.devotee.legalName == undefined || this.devotee.legalName == ""){
-            this.statusService.setFlag("Enter a name", statusType.error);
+            this.statusService.error("Enter a name");
             return false;
         }
         if (this.devotee.smsPhone == undefined || this.devotee.smsPhone == "") {
-            this.statusService.setFlag("Enter phone number", statusType.error);
+            this.statusService.error("Enter phone number");
             return false;
         }
         return true;

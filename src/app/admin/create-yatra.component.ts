@@ -67,7 +67,7 @@ export class CreateYatraComponent implements OnInit {
                         this.yatra.yatraAdmin = this.devotee.id;
                     }
                 }, (err) => {
-                    this.statusService.setFlag("Unable to fetch devotee", statusType.error);
+                    this.statusService.error("Unable to fetch devotee");
                 })
         }, (err) => {
             console.log(`dismiss called with reason ${err}`);
@@ -76,19 +76,19 @@ export class CreateYatraComponent implements OnInit {
 
     validatePage(): boolean {
         if (this.yatra.yatraName == null || this.yatra.yatraName == "") {
-            this.statusService.setFlag("Enter Yatra Name", statusType.error);
+            this.statusService.error("Enter Yatra Name");
             return false;
         }
         if (this.yatra.yatraAddress == null || this.yatra.yatraAddress == "") {
-            this.statusService.setFlag("Enter Yatra Address", statusType.error);
+            this.statusService.error("Enter Yatra Address");
             return false;
         }
         if (this.yatra.yatraType == null || this.yatra.yatraType == "") {
-            this.statusService.setFlag("Enter Yatra Type", statusType.error);
+            this.statusService.error("Enter Yatra Type");
             return false;
         }
         if (this.yatra.yatraAdmin == null || this.yatra.yatraAdmin == undefined) {
-            this.statusService.setFlag("Select a Yatra Admin", statusType.error);
+            this.statusService.error("Select a Yatra Admin");
             return false;
         }
         return true

@@ -41,7 +41,7 @@ export class CreateProgramComponent implements OnInit {
             let programId = +params[routeConstants.paramsProgramId];
 
             if (yatraId == undefined && programId == undefined) {
-                this.statusService.setFlag("Insufficient parameters", statusType.error);
+                this.statusService.error("Insufficient parameters");
                 this.router.navigate(['../']);
             } else if (yatraId != undefined) {
                 this.program.parentYatraId = yatraId;
@@ -73,7 +73,7 @@ export class CreateProgramComponent implements OnInit {
                     this.devotee = devotee as Devotee;
                     this.program.mentorId = this.devotee.id;
                 }, (err) => {
-                    this.statusService.setFlag("Unable to fetch devotee", statusType.error);
+                    this.statusService.error("Unable to fetch devotee");
                 })
         }, (err) => {
             console.log(`dismiss called with reason ${err}`);
@@ -82,19 +82,19 @@ export class CreateProgramComponent implements OnInit {
 
     validatePage(): boolean {
         if (this.program.name == null || this.program.name == "") {
-            this.statusService.setFlag("Enter Program Name", statusType.error);
+            this.statusService.error("Enter Program Name");
             return false;
         }
         if (this.program.mentorId == null || this.program.mentorId == undefined) {
-            this.statusService.setFlag("Select a Mentor", statusType.error);
+            this.statusService.error("Select a Mentor");
             return false;
         }
         if (this.program.type == null || this.program.type == "") {
-            this.statusService.setFlag("Select a Program Type", statusType.error);
+            this.statusService.error("Select a Program Type");
             return false;
         }
         if (this.program.targetAudience == null || this.program.targetAudience == "") {
-            this.statusService.setFlag("Select Target Audiance", statusType.error);
+            this.statusService.error("Select Target Audiance");
             return false;
         }
         return true

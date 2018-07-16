@@ -1,5 +1,12 @@
-<!--The content below is only a placeholder and can be replaced.-->
+
 <div class="container-fluid rounded bg-white">
+	<!--Site Name Band-->
+	<div class="row bg-dark text-white justify-content-center">
+		<div class="navbar-header">
+			<span class="navbar-brand"><h2>SacredPrayer.Org</h2></span>
+		</div>
+	</div>
+	<!--Top Menu Band-->
   <div class="row bg-dark text-warning">
     <div class="col-7">
       <ul class="nav">
@@ -10,10 +17,10 @@
 					</a>
 				</li>
         <li class="nav-item">
-          <a class="nav-link" style="cursor: pointer" (click)="onDashboardClick()"><span class="oi oi-dashboard"></span></a>
+          <a class="nav-link" style="cursor: pointer" (click)="onDashboardClick()"><span class="oi oi-bar-chart"></span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="cursor: pointer" (click)="onDashboardClick()"><span class="oi oi-home"></span></a>
+          <a class="nav-link" style="cursor: pointer" (click)="onHomeClick()"><span class="oi oi-home"></span></a>
         </li>
     	</ul>
     </div>
@@ -31,50 +38,61 @@
     	</ul>
     </div>
 	</div>
-
-		<div class="row justify-content-md-center" style="min-height:600px">
-			<div class="col col-sm-12 col-md-12 col-lg-2 col-xl-2  bg-dark text-white pb-2" id="sideBar" [ngbCollapse]="isCollapsed">
-					<a class="btn" *ngIf="canShow('followup')" (click)="onMyFollowupsClick()">Followups</a> <br>
-					<a class="btn" *ngIf="canShow('program')" (click)="onMyProgramsClick()">Programs</a> <br>
-					<a class="btn" *ngIf="canShow('capture')" (click)="onCaptureContactClick()">Prayer Book</a> <br>
-					<a class="btn" *ngIf="canShow('capture')" (click)="onCapturedListClick()">Contacts</a> <br>
-					<a class="btn" *ngIf="canShow('yatra')" (click)="onYatraAdminClick()">Yatra</a> <br>
-					<a class="btn" *ngIf="canShow('super')" (click)="onSuperAdminClick()">Admin</a> <br>
-					<a class="btn" *ngIf="canShow('userAccount')" (click)="onManageUserAccountClick()">User Account</a> <br>
-					<login-page *ngIf="!isLoggedIn()"></login-page>
-			</div>
-			<div class="col col-md-12 col-lg-10 col-xl-10 p-5">
-					<router-outlet></router-outlet>
-			</div>
+	<!--Just a divider!-->
+	<div class="row bg-secondary" style="height:2px;"></div>
+	<!--Main Content!-->
+	<div class="row justify-content-md-center" style="min-height:600px">
+		<!--Left Side Bar-->
+		<div class="col col-sm-12 col-md-12 col-lg-2 col-xl-2  bg-dark text-white pb-2" id="sideBar" [ngbCollapse]="isCollapsed">
+			<a class="btn" *ngIf="canShow('followup')" (click)="onMyFollowupsClick()">Followups</a> <br>
+			<a class="btn" *ngIf="canShow('program')" (click)="onMyProgramsClick()">Programs</a> <br>
+			<a class="btn" *ngIf="canShow('capture')" (click)="onCaptureContactClick()">Prayer Book</a> <br>
+			<a class="btn" *ngIf="canShow('capture')" (click)="onCapturedListClick()">Contacts</a> <br>
+			<a class="btn" *ngIf="canShow('yatra')" (click)="onYatraAdminClick()">Yatra</a> <br>
+			<a class="btn" *ngIf="canShow('super')" (click)="onSuperAdminClick()">Admin</a> <br>
+			<a class="btn" *ngIf="canShow('userAccount')" (click)="onManageUserAccountClick()">User Account</a> <br>
+			<a class="btn" *ngIf="canShow('logout')" (click)="onLogoutClick()">Logout</a> <br>
+			<login-page *ngIf="!isLoggedIn()"></login-page>
 		</div>
-
-		<div class="row bg-secondary" style="height:10px;">
-
-		</div>
-		<div class="row bg-dark text-white py-5">
-			<div class="col">
-				<div class="card bg-dark text-white">
-					<div class="card-body"> <h6 class="card-title">About Us</h6>
-						We are volunteers of ISKCON
+		<!--Main Content Space-->
+		<div class="col col-md-12 col-lg-10 col-xl-10 p-5">
+			<router-outlet></router-outlet>
+			<div id="alert-div" style="top:15px; right:15px; position:fixed; width:300px ">
+					<div  *ngFor="let statusAlert of statusList">
+							<ngb-alert style="float: top" type='{{statusAlert.getStatusString()}}' (close)="statusList.splice(statusList.indexOf(statusAlert),1)">{{statusAlert.message}}</ngb-alert>
 					</div>
-				</div> 
 			</div>
-			<div class="col">
-					<div class="card bg-dark text-white">
-						<div class="card-body"> <h6 class="card-title">Our Gratitude</h6>
-							To Srila Prabhupada
-						</div>
-					</div> 
-				</div>
-				<div class="col">
-						<div class="card bg-dark text-white">
-							<div class="card-body"> <h6 class="card-title">Contact Us</h6>
-								SacredPrayer.org
-								Email Address
-								Updates
-							</div>
-						</div> 
-					</div>
 		</div>
-		
 	</div>
+	<!--Just a divider!-->
+	<div class="row bg-secondary" style="height:5px;"></div>
+	<!--Footer Code-->
+	<div class="row bg-dark text-white py-5">
+		<!--Footer Column 1-->
+		<div class="col">
+			<h6 class="card-title">About Us</h6>
+			<strong>SacredPrayer.Org</strong> is an initiative of ISKCON Online. <br>On one side there is a lot of good things
+			happening in the world now, in terms of technology and advancement.
+			On the other hand there are a lot of new age problems such as depression, intolerance, addictions,
+			becoming rampent even at a early age of a child. <strong>Can we make a better future?</strong> Yes! we can.
+			We at SacredPrayer.Org wish to work towards assisting each and everyone of you to become happy! That's our introduction. 
+		</div>
+		<!--Footer Column 2-->
+		<div class="col">
+			<h6 class="card-title">Our Gratitude</h6>
+			<img src="../../assets/sacredprayer_sp.png" class="img-fluid float-left m-2" style="max-width:100px;" alt="Srila Prabhupada">
+			Our deepest gratitude to His Divine Grace A.C. Bhaktivedanta Swami Srila Prabhupda, for the showing us the path				of eternal happiness by his illuminating teachings. 
+			Srila Prabhupada has translated many of the Vedic teachings into english, which
+			is now available in all most all the languages. Like to get one, contact us.
+		</div>
+		<!--Footer Column 3-->
+		<div class="col">
+			<h6 class="card-title">Contact Us</h6>
+			SacredPrayer.org <br>
+			Email Address <br>
+			Social Icons
+		</div>
+	</div>
+	<!--Just another divider! May be used for Copyrights-->
+	<div class="row bg-secondary" style="height:10px;"></div>
+</div>

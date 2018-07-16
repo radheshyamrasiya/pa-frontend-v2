@@ -78,7 +78,7 @@ export class CallResponseComponent implements OnInit {
 
     onSaveClick() {
         // if(this.followup.rating == 0) {
-        //     this.statusService.setFlag("Kindly rate the devotee!", statusType.error);
+        //     this.statusService.error("Kindly rate the devotee!");
         //     return;
         // }
         this.followup.timestamp = Date.now();

@@ -45,7 +45,7 @@ export class WriteCommentComponent implements OnInit {
 
     onSaveClick() {
         if(this.history.rating == 0) {
-            this.statusService.setFlag("Kindly rate the devotee!", statusType.error);
+            this.statusService.error("Kindly rate the devotee!");
             return;
         }
         this.history.timeStamp = Date.now();
