@@ -8,7 +8,7 @@
 <div class="form-group">
     <label for="contactNumberInput">Contact Number</label>
     <div class="input-group">
-        <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='devotee.smsPhone'>
+        <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='captureContactRequest.capturedDevotee.smsPhone'>
         <button class="btn btn-outline-primary" id="checkDevotee" (click)="onCheckDevoteeClick()">
             Exist?
         </button>
@@ -20,20 +20,20 @@
 
 <div class="form-group">
     <label for="nameInput">Name</label>
-    <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='devotee.legalName'>
+    <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='captureContactRequest.capturedDevotee.legalName'>
 </div>
 
 <div class="form-group">
     <label for="emailInput">Email</label>
-    <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='devotee.email'>
+    <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='captureContactRequest.capturedDevotee.email'>
 </div>
 <div class="form-group">
     <label for="areaInput">Area</label>
-    <input type="text" class="form-control" id="areaInput" placeholder="Where do you stay?" [(ngModel)]='devotee.area'>
+    <input type="text" class="form-control" id="areaInput" placeholder="Where do you stay?" [(ngModel)]='captureContactRequest.capturedDevotee.area'>
 </div>
 <div class="form-group">
     <label for="postalCodeInput">ZIP/Postal Code</label>
-    <input type="text" class="form-control" id="postalCodeInput" placeholder="ZIP/Postal Code" [(ngModel)]='devotee.zipPostalCode'>
+    <input type="text" class="form-control" id="postalCodeInput" placeholder="ZIP/Postal Code" [(ngModel)]='captureContactRequest.capturedDevotee.zipPostalCode'>
 </div>
 
 <div class="form-group">
@@ -43,13 +43,13 @@
                 Interested In
             </button>
             <div ngbDropdownMenu aria-labelledby="programMenu">
-                <a class="dropdown-item" (click)="programAssignment.programId=undefined; programAssignment.programName='None'">None</a>
+                <a class="dropdown-item" (click)="captureContactRequest.programInterestedIn=undefined; programName='None'">None</a>
                 <div *ngFor="let volPgms of volunteeringPrograms.dataList">
-                    <a class="dropdown-item" (click)="programAssignment.programId=volPgms.programId; programAssignment.programName=volPgms.programName +'('+volPgms.programArea+')'">{{volPgms.programName}}({{volPgms.programArea}})</a>
+                    <a class="dropdown-item" (click)="captureContactRequest.programInterestedIn=volPgms.programId; programName=volPgms.programName +'('+volPgms.programArea+')'">{{volPgms.programName}}({{volPgms.programArea}})</a>
                 </div>
             </div>
         </div>
-        <input type="text" class="form-control" [(ngModel)]="programAssignment.programName" disabled>
+        <input type="text" class="form-control" [(ngModel)]="programName" disabled>
     </div>
 </div>
 
@@ -60,14 +60,14 @@
     <div class="card-body"> <h6 class="card-title"> Additional Details </h6>
         <div class="form-group">
             <label for="cpaturedDuringInput">Where did you meet the contact?</label>
-            <input type="text" class="form-control" id="cpaturedDuringInput" placeholder="at Book Distribution or Visitor to temple?" [(ngModel)]='capturedAt'>
+            <input type="text" class="form-control" id="cpaturedDuringInput" placeholder="at Book Distribution or Visitor to temple?" [(ngModel)]='captureContactRequest.introducedAt'>
         </div>
 
-        <ngb-rating max="5" [(rate)]="captureHistory.rating"></ngb-rating> ({{captureHistory.rating}})
+        <ngb-rating max="5" [(rate)]="captureContactRequest.rating"></ngb-rating> ({{captureContactRequest.rating}})
 
         <div class="form-group">
             <label for="captureComment">Any other Interests/Comments</label>
-            <textarea class="form-control" id="captureComment" rows="3" [(ngModel)]="captureHistory.comment"></textarea>
+            <textarea class="form-control" id="captureComment" rows="3" [(ngModel)]="captureContactRequest.introComments"></textarea>
         </div>
     </div>
 </div>

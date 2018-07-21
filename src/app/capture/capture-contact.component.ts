@@ -2,9 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { Devotee } from '../model/devotee.model';
-import { History } from '../model/history.model';
+import { CaptureContactRequest } from '../model/capture-contact.model';
 import { FollowupVolunteerPage } from '../model/followup-volunteer.model';
-import { ProgramAssignment } from '../model/program-assignment.model';
 import { LoginSessionService } from '../login/login-session.service';
 import { HttpService } from '../shared/http.service';
 import { StatusService } from '../shared/status.service';
@@ -17,11 +16,9 @@ import { Paging } from "../model/entity.model";
 })
 
 export class CaptureContactComponent implements OnInit {
-    devotee: Devotee;
+    programName: string;
+    captureContactRequest: CaptureContactRequest;
     volunteeringPrograms: FollowupVolunteerPage;
-    programAssignment: ProgramAssignment;
-    captureHistory: History;
-    capturedAt: string;
     toggleAdditionalDetails: boolean;
 
     recordNotExist = false;
@@ -49,34 +46,22 @@ export class CaptureContactComponent implements OnInit {
     }
 
     initialiseForNewCapture() {
-        let programId = undefined;
-        let programName = "None";
-        if (this.programAssignment != undefined) {
-            programId = this.programAssignment.programId;
-            programName = this.programAssignment.programName;
-        }
-        this.devotee = new Devotee();
-
-        this.programAssignment = new ProgramAssignment();
-
-        this.captureHistory = new History();
-        this.captureHistory.commentedByDevoteeId = this.loginService.devoteeId;
-        this.captureHistory.rating = 0;
+        this.programName = "None";
+        
+        this.captureContactRequest = new CaptureContactRequest();
+        this.captureContactRequest.programInterestedIn = undefined;
+        this.captureContactRequest.capturedDevotee = new Devotee();
+        this.captureContactRequest.rating = 0;
 
         this.toggleAdditionalDetails = false;
-
-        this.programAssignment.programId = programId;
-        this.programAssignment.programName = programName;
     }
     
     onCaptureClick(): void {
         if (this.validateDevotee()) {
-            this.devotee.capturedBy = this.loginService.getDevoteeId();
-            this.httpService.postAndReturnData(connectionProperties.capture, "", this.devotee)
+            this.captureContactRequest.capturedById = this.loginService.getDevoteeId();
+            this.httpService.postAndReturnData(connectionProperties.capture, "", this.captureContactRequest)
             .subscribe(contents => {
                 let devoteeObj = contents as Devotee;
-                this.signUpForProgram(devoteeObj.id);
-                this.createHistoryEntry(devoteeObj.id);
                 this.initialiseForNewCapture();
                 this.statusService.success("Successfully submitted");
             }, err =>{
@@ -87,52 +72,26 @@ export class CaptureContactComponent implements OnInit {
     }
 
     validateDevotee(): boolean {
-        if (this.devotee.legalName == undefined || this.devotee.legalName == ""){
+        if (this.captureContactRequest.capturedDevotee.legalName == undefined || this.captureContactRequest.capturedDevotee.legalName == ""){
             this.statusService.error("Enter a name");
             return false;
         }
-        if (this.devotee.smsPhone == undefined || this.devotee.smsPhone == "") {
+        if (this.captureContactRequest.capturedDevotee.smsPhone == undefined || this.captureContactRequest.capturedDevotee.smsPhone == "") {
             this.statusService.error("Enter phone number");
             return false;
         }
+        
         return true;
     }
 
-    signUpForProgram(participantId: number) {
-
-        this.programAssignment.attendeeId = participantId;
-        this.httpService.post(connectionProperties.createProgramAssignment,this.programAssignment)
-        .subscribe(history => {
-            //Do something if success
-        }, err => {
-            //Do something if failure
-        })
-    }
-
-    createHistoryEntry(devoteeId: number) {
-        if (this.captureHistory.comment == "") {
-            this.captureHistory.comment = "[Captured without Comment]";
-        } else {
-            this.captureHistory.comment = "[Captured @: " + this.capturedAt + "] " + this.captureHistory.comment;
-        }
-        this.captureHistory.ratedDevoteeId = devoteeId;
-        
-        this.httpService.post(connectionProperties.writeHistory,this.captureHistory)
-        .subscribe(history => {
-            //Do something if success
-        }, err => {
-            //Do something if failure
-        })
-    }
-
     onCheckDevoteeClick() {
-        this.httpService.getData(connectionProperties.devoteesByPhone + "/" + this.devotee.smsPhone)
+        this.httpService.getData(connectionProperties.devoteesByPhone + "/" + this.captureContactRequest.capturedDevotee.smsPhone)
         .subscribe(devoteeObj => {
-            this.devotee = devoteeObj as Devotee;
+            this.captureContactRequest.capturedDevotee = devoteeObj as Devotee;
         }, err => {
-            let phone = this.devotee.smsPhone;
+            let phone = this.captureContactRequest.capturedDevotee.smsPhone;
             this.initialiseForNewCapture();
-            this.devotee.smsPhone = phone;
+            this.captureContactRequest.capturedDevotee.smsPhone = phone;
             this.recordNotExist = true;
             setTimeout(() => this.recordNotExist = false, 3000);
             //Create New!

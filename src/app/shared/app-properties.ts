@@ -19,7 +19,7 @@ export const connectionProperties = {
     getUserAccount: '/userAccount',
 
     //Devotee
-    capture: '/devotees',
+    capture: '/capture',
     devotees: '/devotees',
     devoteeList: '/devoteesPage',
     devoteesByEmailId: '/devoteeByEmail',
