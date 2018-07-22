@@ -82,6 +82,8 @@ export class CallResponseComponent implements OnInit {
         //     return;
         // }
         this.followup.timestamp = Date.now();
+        
+        /*
         //Update History too
         let history = new History();
         history.comment = "[Followed up for " + this.followup.programName  + ", Responded as:" + this.followup.response+ "] " + this.followup.comment;
@@ -90,18 +92,19 @@ export class CallResponseComponent implements OnInit {
         history.rating = this.followup.rating;
         history.response = this.followup.response;
         history.timeStamp = this.followup.timestamp;
-        this.httpService.putAndReturnData(connectionProperties.updateFollowupRecord + '/' + this.followup.id, '', this.followup)
-        .subscribe(follwup => {
-            //created a new followup record
-        }, err => {
-            //handle error of creating new followup record
-        });
         this.httpService.postAndReturnData(connectionProperties.writeHistory, '', history)
         .subscribe(history => {
             //Check the object if needed
         }, err => {
             this.statusService.error("Error updating history");
         });
+        */
+       this.httpService.putAndReturnData(connectionProperties.updateFollowupRecord, '', this.followup)
+       .subscribe(follwup => {
+           //created a new followup record
+       }, err => {
+           //handle error of creating new followup record
+       });
         //Go Back
         this.onBackClick();
     }

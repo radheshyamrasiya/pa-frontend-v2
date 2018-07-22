@@ -89,7 +89,7 @@ export const connectionProperties = {
     getSpecificFollowupRecord: '/specificFollowUpRecord', // programId, attendeeId, volunteerId
     getFollowupRecordById: '/followUp', // followupId
     createFollowupRecord: '/followUp',
-    updateFollowupRecord: '/followUp', // followupId
+    updateFollowupRecord: '/followUpOffilneUpdate', //
     deleteFollowupRecordOfProgram: '/deleteFollowUpOfProgram', //programId
 
     //Reports
