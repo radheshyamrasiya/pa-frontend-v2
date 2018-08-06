@@ -58,15 +58,24 @@ export class CaptureContactComponent implements OnInit {
     
     onCaptureClick(): void {
         if (this.validateDevotee()) {
-            this.captureContactRequest.capturedById = this.loginService.getDevoteeId();
-            this.httpService.postAndReturnData(connectionProperties.capture, "", this.captureContactRequest)
+            // clone object
+            let capturedDevotee = new Devotee();
+            capturedDevotee = Object.assign(capturedDevotee, this.captureContactRequest.capturedDevotee);
+            let captureContactReqClone = new CaptureContactRequest();
+            captureContactReqClone = Object.assign(captureContactReqClone, this.captureContactRequest);
+            captureContactReqClone.capturedDevotee = capturedDevotee;
+
+            // this.captureContactRequest.capturedById = this.loginService.getDevoteeId();
+            captureContactReqClone.capturedById = this.loginService.getDevoteeId();
+            this.initialiseForNewCapture();
+            this.statusService.info(`Saving details for ${capturedDevotee.legalName}. In the meantime, you can update another contact.`);
+            this.httpService.postAndReturnData(connectionProperties.capture, "", captureContactReqClone)
             .subscribe(contents => {
                 let devoteeObj = contents as Devotee;
-                this.initialiseForNewCapture();
-                this.statusService.success("Successfully submitted");
+                this.statusService.success(`Successfully updated details for ${devoteeObj.legalName}`);
             }, err =>{
                 //TODO: Handle Error 
-                this.statusService.error("Unable to save");
+                this.statusService.error(`Error in saving ${captureContactReqClone.capturedDevotee.legalName}`);
             });
         }
     }
