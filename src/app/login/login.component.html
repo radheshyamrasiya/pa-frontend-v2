@@ -8,6 +8,9 @@
       <label for="exampleInputPassword1">Password</label>
       <input [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" (keyup.enter)="onLoginClick()">
     </div>
+    <div *ngIf="this.loginErrorMsg">
+      {{ loginErrorMsg }}
+    </div>
     <button type="submit" class="btn btn-primary" (click)="onLoginClick()">Login</button>
 
   </div>

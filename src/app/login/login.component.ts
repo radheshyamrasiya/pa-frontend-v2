@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
     status = "No Status";
     username: string;
     password: string;
+    loginErrorMsg: string;
 
     constructor(
         private loginSessionService: LoginSessionService,
@@ -29,6 +30,13 @@ export class LoginComponent implements OnInit {
     onLoginClick(): void {
         this.status="clicked";
         this.httpService.init(this.username, this.password);
-        this.loginSessionService.login(this.username, this.password);
+        this.loginErrorMsg = "";
+        this.loginSessionService.login(this.username, this.password)
+            .subscribe(res => {
+                this.loginErrorMsg = "";
+            }, err => {
+                this.password = "";
+                this.loginErrorMsg = "Error while logging in, please try again";
+            })
     }
 }

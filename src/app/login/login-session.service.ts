@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { LoginStatus } from '../shared/app-properties';
 
@@ -8,6 +9,7 @@ import { EnumService } from '../shared/enum.service';
 import { connectionProperties, routeConstants } from '../shared/app-properties';
 
 import { StatusService } from '../shared/status.service';
+import { Observable } from 'rxjs';
 
 
 /*
@@ -36,34 +38,40 @@ export class LoginSessionService implements OnInit {
         this.devoteeId = 0;
     }
 
-    login(username: string, password: string): void {
+    login(username: string, password: string): Observable<any> {
         //Authentication Code
         const queryParams = {
             username
         };
-        this.httpService
-            .get(connectionProperties.login, '', queryParams)
-            .subscribe(res => {
-                let loginResponse = JSON.parse(res._body);
-                this.loginStatus = LoginStatus.loggedIn;
-                this.userName = username;
-                this.password = password;
-                this.devoteeId = loginResponse.data.devoteeId;
-                this.devoteeName = loginResponse.data.devoteeName;
-                this.role = loginResponse.data.role;
+        return Observable.create(observer => {
+            this.httpService
+                .get(connectionProperties.login, '', queryParams)
+                .subscribe(res => {
+                    let loginResponse = JSON.parse(res._body);
+                    this.loginStatus = LoginStatus.loggedIn;
+                    this.userName = username;
+                    this.password = password;
+                    this.devoteeId = loginResponse.data.devoteeId;
+                    this.devoteeName = loginResponse.data.devoteeName;
+                    this.role = loginResponse.data.role;
 
-                this.statusService.info("Welcome: " + this.devoteeName);
-                this.router.navigate([routeConstants.dashboard]);
-                this.enumService.loadEnums();
-                console.log(this.enumService.enums);
-            }, err => {
-                console.log(err);
-                this.loginStatus = LoginStatus.loggedOut;
-                this.userName = "";
-                this.password = "";
-                this.devoteeId = 0;
-                this.router.navigate([routeConstants.welcome]);
+                    this.statusService.info("Welcome: " + this.devoteeName);
+                    this.router.navigate([routeConstants.dashboard]);
+                    this.enumService.loadEnums();
+                    console.log(this.enumService.enums);
+                    observer.next(res);
+                    observer.complete();
+                }, (err: HttpErrorResponse) => {
+                    console.log(err);
+                    this.loginStatus = LoginStatus.loggedOut;
+                    this.userName = "";
+                    this.password = "";
+                    this.devoteeId = 0;
+                    this.router.navigate([routeConstants.welcome]);
+                    observer.error(err);
+                    observer.complete();
             });
+        });
     }
 
     logout(): void {
