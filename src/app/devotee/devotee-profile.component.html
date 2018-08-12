@@ -24,7 +24,10 @@
                     <label for="dobInput">Date of Birth</label>
                     <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" id="dobInput"
-                            name="dp" [(ngModel)]="datePicker" ngbDatepicker #d="ngbDatepicker" disabled>
+                            name="dp" [(ngModel)]="datePicker" ngbDatepicker #d="ngbDatepicker" disabled
+                            [minDate]="{year: 1910, month: 1, day: 1}"
+                            [maxDate]="{year:2010, month: 12, day: 31}"
+                            >
                         <button class="input-group-addon" (click)="d.toggle()" type="button">
                             <span class="oi oi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
                         </button>
