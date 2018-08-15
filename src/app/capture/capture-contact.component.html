@@ -6,14 +6,24 @@
     <i><p align="center">A prayer can make a difference</p></i>
     <br>
 
-    <form>
+    <form #captureForm="ngForm">
       <div class="form-group">
-        <label for="contactNumberInput">Contact Number</label>
+        <label for="contactNumberInput">Contact Number*</label>
         <div class="input-group">
-          <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='captureContactRequest.capturedDevotee.smsPhone' name="smsPhone">
+          <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" 
+                [(ngModel)]='captureContactRequest.capturedDevotee.smsPhone' name="smsPhone"
+                pattern="^[0-9]{10}$" required #smsPhone="ngModel">
           <button class="btn btn-outline-primary" id="checkDevotee" (click)="onCheckDevoteeClick()">
             Exist?
           </button>
+        </div>
+        <div *ngIf="smsPhone.invalid && (smsPhone.dirty || smsPhone.touched)">
+            <div *ngIf="smsPhone.errors.required" class="alert alert-danger">
+                Phone number is required
+            </div>
+            <div *ngIf="smsPhone.errors.pattern" class="alert alert-danger">
+                Invalid phone number
+            </div>
         </div>
       </div>
       <div>
@@ -21,13 +31,21 @@
       </div>
 
       <div class="form-group">
-        <label for="nameInput">Name</label>
-        <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='captureContactRequest.capturedDevotee.legalName' name="legalName">
+        <label for="nameInput">Name*</label>
+        <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='captureContactRequest.capturedDevotee.legalName' name="legalName"
+            required #legalName="ngModel">
+        <div *ngIf="legalName.invalid && (legalName.dirty || legalName.touched)" class="alert alert-danger">
+            Name is required
+        </div>
       </div>
 
       <div class="form-group">
         <label for="emailInput">Email</label>
-        <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='captureContactRequest.capturedDevotee.email' name="email">
+        <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='captureContactRequest.capturedDevotee.email' name="email" 
+                [email]="captureContactRequest.capturedDevotee.email!=='' && captureContactRequest.capturedDevotee.email != null" #email="ngModel">
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+            Email should be valid
+        </div>
       </div>
       <div class="form-group">
         <label for="areaInput">Area</label>
@@ -75,7 +93,8 @@
         </div>
       </ng-template>
       <button class="btn btn-primary" (click)="toggleAdditionalDetails=!toggleAdditionalDetails"><span class="oi oi-plus"></span></button>
-      <button class="btn btn-primary" (click)="onCaptureClick()">Capture</button>
+      <button type="submit" class="btn btn-primary" (click)="onCaptureClick(); captureForm.reset()"
+            [disabled]="!captureForm.form.valid">Capture</button>
       <button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>
     </form>
 
