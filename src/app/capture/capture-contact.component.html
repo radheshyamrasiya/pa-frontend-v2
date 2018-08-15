@@ -1,81 +1,84 @@
 <div class="row justify-content-md-center">
-    <div class="col spo-disp-comp">
-            <h2><p align="center"><span class="oi oi-book"></span></p></h2>
-            <p align="center" class="m-0">Enter your name into</p>
-<h5><p align="center" class="m-0">The Sacred Prayer Book</p></h5>
-<i><p align="center">A prayer can make a difference</p></i>
-<br>
-<div class="form-group">
-    <label for="contactNumberInput">Contact Number</label>
-    <div class="input-group">
-        <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='captureContactRequest.capturedDevotee.smsPhone'>
-        <button class="btn btn-outline-primary" id="checkDevotee" (click)="onCheckDevoteeClick()">
+  <div class="col spo-disp-comp">
+    <h2><p align="center"><span class="oi oi-book"></span></p></h2>
+    <p align="center" class="m-0">Enter your name into</p>
+    <h5><p align="center" class="m-0">The Sacred Prayer Book</p></h5>
+    <i><p align="center">A prayer can make a difference</p></i>
+    <br>
+
+    <form>
+      <div class="form-group">
+        <label for="contactNumberInput">Contact Number</label>
+        <div class="input-group">
+          <input type="tel" class="form-control" id="contactNumberInput" placeholder="Enter Contact Number" [(ngModel)]='captureContactRequest.capturedDevotee.smsPhone' name="smsPhone">
+          <button class="btn btn-outline-primary" id="checkDevotee" (click)="onCheckDevoteeClick()">
             Exist?
-        </button>
-    </div>
-</div>
-<div>
+          </button>
+        </div>
+      </div>
+      <div>
         <ngb-alert *ngIf="recordNotExist" type='info' (close)='recordNotExist=false'>Record does not exist</ngb-alert>
-</div>
+      </div>
 
-<div class="form-group">
-    <label for="nameInput">Name</label>
-    <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='captureContactRequest.capturedDevotee.legalName'>
-</div>
+      <div class="form-group">
+        <label for="nameInput">Name</label>
+        <input type="text" class="form-control" id="nameInput"  placeholder="Enter Name" [(ngModel)]='captureContactRequest.capturedDevotee.legalName' name="legalName">
+      </div>
 
-<div class="form-group">
-    <label for="emailInput">Email</label>
-    <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='captureContactRequest.capturedDevotee.email'>
-</div>
-<div class="form-group">
-    <label for="areaInput">Area</label>
-    <input type="text" class="form-control" id="areaInput" placeholder="Where do you stay?" [(ngModel)]='captureContactRequest.capturedDevotee.area'>
-</div>
-<div class="form-group">
-    <label for="postalCodeInput">ZIP/Postal Code</label>
-    <input type="text" class="form-control" id="postalCodeInput" placeholder="ZIP/Postal Code" [(ngModel)]='captureContactRequest.capturedDevotee.zipPostalCode'>
-</div>
+      <div class="form-group">
+        <label for="emailInput">Email</label>
+        <input type="email" class="form-control" id="emailInput" placeholder="Enter Email id" [(ngModel)]='captureContactRequest.capturedDevotee.email' name="email">
+      </div>
+      <div class="form-group">
+        <label for="areaInput">Area</label>
+        <input type="text" class="form-control" id="areaInput" placeholder="Where do you stay?" [(ngModel)]='captureContactRequest.capturedDevotee.area' name="area">
+      </div>
+      <div class="form-group">
+        <label for="postalCodeInput">ZIP/Postal Code</label>
+        <input type="text" class="form-control" id="postalCodeInput" placeholder="ZIP/Postal Code" [(ngModel)]='captureContactRequest.capturedDevotee.zipPostalCode' name="zipPostalCode">
+      </div>
 
-<div class="form-group">
-    <div class="input-group">
-        <div ngbDropdown>
+      <div class="form-group">
+        <div class="input-group">
+          <div ngbDropdown>
             <button class="btn btn-outline-primary" id="programMenu" ngbDropdownToggle>
-                Interested In
+              Interested In
             </button>
             <div ngbDropdownMenu aria-labelledby="programMenu">
-                <a class="dropdown-item" (click)="captureContactRequest.programInterestedIn=undefined; programName='None'">None</a>
-                <div *ngFor="let volPgms of volunteeringPrograms.dataList">
-                    <a class="dropdown-item" (click)="captureContactRequest.programInterestedIn=volPgms.programId; programName=volPgms.programName +'('+volPgms.programArea+')'">{{volPgms.programName}}({{volPgms.programArea}})</a>
-                </div>
+              <a class="dropdown-item" (click)="captureContactRequest.programInterestedIn=undefined; programName='None'">None</a>
+              <div *ngFor="let volPgms of volunteeringPrograms.dataList">
+                <a class="dropdown-item" (click)="captureContactRequest.programInterestedIn=volPgms.programId; programName=volPgms.programName +'('+volPgms.programArea+')'">{{volPgms.programName}}({{volPgms.programArea}})</a>
+              </div>
             </div>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="programName" name="programName" disabled>
         </div>
-        <input type="text" class="form-control" [(ngModel)]="programName" disabled>
-    </div>
-</div>
+      </div>
 
-<div *ngIf="!toggleAdditionalDetails else additionalDetails">May enter additional details</div>
+      <div *ngIf="!toggleAdditionalDetails else additionalDetails">May enter additional details</div>
 
-<ng-template #additionalDetails>
-<div class="card">
-    <div class="card-body"> <h6 class="card-title"> Additional Details </h6>
-        <div class="form-group">
-            <label for="cpaturedDuringInput">Where did you meet the contact?</label>
-            <input type="text" class="form-control" id="cpaturedDuringInput" placeholder="at Book Distribution or Visitor to temple?" [(ngModel)]='captureContactRequest.introducedAt'>
+      <ng-template #additionalDetails>
+        <div class="card">
+          <div class="card-body"> <h6 class="card-title"> Additional Details </h6>
+            <div class="form-group">
+              <label for="cpaturedDuringInput">Where did you meet the contact?</label>
+              <input type="text" class="form-control" id="cpaturedDuringInput" placeholder="at Book Distribution or Visitor to temple?" [(ngModel)]='captureContactRequest.introducedAt' name="introducedAt">
+            </div>
+
+            <ngb-rating max="5" [(rate)]="captureContactRequest.rating"></ngb-rating> ({{captureContactRequest.rating}})
+
+            <div class="form-group">
+              <label for="captureComment">Any other Interests/Comments</label>
+              <textarea class="form-control" id="captureComment" rows="3" [(ngModel)]="captureContactRequest.introComments" name="introComments"></textarea>
+            </div>
+          </div>
         </div>
+      </ng-template>
+      <button class="btn btn-primary" (click)="toggleAdditionalDetails=!toggleAdditionalDetails"><span class="oi oi-plus"></span></button>
+      <button class="btn btn-primary" (click)="onCaptureClick()">Capture</button>
+      <button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>
+    </form>
 
-        <ngb-rating max="5" [(rate)]="captureContactRequest.rating"></ngb-rating> ({{captureContactRequest.rating}})
-
-        <div class="form-group">
-            <label for="captureComment">Any other Interests/Comments</label>
-            <textarea class="form-control" id="captureComment" rows="3" [(ngModel)]="captureContactRequest.introComments"></textarea>
-        </div>
-    </div>
-</div>
-</ng-template>
-<button class="btn btn-primary" (click)="toggleAdditionalDetails=!toggleAdditionalDetails"><span class="oi oi-plus"></span></button>
-<button class="btn btn-primary" (click)="onCaptureClick()">Capture</button>
-<button class="btn btn-primary my-3" (click)="onBackClick()">Back</button>
-
-</div> 
+  </div>
 
 </div>
